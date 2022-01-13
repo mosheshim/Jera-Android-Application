@@ -4,8 +4,10 @@ import android.os.Bundle
 
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -25,7 +27,7 @@ class CartFragment : Fragment() {
     private lateinit var viewModel: CartViewModel
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
-
+    private lateinit var adapter:CartAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,18 +76,13 @@ class CartFragment : Fragment() {
                 else findNavController().navigate(R.id.navigate_to_checkout)
             }
 
-            val adapter = CartAdapter(viewModel.cart)
+             adapter = CartAdapter(viewModel.cart ){view, index ->
+                showPopup(view, index)
+            }
             val recyclerView = binding.rvCart
 
             ItemTouchHelper(RecycleItemTouchHelper(requireContext()) { index ->
-                UiUtils.deleteItemDialog(requireContext()) {
-                    if (it) {
-                        viewModel.deleteItem(index)
-                        adapter.notifyItemRemoved(index)
-                        binding.textTotalPrice.text =
-                            getString(R.string.money_symbol,viewModel.price)
-                    } else adapter.notifyItemChanged(index)
-                }
+                deleteItemDialog(index)
             })
                 .attachToRecyclerView(recyclerView)
             recyclerView.adapter = adapter
@@ -99,6 +96,32 @@ class CartFragment : Fragment() {
         _binding = null
 
     }
+
+    private fun deleteItemDialog(index: Int) =
+        UiUtils.deleteItemDialog(requireContext()) {
+        if (it) {
+            viewModel.deleteItem(index)
+            adapter.notifyItemRemoved(index)
+            binding.textTotalPrice.text =
+                getString(R.string.money_symbol,viewModel.price)
+        } else adapter.notifyItemChanged(index)
+    }
+
+
+    private fun showPopup(v: View, index:Int){
+        PopupMenu(requireContext(), v).apply {
+            setOnMenuItemClickListener {
+                deleteItemDialog(index)
+                true
+            }
+            inflate(R.menu.delete_cart_item)
+                show()
+        }
+//        val inflater: MenuInflater = popup.menuInflater
+//        inflater., popup.menu)
+//        popup.show()
+    }
+
 
 
 }

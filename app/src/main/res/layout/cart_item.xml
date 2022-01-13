@@ -62,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/text_quantity"
             app:layout_constraintStart_toStartOf="@+id/text_quantity"
             app:layout_constraintTop_toTopOf="@+id/text_additional" />
 
@@ -86,8 +87,18 @@
             app:layout_constraintEnd_toStartOf="@+id/text_quantity"
             app:layout_constraintTop_toTopOf="@+id/text_quantity" />
 
-
-
+        <ImageButton
+            android:id="@+id/button_delete_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="@+id/text_quantity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_quantity"
+            app:layout_constraintTop_toTopOf="@+id/text_quantity"
+            app:srcCompat="@drawable/ic_baseline_drag_handle_24" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
