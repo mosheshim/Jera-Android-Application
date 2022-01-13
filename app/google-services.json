@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "540879151687",
+    "project_id": "jera-c268c",
+    "storage_bucket": "jera-c268c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540879151687:android:7ae6eb892c7ea282d38762",
+        "android_client_info": {
+          "package_name": "mosh.com.jera_v1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "540879151687-bgbf8utnd3vrtocpjsc9i7j6rjbs5c6p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mosh.com.jera_v1",
+            "certificate_hash": "101137c3f7eaf5695933d65dc2c8ebe9e04dda35"
+          }
+        },
+        {
+          "client_id": "540879151687-34qq6c7jehqgr0jhnb4ph36ka1j3m3n9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAchZqDUC6N44VFL3HkM_vNwcI_WrbZZP8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "540879151687-34qq6c7jehqgr0jhnb4ph36ka1j3m3n9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

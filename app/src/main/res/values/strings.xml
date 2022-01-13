@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">jera-v1</string>
+    <string name="title_coffee">Coffee</string>
+    <string name="title_tea">Tea</string>
+    <string name="title_equipment">Equipment</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_cart">Cart</string>
+    <string name="out_of_stock">Out of stock</string>
+    <string name="in_stock">In Stock</string>
+    <string name="money_symbol">₪%1$d</string>
+    <string name="money_symbol_with_string">₪%1$s</string>
+    <string name="money_symbol_with_pay_text">Pay ₪%1$d</string>
+    <string name="grind_type">Grind Type</string>
+    <string name="quantity_init">1</string>
+    <string name="beans">Beans</string>
+    <string name="bag_size">250 grams bags</string>
+    <string name="bitterness_label">Bitterness:</string>
+    <string name="acidity_label">Acidity:</string>
+    <string name="sweetness_label">Sweetness:</string>
+    <string name="body_label">Body:</string>
+    <string name="taste_profile_label">Taste Profile -</string>
+    <string name="country_of_origin_label">Country Of Origin -</string>
+    <string name="add_to_cart">Add To Cart</string>
+    <string name="go_back">Go back</string>
+    <string name="tea">Tea</string>
+    <string name="choose">Choose</string>
+    <string name="weight">Weight</string>
+    <string name="amount">Amount</string>
+    <string name="product_image">Product image</string>
+    <string name="login_to_check_out_meassage">To proceed to checkout please log in</string>
+    <string name="log_in">Log In</string>
+    <string name="cancel">Cancel</string>
+    <string name="REQUIRED">*Required</string>
+    <string name="missed_a_field_message">You may missed something, check again</string>
+    <string name="register_successfully_message">Register successfully </string>
+    <string name="login_successfully_message">Welcome Back</string>
+
+
+</resources>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/viewPagerFragment">
+
+    <fragment
+        android:id="@+id/navigation_tea"
+        android:name="mosh.com.jera_v1.ui.main_page.TeaFragment"
+        android:label="@string/title_tea"
+        tools:layout="@layout/fragment_tea">
+        <action
+            android:id="@+id/action_navigation_tea_to_teaItemFragment"
+            app:destination="@id/navigation_tea_Item_screen" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_coffee"
+        android:name="mosh.com.jera_v1.ui.main_page.CoffeeFragment"
+        android:label="@string/title_coffee"
+        tools:layout="@layout/fragment_coffee">
+        <action
+            android:id="@+id/action_navigation_coffee_to_coffeeItemFragment"
+            app:destination="@id/navigation_coffee_Item_screen" />
+
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_cart"
+        android:name="mosh.com.jera_v1.ui.cart.CartFragment"
+        android:label="@string/title_cart"
+        tools:layout="@layout/fragment_cart">
+
+        <action
+            app:destination="@id/navigation_checkout"
+            android:id="@+id/navigate_to_checkout"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/navigation_cart"/>
+    </fragment>
+
+    <action
+        android:id="@+id/action_global_cart_fragment"
+        app:destination="@id/navigation_cart"
+        app:popUpTo="@id/navigation_cart"
+        app:popUpToInclusive="true" />
+
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="mosh.com.jera_v1.ui.forms.LoginFragment"
+        android:label="Log In"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/navigation_register"
+            app:popUpTo="@id/navigation_register"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_login_fragment"
+        app:destination="@id/navigation_login"
+        app:popUpTo="@id/navigation_login"
+        app:popUpToInclusive="true" />
+
+    <fragment
+        android:id="@+id/navigation_register"
+        android:name="mosh.com.jera_v1.ui.forms.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register"/>
+
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="mosh.com.jera_v1.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <action
+        android:id="@+id/action_global_profile_fragment"
+        app:destination="@id/navigation_profile"
+        app:popUpTo="@id/navigation_profile"
+        app:popUpToInclusive="true" />
+
+    <fragment
+        android:id="@+id/navigation_coffee_Item_screen"
+        android:name="mosh.com.jera_v1.ui.coffee.CoffeeItemFragment"
+        android:label="CoffeeItemFragment" />
+
+    <fragment
+        android:id="@+id/navigation_tea_Item_screen"
+        android:name="mosh.com.jera_v1.ui.tea.TeaItemFragment"
+        android:label="TeaItemFragment">
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_checkout"
+        android:name="mosh.com.jera_v1.ui.checkout.CheckoutFragment"
+        android:label="fragment_checkout"
+        tools:layout="@layout/fragment_checkout" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/viewPagerFragment"
+        android:name="mosh.com.jera_v1.ui.main_page.ViewPagerFragment"
+        android:label="fragment_view_pager"
+        tools:layout="@layout/fragment_view_pager" />
+<action
+    android:id="@+id/navigation_to_main"
+    app:destination="@id/viewPagerFragment"
+    app:popUpTo="@id/viewPagerFragment"
+    app:popUpToInclusive="true"/>
+
+</navigation>
