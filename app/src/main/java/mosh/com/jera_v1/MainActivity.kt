@@ -1,15 +1,21 @@
 package mosh.com.jera_v1
 
 import android.os.Bundle
-import android.view.*
+import android.view.ActionMode
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.children
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import kotlinx.coroutines.cancel
 import mosh.com.jera_v1.databinding.ActivityMainBinding
+import mosh.com.jera_v1.utils.UiUtils.Companion.showToast
+import mosh.com.jera_v1.utils.UiUtils.Companion.visible
+import kotlin.math.log
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -71,7 +77,19 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun changeMenuItemVisibility(menu: Menu?, loggedIn: Boolean) {
+        menu?.findItem(R.id.login_menu_item)?.isVisible = !loggedIn
+        menu?.findItem(R.id.orders_menu_item)?.isVisible = loggedIn
+        menu?.findItem(R.id.logout_menu_item)?.isVisible = loggedIn
 
+    }
+
+    override fun onMenuOpened(featureId: Int, menu: Menu): Boolean {
+        if (authRepo.isLoggedIn) changeMenuItemVisibility(menu, true)
+        else changeMenuItemVisibility(menu, false)
+        return super.onMenuOpened(featureId, menu)
+
+    }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.main_menu, menu)
@@ -85,13 +103,12 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(R.id.action_global_cart_fragment)
                 return true
             }
-            R.id.login_button -> {
-                if (authRepo.isLoggedIn)
-                    navController.navigate(R.id.navigation_profile)
-                else
-                    navController.navigate(R.id.action_global_login_fragment)
-                return true
+            R.id.login_menu_item -> navController.navigate(R.id.navigation_login)
+            R.id.logout_menu_item -> {
+                authRepo.logout()
+                Toast.makeText(this, "Signed out", Toast.LENGTH_SHORT).show() //TODO make a string res
             }
+            R.id.orders_menu_item -> showToast(this, "order page")
         }
         return super.onOptionsItemSelected(item)
     }
@@ -106,6 +123,8 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         MyApplication.cartRepo.scope.cancel()
+        authRepo.destroyListeners()
     }
+
 
 }

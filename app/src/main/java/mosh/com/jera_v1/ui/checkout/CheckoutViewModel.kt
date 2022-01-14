@@ -102,20 +102,22 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
     }
     //--------------------------------validation and saving---------------------------------------//
     //validate the fields which needed by the user delivery choice
-    fun pay(onFinish: (String?) -> Unit) {
-        if (pickupOrDelivery.value == null) return
+    fun pay(onFinish: (String?) -> Unit):Boolean {
         fillNotRequiredFields()
         val error: String? =
-            if (fields[PHONE].equals("")) "Phone number is invalid"
-            else when (orderType) {
-                PICK_UP -> if (chosenPickupLocation == null) "Choose Location" else null
-                NEW_ADDRESS -> if (fields.containsValue(EMPTY_FIELD))
-                    "Fill all required fields" else null
-                else -> null
+            when {
+                pickupOrDelivery.value == null -> "Choose delivery option"
+                fields[PHONE].equals("") -> "Phone number is invalid"
+                else -> when (orderType) {
+                    PICK_UP -> if (chosenPickupLocation == null) "Choose Location" else null
+                    NEW_ADDRESS -> if (fields.containsValue(EMPTY_FIELD))
+                        "Fill all required fields" else null
+                    else -> null
+                }
             }
-        if (error.isNullOrEmpty())  updateDB(onFinish)
+        if (error.isNullOrEmpty())  updateDB(onFinish).also { return true }
         else onFinish(error)
-
+        return false
     }
 
     private fun validatePhone(number: String): String? {

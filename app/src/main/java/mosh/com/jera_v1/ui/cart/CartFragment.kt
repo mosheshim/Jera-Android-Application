@@ -117,9 +117,7 @@ class CartFragment : Fragment() {
             inflate(R.menu.delete_cart_item)
                 show()
         }
-//        val inflater: MenuInflater = popup.menuInflater
-//        inflater., popup.menu)
-//        popup.show()
+
     }
 
 

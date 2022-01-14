@@ -1,18 +1,22 @@
 package mosh.com.jera_v1.repositories
 
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 
 class AuthRepository(private val auth: FirebaseAuth) {
-    //temp
-    val authTemp get() = auth
 
     private var _isUserLoggedIn: Boolean = false
     val isLoggedIn get() = _isUserLoggedIn
+
 
     init {
         auth.addAuthStateListener {
             _isUserLoggedIn = it.currentUser != null
         }
+    }
+
+    fun destroyListeners(){
+        auth.removeAuthStateListener {}
     }
 
     /**

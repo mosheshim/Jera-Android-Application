@@ -113,7 +113,6 @@ class UiUtils {
             )
         }
 
-
         fun buildDialog(
             context: Context,
             message: String,

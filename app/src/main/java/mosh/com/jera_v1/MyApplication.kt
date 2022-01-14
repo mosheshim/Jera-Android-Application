@@ -15,8 +15,6 @@ class MyApplication : Application() {
     companion object {
         private lateinit var instance: MyApplication
 
-        val isLoggedIn get() = authRepo.isLoggedIn
-
         private val firebase: FireBase by lazy {
             FireBase()
         }
@@ -58,6 +56,7 @@ class MyApplication : Application() {
         super.onCreate()
         instance = this
     }
+
 
 
 }

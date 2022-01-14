@@ -1,5 +1,7 @@
 package mosh.com.jera_v1.ui.checkout
 
+import android.app.AlertDialog
+import android.app.ProgressDialog
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -47,22 +49,19 @@ class CheckoutFragment : Fragment() {
             buttonPay.setOnClickListener {
                 UiUtils.hideKeyBoard(requireActivity())
                 saveAllFields()
-                buttonPay.isClickable = false
-                buttonCancel.isClickable = false
-                progressBar.visible()
-                viewModel.pay {
+                val progressDialog = ProgressDialog(requireContext())
+                progressDialog.setTitle("Precessing Order")
+                progressDialog.setMessage("Just a few seconds please")
+
+                if (viewModel.pay {
                     var message = it
                     if (it.isNullOrEmpty()){
                         message = "Order succeeded!"
                         findNavController().popBackStack()
-                    }else{
-                        progressBar.gone()
-                        buttonPay.isClickable = true
-                        buttonCancel.isClickable = true
-                        message = it
-                    }
+                    }else message = it
+                    progressDialog.dismiss()
                     showToast(requireContext(), message)
-                }
+                }) progressDialog.show()
             }
             buttonCancel.setOnClickListener { findNavController().popBackStack() }
         }
@@ -114,6 +113,11 @@ class CheckoutFragment : Fragment() {
                         viewModel.pickupLocations,
                         spinnerPickupLocation
                     ) { viewModel.setPickUpLocation(it) }
+
+//                    TODO add this to a shared fragment
+                    spinnerPickupLocation.setOnClickListener {
+                        UiUtils.hideKeyBoard(requireActivity()) }
+
                 }
                 //-------------------shipping layout -------------------//
                 layoutAddressesOptions.apply {
@@ -125,6 +129,11 @@ class CheckoutFragment : Fragment() {
                     textDefStreetAndNumber.text = viewModel.defStreetAndNumber
                     textDefPostalNum.text = viewModel.defPostalNumber
                     textDefBuildingInfo.text = viewModel.defEntranceFloorApt
+
+                    cardDefaultAddressDetails.setOnClickListener {
+                        radioButtonUseDefaultAddress.callOnClick()
+                        radioButtonUseDefaultAddress.isChecked = true
+                    }
 
                     radioButtonUseDefaultAddress.setOnClickListener {
                         radioButtonNewAddress.isChecked = false

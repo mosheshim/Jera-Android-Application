@@ -9,6 +9,7 @@ import mosh.com.jera_v1.utils.UiUtils
 import mosh.com.jera_v1.utils.UiUtils.Companion.getTotalPrice
 
 class CartViewModel(application: Application) : AndroidViewModel(application) {
+    private val authRepo = MyApplication.authRepo
     private val cartRepo = MyApplication.cartRepo
 
     private lateinit var _cart :MutableList<CartItem>
@@ -38,7 +39,7 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
 
 
     fun isLoggedIn(): Boolean {
-       return MyApplication.isLoggedIn
+       return authRepo.isLoggedIn
     }
 
     val price get() = UiUtils.getTotalPrice(cart)

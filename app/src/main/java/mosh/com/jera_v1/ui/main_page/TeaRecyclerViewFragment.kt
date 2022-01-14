@@ -1,25 +1,25 @@
 package mosh.com.jera_v1.ui.main_page
 
+import android.app.Application
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import mosh.com.jera_v1.R
-import mosh.com.jera_v1.adapters.CoffeeAdapter
-import mosh.com.jera_v1.databinding.FragmentCoffeeBinding
+import mosh.com.jera_v1.adapters.TeaAdapter
+import mosh.com.jera_v1.databinding.FragmentTeaBinding
 import mosh.com.jera_v1.utils.UiUtils.Companion.getSpanNum
-import mosh.com.jera_v1.utils.UiUtils.Companion.gone
 
-class CoffeeFragment : Fragment() {
+class TeaRecyclerViewFragment : Fragment() {
 
     private lateinit var viewModel: ProductsViewModel
+    private var _binding: FragmentTeaBinding? = null
 
-    private var _binding: FragmentCoffeeBinding? = null
+    // This property is only valid between onCreateView and
+    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -27,34 +27,32 @@ class CoffeeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         viewModel =
             ViewModelProvider(requireActivity())[ProductsViewModel::class.java]
 
-        _binding = FragmentCoffeeBinding.inflate(inflater, container, false)
+        _binding = FragmentTeaBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.coffeeList.observe(viewLifecycleOwner) {
-            binding.progressBar.gone()
-            binding.rvCoffee.adapter = CoffeeAdapter(it) { id ->
+        viewModel.productLinesLiveData.observe(viewLifecycleOwner) {
+            binding.rvTea.adapter = TeaAdapter(it) { id ->
                 findNavController().navigate(
-                    R.id.navigation_coffee_Item_screen,
+                    R.id.navigation_tea_Item_screen,
                     bundleOf("id" to id)
                 )
+
             }
-            binding.rvCoffee.layoutManager = GridLayoutManager(
+            binding.rvTea.layoutManager = GridLayoutManager(
                 requireContext(), getSpanNum(resources)
             )
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }

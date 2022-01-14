@@ -5,9 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import mosh.com.jera_v1.R
 import mosh.com.jera_v1.adapters.ViewPagerAdapter
 import mosh.com.jera_v1.databinding.FragmentViewPagerBinding
 
@@ -27,7 +25,7 @@ class ViewPagerFragment : Fragment() {
         val tabLayout = binding.tabLayout
 
         pager.adapter = ViewPagerAdapter(
-            listOf(CoffeeFragment(), TeaFragment()),
+            listOf(CoffeeRecyclerViewFragment(), TeaRecyclerViewFragment()),
             childFragmentManager,
             lifecycle
         )

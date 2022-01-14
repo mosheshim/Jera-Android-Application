@@ -9,16 +9,39 @@
         android:orderInCategory="2"
         android:icon="@drawable/ic_baseline_shopping_cart_24"
         app:showAsAction="always"
-        android:title="go_to_cart" />
+        android:title="cart" />
 
     <item
-        android:id="@+id/login_button"
+        android:id="@+id/profile_button"
         android:orderInCategory="1"
         android:icon="@drawable/ic_baseline_person_24"
         app:showAsAction="always"
-        android:title="go_to_login_screen">
+        android:title="profile">
+        <menu>
+            <item
+                android:id="@+id/login_menu_item"
+                android:orderInCategory="2"
+                app:showAsAction="never"
+                android:title="Login"
+                android:icon="@drawable/login_icon"
+                />
+
+            <item
+                android:id="@+id/logout_menu_item"
+                android:orderInCategory="1"
+                app:showAsAction="never"
+                android:title="Logout"
+                android:icon="@drawable/logout_icon"/>
+            <item
+                android:id="@+id/orders_menu_item"
+                android:orderInCategory="1"
+                app:showAsAction="never"
+                android:title="Orders"
+                android:icon="@drawable/orders_icon"/>
+        </menu>
 
     </item>
+
 
 
 </menu>
