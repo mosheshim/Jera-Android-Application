@@ -18,11 +18,8 @@ class CoffeeItemViewModel : ProductItemViewModel() {
      */
     fun setCoffeeById(id: String) {
 //        TODO change the exeption
-        val temp = productsRepository.findCoffeeById(id) ?: throw Exception("no coffee found")
-        coffee = temp
+        coffee = productsRepository.findCoffeeById(id) ?: throw Exception("no coffee found")
     }
-
-
     fun onAddToCartButtonClicked(onSuccess:()->Unit){
         addToCart(
             coffee,

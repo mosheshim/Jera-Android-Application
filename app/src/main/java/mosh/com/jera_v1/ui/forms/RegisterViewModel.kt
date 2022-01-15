@@ -5,9 +5,8 @@ import android.util.Patterns
 import mosh.com.jera_v1.MyApplication
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.models.AppUser
-import mosh.com.jera_v1.utils.EMPTY_FIELD
-import mosh.com.jera_v1.utils.BaseViewModel
 import mosh.com.jera_v1.utils.FormViewModel
+import mosh.com.jera_v1.utils.NOT_VALID
 import mosh.com.jera_v1.utils.TextResource
 import mosh.com.jera_v1.utils.TextResource.Companion.fromStringId
 
@@ -26,11 +25,11 @@ class AuthViewModel : FormViewModel() {
 
     init {
         fields = mutableMapOf(
-            Pair(FIRST_NAME, EMPTY_FIELD),
-            Pair(LAST_NAME, EMPTY_FIELD),
-            Pair(EMAIL, EMPTY_FIELD),
-            Pair(PASSWORD_1, EMPTY_FIELD),
-            Pair(PASSWORD_2, EMPTY_FIELD),
+            Pair(FIRST_NAME, NOT_VALID),
+            Pair(LAST_NAME, NOT_VALID),
+            Pair(EMAIL, NOT_VALID),
+            Pair(PASSWORD_1, NOT_VALID),
+            Pair(PASSWORD_2, NOT_VALID),
         )
     }
 
@@ -49,14 +48,22 @@ class AuthViewModel : FormViewModel() {
      * call back boolean value will be true if succeeded or false if failed
      *  and string value will be the error if wont succeed, else will be null
      */
-    fun register(onResult: (String?) -> Unit) {
-        if (!fields.containsValue(EMPTY_FIELD)) {
+    fun register(onResult: (Boolean) -> Unit) {
+        if (fields.containsValue(NOT_VALID)) {
+            onResult(false)
+            showToast(R.string.empty_field_message)
+            return
+        }
             authRepo.registerNewUser(fields[EMAIL]!!, fields[PASSWORD_1]!!) {
-                if (it == null) addAppUserToDB()
-                onResult(it)
+                if (it.isNullOrEmpty()) {
+                    addAppUserToDB()
+                    showToast(R.string.register_successfully_message)
+                }
+                onResult(it.isNullOrEmpty())
+
             }
-        } else onResult("missed_a_field_message")
     }
+
 
     public override fun validateField(editable: Editable?, field: String): TextResource? {
         val string = editable.toString()

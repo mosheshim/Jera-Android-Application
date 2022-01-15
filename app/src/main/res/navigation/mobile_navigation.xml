@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_tea"
         android:name="mosh.com.jera_v1.ui.main_page.TeaRecyclerViewFragment"
-        android:label="@string/title_tea"
+        android:label="@string/tea"
         tools:layout="@layout/fragment_tea">
         <action
             android:id="@+id/action_navigation_tea_to_teaItemFragment"
@@ -19,16 +19,12 @@
     <fragment
         android:id="@+id/navigation_coffee"
         android:name="mosh.com.jera_v1.ui.main_page.CoffeeRecyclerViewFragment"
-        android:label="@string/title_coffee"
+        android:label="@string/coffee"
         tools:layout="@layout/fragment_coffee">
         <action
             android:id="@+id/action_navigation_coffee_to_coffeeItemFragment"
             app:destination="@id/navigation_coffee_Item_screen" />
-
-
     </fragment>
-
-
     <fragment
         android:id="@+id/navigation_cart"
         android:name="mosh.com.jera_v1.ui.cart.CartFragment"
@@ -51,7 +47,7 @@
     <fragment
         android:id="@+id/navigation_login"
         android:name="mosh.com.jera_v1.ui.forms.LoginFragment"
-        android:label="Log In"
+        android:label="@string/log_in"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_login_to_register"
@@ -68,14 +64,14 @@
     <fragment
         android:id="@+id/navigation_register"
         android:name="mosh.com.jera_v1.ui.forms.RegisterFragment"
-        android:label="fragment_register"
+        android:label="@string/register"
         tools:layout="@layout/fragment_register"/>
 
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="mosh.com.jera_v1.ui.profile.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
     <action
         android:id="@+id/action_global_profile_fragment"
@@ -86,24 +82,24 @@
     <fragment
         android:id="@+id/navigation_coffee_Item_screen"
         android:name="mosh.com.jera_v1.ui.coffee.CoffeeItemFragment"
-        android:label="CoffeeItemFragment" />
+        android:label="@string/coffee" />
 
     <fragment
         android:id="@+id/navigation_tea_Item_screen"
         android:name="mosh.com.jera_v1.ui.tea.TeaItemFragment"
-        android:label="TeaItemFragment">
+        android:label="@string/tea">
     </fragment>
     <fragment
         android:id="@+id/navigation_checkout"
         android:name="mosh.com.jera_v1.ui.checkout.CheckoutFragment"
-        android:label="fragment_checkout"
+        android:label="@string/check_out"
         tools:layout="@layout/fragment_checkout" >
 
     </fragment>
     <fragment
         android:id="@+id/viewPagerFragment"
         android:name="mosh.com.jera_v1.ui.main_page.ViewPagerFragment"
-        android:label="fragment_view_pager"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_view_pager" />
 <action
     android:id="@+id/navigation_to_main"

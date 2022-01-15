@@ -11,21 +11,20 @@ class CartViewModel : BaseViewModel(){
     private val authRepo = MyApplication.authRepo
     private val cartRepo = MyApplication.cartRepo
 
-    private lateinit var _cart :MutableList<CartItem>
+    private val _cart = mutableListOf<CartItem>()
     val cart:List<CartItem> get() = _cart
 
+    init {
+        _cart.addAll(cartRepo.cartLiveData.value?: listOf())
+    }
     /**
      * Calls updateUI callback when Room is synced with Firebase(if user is logged in) and the cart
      * is fetched
      */
-    fun onCartLoad(updateUI:() ->Unit){
-            viewModelScope.launch{
-                cartRepo.getCart() {
-                    _cart = it.toMutableList()
-                    updateUI()
-                }
-            }
-    }
+//    fun onCartLoad(updateUI:() ->Unit){
+//                    _cart = cartRepo.cartLiveData.value.toMutableList()
+//                    updateUI()
+//    }
 
     fun deleteItem(index: Int) {
         val item = _cart[index]
@@ -35,13 +34,13 @@ class CartViewModel : BaseViewModel(){
         }
     }
 
-
-
     fun isLoggedIn(): Boolean {
        return authRepo.isLoggedIn
     }
 
-    val price get() = Utils.getTotalPrice(cart)
+
+
+    val price get() = Utils.getTotalPrice(cart).toString()
     val cartIsEmpty get() = _cart.isNullOrEmpty()
 
 

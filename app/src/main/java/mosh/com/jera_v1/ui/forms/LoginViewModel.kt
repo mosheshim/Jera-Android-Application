@@ -18,16 +18,16 @@ class LoginViewModel() : BaseViewModel() {
         else null
     }
 
-    fun logIn(emailEditable: Editable?, passwordEditable: Editable?, onResult: (String?) -> Unit) {
+    fun logIn(emailEditable: Editable?, passwordEditable: Editable?, onResult: (Boolean) -> Unit) {
         val email = emailEditable.toString()
         val password = passwordEditable.toString()
         if (validateEmail(emailEditable) == null && password.isNotEmpty())
             authRepo.logIn(email, password) {
-                if (it == null) showToast(R.string.register_successfully_message)
-                onResult(it)
-            }
+                if (it.isNullOrEmpty())showToast(R.string.login_successfully_message)
+                    onResult(it.isNullOrEmpty()) }
         else {
-            onResult("missed_a_field_message")
+            onResult(false)
+            showToast(R.string.empty_field_message)
         }
     }
 

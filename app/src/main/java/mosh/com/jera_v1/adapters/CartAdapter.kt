@@ -9,9 +9,9 @@ import mosh.com.jera_v1.databinding.CartItemBinding
 import mosh.com.jera_v1.models.CartItem
 import mosh.com.jera_v1.utils.Utils
 
-class CartAdapter(val cart:List<CartItem>,val onItemMenuClicked:(View,index: Int)->Unit)
-    : RecyclerView.Adapter<CartAdapter.ViewHolder>() {
-    class ViewHolder(val binding: CartItemBinding) : RecyclerView.ViewHolder(binding.root){}
+class CartAdapter(val cart: List<CartItem>, val onItemMenuClicked: (View, index: Int) -> Unit) :
+    RecyclerView.Adapter<CartAdapter.ViewHolder>() {
+    class ViewHolder(val binding: CartItemBinding) : RecyclerView.ViewHolder(binding.root) {}
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,17 +27,18 @@ class CartAdapter(val cart:List<CartItem>,val onItemMenuClicked:(View,index: Int
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val cartItem = cart[position]
         holder.binding.apply {
-           Utils.buildPicasso(cartItem.imageURL, imageView, progressBar)
+            Utils.buildPicasso(cartItem.imageURL, imageView, progressBar)
             textName.text = cartItem.productName
-            textQuantity.text = "${cartItem.quantity}"
-            textPrice.text = root.context.getString(R.string.money_symbol, cartItem.price)
+            textQuantity.text = cartItem.quantity.toString()
+            textPrice.text =
+                root.context.getString(R.string.money_symbol_with_string, cartItem.price.toString())
             textAdditional.text = cartItem.extra
-            buttonDeleteMenu.setOnClickListener{
+            buttonDeleteMenu.setOnClickListener {
                 onItemMenuClicked(it, position)
             }
         }
 
-            }
+    }
 
     override fun getItemCount(): Int = cart.size
 

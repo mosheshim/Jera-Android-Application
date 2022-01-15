@@ -49,6 +49,8 @@ dependencies {
     //material design
     implementation 'com.google.android.material:material:1.6.0-alpha01'
 
+
+
     // Import the Firebase BoM fire base stuff
     implementation platform('com.google.firebase:firebase-bom:29.0.2')
     implementation 'com.google.firebase:firebase-analytics-ktx'

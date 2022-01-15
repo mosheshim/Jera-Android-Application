@@ -3,6 +3,8 @@ package mosh.com.jera_v1
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.FrameLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -16,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private val authRepo = MyApplication.authRepo
+    private val cartRepo = MyApplication.cartRepo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,46 +32,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_container) as NavHostFragment
         navController = navHostFragment.navController
         setupActionBarWithNavController(navController)
-
-//        navController.addOnDestinationChangedListener { _, navD, _ ->
-//            when (navD.id) {
-//                R.id.navigation_coffee, R.id.navigation_tea
-//                -> binding.navView.visibility = View.VISIBLE
-//                else -> binding.navView.visibility = View.GONE
-//            }
-//        }
-
-//        val appBarConfiguration = AppBarConfiguration(
-//            setOf(
-//                R.id.navigation_coffee, R.id.navigation_tea
-//            )
-//        )
-//        binding.navView.setupWithNavController(navController)
-
-//        binding.navView.setOnItemSelectedListener {
-//            when (it.itemId) {
-//                R.id.coffee_tab -> {
-//                    supportFragmentManager
-//                        .beginTransaction()
-//                        .replace(R.id.nav_host_container, CoffeeFragment())
-//                        .addToBackStack(null)
-//                        .setReorderingAllowed(true)
-//                        .commit()
-//                    true
-//                }
-//                R.id.tea_tab -> {
-//                    supportFragmentManager
-//                        .beginTransaction()
-//                        .replace(R.id.nav_host_container, TeaFragment())
-//                        .addToBackStack(null)
-//                        .setReorderingAllowed(true)
-//                        .commit()
-//                    true
-//                }
-//
-//                else -> true
-//            }
-//        }
 
     }
 
@@ -88,20 +51,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.main_menu, menu)
+        val cartItem = menu!!.findItem(R.id.cart_button)
+        cartItem.setActionView(R.layout.layout_toolbar_cart_icon)
+        val badge = cartItem.actionView.findViewById<TextView>(R.id.cart_badge)
+        cartItem.actionView.findViewById<FrameLayout>(R.id.cart_toolbar_icon).setOnClickListener {
+            navController.navigate(R.id.action_global_cart_fragment)
+        }
+        cartRepo.cartLiveData.observe(this){ badge.text = it.size.toString()}
 
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        println(item.itemId)
         when (item.itemId) {
-            R.id.cart_button -> {
-                navController.navigate(R.id.action_global_cart_fragment)
-                return true
-            }
             R.id.login_menu_item -> navController.navigate(R.id.navigation_login)
             R.id.logout_menu_item -> {
                 authRepo.logout()
-                Toast.makeText(this, "Signed out", Toast.LENGTH_SHORT).show() //TODO make a string res
+                Toast.makeText(this, R.string.signed_out, Toast.LENGTH_SHORT).show()
             }
             R.id.orders_menu_item ->
                 Toast.makeText(this, "order page",Toast.LENGTH_SHORT).show()
@@ -118,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        MyApplication.cartRepo.scope.cancel()
+        cartRepo.scope.cancel()
         authRepo.destroyListeners()
     }
 

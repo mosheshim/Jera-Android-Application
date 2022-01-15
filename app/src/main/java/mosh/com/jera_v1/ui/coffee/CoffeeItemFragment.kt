@@ -24,7 +24,7 @@ class CoffeeItemFragment() : BaseFragment<CoffeeItemViewModel>() {
 
         viewModel =
             ViewModelProvider(requireActivity())[CoffeeItemViewModel::class.java]
-        val coffeeId = arguments?.getString("id") //TODO find a place to put it
+        val coffeeId = arguments?.getString("id") //TODO find a place to put it (ID)
         viewModel.setCoffeeById(coffeeId!!)
 
         _binding = FragmentCoffeeItemScreenBinding.inflate(inflater, container, false)
@@ -33,7 +33,6 @@ class CoffeeItemFragment() : BaseFragment<CoffeeItemViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.apply {
             viewModel.apply {
                 titleRow.textName.text = name

@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Go To Payment"
+        android:text="@string/go_to_payment"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,7 @@
         android:id="@+id/button_go_back_cart_frag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Continue Shopping"
+        android:text="@string/continue_shopping"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/button_go_to_payment"
         app:layout_constraintEnd_toStartOf="@+id/button_go_to_payment"
@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Total Price"
+        android:text="@string/total_price"
         android:textColor="@color/black"
         android:textSize="22sp"
         app:layout_constraintBottom_toTopOf="@+id/button_go_back_cart_frag"
@@ -75,23 +75,13 @@
         app:layout_constraintStart_toStartOf="@+id/rv_cart"
         app:layout_constraintTop_toBottomOf="@+id/rv_cart" />
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/rv_cart"
-        app:layout_constraintEnd_toEndOf="@+id/rv_cart"
-        app:layout_constraintStart_toStartOf="@+id/rv_cart"
-        app:layout_constraintTop_toTopOf="@+id/rv_cart" />
-
     <TextView
         android:id="@+id/text_cart_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Your cart is empty"
+        android:text="@string/your_cart_is_empty"
         android:textColor="@color/black"
         android:textSize="40sp"
         android:visibility="gone"

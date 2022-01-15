@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
-        android:text="Self Pickup"
+        android:text="@string/self_pickup"
         app:layout_constraintEnd_toEndOf="@+id/radioButton_selfPickup"
         app:layout_constraintStart_toStartOf="@+id/radioButton_selfPickup"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Delivery"
+        android:text="@string/delivery"
         app:layout_constraintBottom_toTopOf="@+id/radioButton_delivery"
         app:layout_constraintEnd_toEndOf="@+id/radioButton_delivery"
         app:layout_constraintHorizontal_bias="0.746"

@@ -205,6 +205,7 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/spinner_grind_level"
+                        android:labelFor="@+id/spinner_grind_level_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"

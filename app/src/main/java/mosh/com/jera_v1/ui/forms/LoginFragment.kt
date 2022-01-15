@@ -45,13 +45,9 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
                 changeButtonLoadingView(textViewLogin,progressIndicator,button)
                 viewModel.logIn(inputEmailLogin.text, inputPasswordLogin.text){
                     hideKeyBoard()
-                    if (it.isNullOrEmpty()){
-//                        showToast( getString(R.string.login_successfully_message))
-                        findNavController().popBackStack()
-                    }else {
-//                        showToast(it)
-                        changeButtonLoadingView(textViewLogin,progressIndicator,button)
-                    }
+                    if (it) findNavController().popBackStack()
+                    else changeButtonLoadingView(textViewLogin,progressIndicator,button)
+
 
                 }
             }

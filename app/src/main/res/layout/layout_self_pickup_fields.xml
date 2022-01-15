@@ -18,7 +18,7 @@
             android:id="@+id/text_location_label"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Pick Up Location"
+            android:text="@string/pick_up_location"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -41,9 +41,10 @@
                 android:id="@+id/spinner_pickup_location"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:labelFor="@+id/spinner_pickup_location_layout"
                 android:inputType="none"
                 android:maxLines="1"
-                android:text="Choose" />
+                android:text="@string/choose" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

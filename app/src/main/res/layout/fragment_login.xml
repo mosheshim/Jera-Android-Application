@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:hint="Email"
+        android:hint="@string/email"
         app:endIconDrawable="@drawable/ic_baseline_check_circle_24"
         app:endIconMode="none"
         app:endIconTint="#37E63D"
@@ -37,7 +37,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="@string/password"
         app:endIconMode="password_toggle"
         app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="sans-serif-medium"
-                android:text="LOG ME IN!"
+                android:text="@string/log_me_in"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp" />
 
@@ -93,8 +93,9 @@
         android:layout_marginTop="30dp"
         android:clickable="true"
         android:padding="15dp"
-        android:text="Not Register Yet? Click On Me!"
+        android:text="@string/not_register_yet_click_on_me"
         android:textAlignment="center"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:focusable="true" />
 
 </LinearLayout>

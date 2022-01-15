@@ -18,11 +18,6 @@ import mosh.com.jera_v1.models.CartItem
 import mosh.com.jera_v1.models.ProductSeries
 import java.lang.Exception
 
-const val MONEY_SYMBOL = "INS"
-const val IN_STOCK = "In Stock"
-const val EMPTY_FIELD = ""
-
-
 
 class Utils {
     companion object {
@@ -61,35 +56,6 @@ class Utils {
             })
 
 
-
-
-
-
-//        fun addToCartDialog(context: Context, onClick: (continueShopping:Boolean) -> Unit) =
-//            buildDialog(
-//                context,
-//                "Do you want to continue Shopping?",
-//                "Go To Cart",
-//                "Continue Shopping",
-//                onClick
-//            )
-//        fun deleteItemDialog(context: Context, onClick: (deleteClicked:Boolean) -> Unit){
-//            buildDialog(
-//                context,
-//                "Are you sure you want to delete this item?",
-//                "Delete",
-//                "Cancel",
-//                onClick
-//            )
-//        }
-
-
-
-        fun getSpanNum(resources: Resources): Int {
-            return if
-                           (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-                2 else 3
-        }
 
         fun getTeaBagOrBrew(productSeries: ProductSeries): String {
             return if (productSeries.isTeaBag) "Tea Bag" else "Halita"

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayoutMediator
+import mosh.com.jera_v1.R
 import mosh.com.jera_v1.adapters.ViewPagerAdapter
 import mosh.com.jera_v1.databinding.FragmentViewPagerBinding
 
@@ -35,8 +36,8 @@ class ViewPagerFragment : Fragment() {
           pager
         ){tab, position ->
             when(position){
-                0 -> tab.text = "Coffee"
-                1 -> tab.text = "Tea"
+                0 -> tab.text = getString(R.string.coffee)
+                1 -> tab.text = getString(R.string.tea)
             }
         }.attach()
         return binding.root

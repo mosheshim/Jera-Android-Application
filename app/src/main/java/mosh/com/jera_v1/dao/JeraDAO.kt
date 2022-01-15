@@ -15,6 +15,9 @@ interface JeraDAO {
     @Query("SELECT * FROM CartItems")
     suspend fun getCart():List<CartItem>
 
+    @Query("SELECT * FROM CartItems")
+    fun getLiveCart():LiveData<List<CartItem>>
+
     @Delete
     suspend fun deleteItem(cartItem: CartItem)
 

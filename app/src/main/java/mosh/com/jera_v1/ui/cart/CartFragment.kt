@@ -14,6 +14,7 @@ import mosh.com.jera_v1.R
 import mosh.com.jera_v1.adapters.CartAdapter
 import mosh.com.jera_v1.adapters.RecycleItemTouchHelper
 import mosh.com.jera_v1.databinding.FragmentCartBinding
+import mosh.com.jera_v1.models.CartItem
 import mosh.com.jera_v1.utils.BaseFragment
 import mosh.com.jera_v1.utils.Utils.Companion.gone
 import mosh.com.jera_v1.utils.Utils.Companion.visible
@@ -22,7 +23,7 @@ class CartFragment : BaseFragment<CartViewModel>() {
 
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter:CartAdapter
+    private lateinit var adapter: CartAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,15 +38,10 @@ class CartFragment : BaseFragment<CartViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+            updateList()
 
-            viewModel.onCartLoad {
-                binding.progressBar.gone()
-                updateList()
-            }
-
-
-        binding.buttonGoBackCartFrag.setOnClickListener{
-                findNavController().popBackStack()
+        binding.buttonGoBackCartFrag.setOnClickListener {
+            findNavController().popBackStack()
         }
 
     }
@@ -56,7 +52,6 @@ class CartFragment : BaseFragment<CartViewModel>() {
      */
     private fun updateList() {
         if (viewModel.cartIsEmpty) binding.textCartEmpty.visible()
-
         else {
             binding.buttonGoToPayment.setOnClickListener {
 //            TODO delete backstack later
@@ -71,7 +66,7 @@ class CartFragment : BaseFragment<CartViewModel>() {
                 else findNavController().navigate(R.id.navigate_to_checkout)
             }
 
-             adapter = CartAdapter(viewModel.cart ){view, index ->
+            adapter = CartAdapter(viewModel.cart) { view, index ->
                 showPopup(view, index)
             }
             val recyclerView = binding.rvCart
@@ -82,7 +77,8 @@ class CartFragment : BaseFragment<CartViewModel>() {
                 .attachToRecyclerView(recyclerView)
             recyclerView.adapter = adapter
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            binding.textTotalPrice.text = getString(R.string.money_symbol,viewModel.price)
+            binding.textTotalPrice.text =
+                getString(R.string.money_symbol_with_string, viewModel.price)
         }
     }
 
@@ -93,32 +89,33 @@ class CartFragment : BaseFragment<CartViewModel>() {
     }
 
     private fun deleteItemDialog(index: Int) =
-       buildDialog(
-           "Are you sure you want to delete this item?",
-           "Delete",
-           "Cancel",
-       ) {
-        if (it) {
-            viewModel.deleteItem(index)
-            adapter.notifyItemRemoved(index)
-            binding.textTotalPrice.text =
-                getString(R.string.money_symbol,viewModel.price)
-        } else adapter.notifyItemChanged(index)
-    }
+        buildDialog(
+            getString(R.string.delete_item_dialog),
+            getString(R.string.delete),
+            getString(R.string.cancel)
+        ) {
+            if (it) {
+                viewModel.deleteItem(index)
+                adapter.notifyItemRemoved(index)
+                binding.textTotalPrice.text =
+                    getString(R.string.money_symbol_with_string, viewModel.price)
+            } else adapter.notifyItemChanged(index)
+        }
 
 
-    private fun showPopup(v: View, index:Int){
+
+
+    private fun showPopup(v: View, index: Int) {
         PopupMenu(requireContext(), v).apply {
             setOnMenuItemClickListener {
                 deleteItemDialog(index)
                 true
             }
             inflate(R.menu.delete_cart_item)
-                show()
+            show()
         }
 
     }
-
 
 
 }

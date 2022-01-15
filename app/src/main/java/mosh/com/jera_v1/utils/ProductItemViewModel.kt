@@ -41,8 +41,9 @@ open class ProductItemViewModel: BaseViewModel() {
                     _quantity!!,
                     extra
                 )
-                showToast(R.string.added_to_cart_message)
                 onSuccess()
+                showToast(R.string.added_to_cart_message)
+
             }
         }
 

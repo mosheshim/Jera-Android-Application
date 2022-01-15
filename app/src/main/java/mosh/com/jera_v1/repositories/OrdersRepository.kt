@@ -15,7 +15,7 @@ class OrdersRepository(private val orderRef: DatabaseReference) {
         userId: String,
         address: Address?,
         pickUpLocation: PickUpLocation?,
-        onFinish:(String?) ->Unit
+        ifSucceeded:(String?) ->Unit
     ) {
 
         val order = if (address != null) Order(
@@ -31,15 +31,15 @@ class OrdersRepository(private val orderRef: DatabaseReference) {
                 pickUpLocation = pickUpLocation,
             )
 
-        addOrderToDB(order,onFinish)
+        addOrderToDB(order,ifSucceeded)
     }
 
-    private fun addOrderToDB(order: Order,onFinish:(String?)->Unit) {
+    private fun addOrderToDB(order: Order, ifSucceeded:(String?)->Unit) {
         orderRef.child(order.orderId).setValue(order)
             .addOnFailureListener {
-                onFinish(it.localizedMessage)
+                ifSucceeded(it.localizedMessage)
             }.addOnCompleteListener{
-                onFinish(null)
+                ifSucceeded(null)
             }
     }
 }

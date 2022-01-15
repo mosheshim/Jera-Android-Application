@@ -49,16 +49,17 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>() {
                 progressDialog.setTitle("Precessing Order")
                 progressDialog.setMessage("Just a few seconds please")
 
-                if (viewModel.pay{
-                    if (it.isNullOrEmpty())findNavController().navigate(R.id.navigation_to_main)
-                    progressDialog.dismiss()
-                }) progressDialog.show()
+                if (viewModel.pay {
+                        if (it) findNavController().navigate(R.id.navigation_to_main)
+                        progressDialog.dismiss()
+                    }) progressDialog.show()
 
             }
 
             buttonCancel.setOnClickListener { findNavController().popBackStack() }
         }
     }
+
     private fun notifyWhenDataFetched() {
         setListeners()
         binding.apply {
@@ -105,33 +106,40 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>() {
                         spinnerPickupLocation
                     ) { viewModel.setPickUpLocation(it) }
 
-                    spinnerPickupLocation.setOnClickListener { hideKeyBoard() } }
+                    spinnerPickupLocation.setOnClickListener { hideKeyBoard() }
+                }
                 //-------------------shipping layout -------------------//
                 layoutAddressesOptions.apply {
                     mainContainer.visibility = viewModel.addressesLayoutVisibility
 
                     //----------------------------default address-----------------------------------//
-                    containerDefaultAddress.visibility = viewModel.defaultAddressContainerVisibility
-                    textDefCity.text = viewModel.defCity
-                    textDefStreetAndNumber.text = viewModel.defStreetAndNumber
-                    textDefPostalNum.text = viewModel.defPostalNumber
-                    textDefBuildingInfo.text = viewModel.defEntranceFloorApt
+                    layoutDefaultAddress.apply {
+                        containerDefaultAddress.visibility =
+                            viewModel.defaultAddressContainerVisibility
+                        textDefCity.text = viewModel.defCity
+                        textDefStreetAndNumber.text = viewModel.defStreetAndNumber
+                        textDefPostalNum.text = viewModel.defPostalNumber
+                        textDefEntrance.text = viewModel.defEntrance
+                        textDefFloor.text = viewModel.defFloor
+                        textDefApartment.text = viewModel.defApartment
 
-                    cardDefaultAddressDetails.setOnClickListener {
-                        radioButtonUseDefaultAddress.callOnClick()
-                        radioButtonUseDefaultAddress.isChecked = true
-                    }
+                        cardDefaultAddressDetails.setOnClickListener {
+                            radioButtonUseDefaultAddress.callOnClick()
+                            radioButtonUseDefaultAddress.isChecked = true
+                        }
 
-                    radioButtonUseDefaultAddress.setOnClickListener {
-                        radioButtonNewAddress.isChecked = false
-                        viewModel.defaultAddressClicked()
-                    }
-                    radioButtonUseDefaultAddress.visibility = viewModel.radioChooseAddressVisibility
+                        radioButtonUseDefaultAddress.setOnClickListener {
+                            radioButtonNewAddress.isChecked = false
+                            viewModel.defaultAddressClicked()
+                        }
+                        radioButtonUseDefaultAddress.visibility =
+                            viewModel.radioChooseAddressVisibility
 
-                    //-------------------------new address------------------------------/
-                    radioButtonNewAddress.setOnClickListener {
-                        radioButtonUseDefaultAddress.isChecked = false
-                        viewModel.newAddressClicked()
+                        //-------------------------new address------------------------------/
+                        radioButtonNewAddress.setOnClickListener {
+                            radioButtonUseDefaultAddress.isChecked = false
+                            viewModel.newAddressClicked()
+                        }
                     }
                     buttonUseAsDefaultAddress.setOnClickListener {
                         viewModel.addAddressToDefaultClicked()
@@ -142,7 +150,8 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>() {
                         containerNewAddress.visibility = viewModel.newAddressContainerVisibility
 
                         radioButtonNewAddress.visibility = viewModel.radioChooseAddressVisibility
-                        radioButtonNewAddress.text = viewModel.radioNewAddressText
+                        radioButtonNewAddress.text =
+                            viewModel.radioNewAddressText.asString(resources)
                     }
                 }
 
@@ -152,8 +161,10 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>() {
 
     private fun setListeners() {
         for (field in fieldsMap) onLostFocusListener(field.first)
-        { field.second.error =
-            viewModel.validateField(field.first.text, field.third)?.asString(resources) }
+        {
+            field.second.error =
+                viewModel.validateField(field.first.text, field.third)?.asString(resources)
+        }
     }
 
     private fun saveAllFields() {

@@ -1,6 +1,7 @@
 package mosh.com.jera_v1.repositories
 
 
+import androidx.lifecycle.LiveData
 import kotlinx.coroutines.*
 import mosh.com.jera_v1.dao.JeraDAO
 import mosh.com.jera_v1.models.CartItem
@@ -14,7 +15,11 @@ class CartRepository(
 ) {
     val scope = CoroutineScope(Dispatchers.IO)
     var syncedWithFB = false
+    val cartLiveData: LiveData<List<CartItem>> = jeraDAO.getLiveCart()
 
+    init {
+        updateCart()
+    }
 
     /**
      * The function check if the cart has already been fetched fromFirebaseDB in
@@ -25,28 +30,47 @@ class CartRepository(
      * sync Room with Firebase. After syncing with Firebase the function will stop sending GET
      * request until the user will open the app again in another time.
      */
-    suspend fun getCart(cartFetched: (List<CartItem>) -> Unit) {
-        if (syncedWithFB) cartFetched(jeraDAO.getCart())
-        else {
+//    suspend fun getCart(cartFetched: (List<CartItem>) -> Unit) {
+//        if (syncedWithFB) cartFetched(jeraDAO.getCart())
+//        else {
+//            val roomCart = jeraDAO.getCart()
+//            if (!roomCart.isNullOrEmpty()) {
+//                cartFetched(roomCart)
+//                userRepo.updateFirebaseCart(roomCart)
+//            } else {
+//                userRepo.getCartFromFirebase {
+//                    if (it == null) cartFetched(listOf())
+//                    else {
+//                        syncedWithFB = true
+//                        cartFetched(it)
+//                        scope.launch(Dispatchers.IO) {
+//                            jeraDAO.addCartItems(it)
+//                        }
+//                    }
+//                }
+//            }
+//
+//        }
+//    }
+    private fun updateCart() {
+        scope.launch(Dispatchers.IO) {
             val roomCart = jeraDAO.getCart()
             if (!roomCart.isNullOrEmpty()) {
-                cartFetched(roomCart)
                 userRepo.updateFirebaseCart(roomCart)
             } else {
                 userRepo.getCartFromFirebase {
-                    if (it == null) cartFetched(listOf())
-                    else {
-                        syncedWithFB = true
-                        cartFetched(it)
-                        scope.launch(Dispatchers.IO) {
+                    if (it != null) {
+                        scope.launch {
+                            println("launched")
                             jeraDAO.addCartItems(it)
                         }
                     }
                 }
             }
-
         }
+
     }
+
 
     /**
      * Adds an item to Room and updates the Firebase DB
@@ -69,6 +93,7 @@ class CartRepository(
             userRepo.updateFirebaseCart(jeraDAO.getCart())
         }
     }
+
     /**
      * deletes the item from Room and Firebase DB
      */

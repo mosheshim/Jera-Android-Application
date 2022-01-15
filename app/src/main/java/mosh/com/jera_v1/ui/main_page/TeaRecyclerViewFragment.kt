@@ -10,15 +10,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.adapters.TeaAdapter
 import mosh.com.jera_v1.databinding.FragmentTeaBinding
-import mosh.com.jera_v1.utils.Utils.Companion.getSpanNum
 
 class TeaRecyclerViewFragment : Fragment() {
 
     private lateinit var viewModel: ProductsViewModel
     private var _binding: FragmentTeaBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -45,7 +43,7 @@ class TeaRecyclerViewFragment : Fragment() {
 
             }
             binding.rvTea.layoutManager = GridLayoutManager(
-                requireContext(), getSpanNum(resources)
+                requireContext(), viewModel.getSpanNum(resources.configuration.orientation)
             )
         }
     }

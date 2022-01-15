@@ -5,9 +5,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 class AuthRepository(private val auth: FirebaseAuth) {
 
-    private var _isUserLoggedIn: Boolean = false
+    private var _isUserLoggedIn: Boolean = auth.currentUser != null
     val isLoggedIn get() = _isUserLoggedIn
-
 
     init {
         auth.addAuthStateListener {
@@ -15,6 +14,7 @@ class AuthRepository(private val auth: FirebaseAuth) {
         }
     }
 
+//    TODO ia that ok?
     fun destroyListeners(){
         auth.removeAuthStateListener {}
     }

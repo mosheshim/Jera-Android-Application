@@ -30,7 +30,7 @@ class CoffeeAdapter(private val coffeeList: List<Coffee>,val onClick:(String)->U
                 textItemRoastingLevel.text = coffee.roastingLevel
                 textItemTasteProfile.text = coffee.tasteProfile
                 textCoffeeItemPrice.text =
-                    root.context.getString(R.string.money_symbol, coffee.price)
+                    root.context.getString(R.string.money_symbol_with_string, coffee.price)
                 Utils.buildPicasso(coffee.imageURL,imageCoffeeItem,progressbar)
             }
         holder.itemView.setOnClickListener {

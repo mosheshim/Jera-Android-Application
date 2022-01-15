@@ -47,40 +47,39 @@ class RegisterFragment : BaseFragment<AuthViewModel>() {
 
 
             buttonRegister.setOnClickListener { button ->
-               hideKeyBoard()
+                hideKeyBoard()
                 saveAllFields()
                 Utils.changeButtonLoadingView(textViewRegister, progressIndicator, button)
                 viewModel.register {
-                    if (it.isNullOrEmpty())
-                        findNavController().popBackStack(R.id.navigation_login, true)
-                     else Utils.changeButtonLoadingView(
-                        textViewRegister,
-                        progressIndicator,
-                        button
-                    )
-
+                    if (it) findNavController().popBackStack(R.id.navigation_login, true)
+                    else Utils.changeButtonLoadingView(textViewRegister, progressIndicator, button)
                 }
             }
         }
     }
 
     private fun changeFieldUI(
-        field:Triple<TextInputEditText, TextInputLayout, String>, error:String?){
+        field: Triple<TextInputEditText, TextInputLayout, String>, error: String?
+    ) {
         field.second.error = error
         field.second.isEndIconVisible = error.isNullOrEmpty()
     }
 
     private fun setListeners() {
         for (field in fieldsMap) onLostFocusListener(field.first) {
-            changeFieldUI (field,
-                viewModel.validateField(field.first.text, field.third)?.asString(resources))
+            changeFieldUI(
+                field,
+                viewModel.validateField(field.first.text, field.third)?.asString(resources)
+            )
         }
     }
 
     private fun saveAllFields() {
         for (field in fieldsMap) {
-            changeFieldUI(field,
-                viewModel.saveField(field.first.text, field.third)?.asString(resources))
+            changeFieldUI(
+                field,
+                viewModel.saveField(field.first.text, field.third)?.asString(resources)
+            )
 
         }
     }

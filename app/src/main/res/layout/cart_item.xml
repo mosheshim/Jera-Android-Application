@@ -24,7 +24,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/coffee" />
+            app:srcCompat="@drawable/coffee"
+            android:contentDescription="@string/product_image" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -81,7 +82,7 @@
             android:id="@+id/text_qty_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Qty"
+            android:text="@string/qty"
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/text_quantity"
             app:layout_constraintEnd_toStartOf="@+id/text_quantity"

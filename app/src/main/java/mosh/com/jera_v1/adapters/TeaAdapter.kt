@@ -27,7 +27,6 @@ class TeaAdapter(
         )
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val productLine = productSeriesList[position]
         holder.binding.apply {

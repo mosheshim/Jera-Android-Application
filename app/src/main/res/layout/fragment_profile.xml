@@ -10,12 +10,12 @@
         android:id="@+id/textView_welcome"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:text="holder"/>
+        android:text="@string/holder"/>
 
     <Button
         android:id="@+id/button_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="log out" />
+        android:text="@string/log_out" />
 
 </LinearLayout>

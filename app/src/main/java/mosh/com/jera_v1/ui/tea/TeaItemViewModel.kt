@@ -128,7 +128,7 @@ class TeaItemViewModel() : ProductItemViewModel() {
 
     val name: String get() = _name
     val productLineDescription: String get() = _productLineDescription
-    val price: String get() = "$_price $MONEY_SYMBOL"
+    val price: String get() = _price
     val imageURL: String get() = _imageURL
     val subTitle: String get() = _subTitle
     val inStock: TextResource get() = _inStock

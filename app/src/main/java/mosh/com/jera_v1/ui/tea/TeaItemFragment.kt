@@ -69,7 +69,7 @@ class TeaItemFragment : BaseFragment<TeaItemViewModel>() {
 
             buildPicasso(viewModel.imageURL, imageLayout.image, imageLayout.progressBar)
             titleRow.textName.text = viewModel.name
-            titleRow.textPrice.text = viewModel.price
+            titleRow.textPrice.text = getString(R.string.money_symbol_with_string, viewModel.price)
 
            buildSpinner(
                 viewModel.teaListNames,
