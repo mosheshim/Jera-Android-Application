@@ -1,7 +1,6 @@
 package mosh.com.jera_v1.ui.tea
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +9,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.databinding.FragmentTeaItemScreenBinding
+import mosh.com.jera_v1.utils.BaseFragment
 import mosh.com.jera_v1.utils.Listeners
-import mosh.com.jera_v1.utils.UiUtils
-import mosh.com.jera_v1.utils.UiUtils.Companion.visible
+import mosh.com.jera_v1.utils.TextResource.Companion.asString
+import mosh.com.jera_v1.utils.Utils.Companion.visible
 
-class TeaItemFragment : Fragment() {
+class TeaItemFragment : BaseFragment<TeaItemViewModel>() {
 
-    private lateinit var viewModel: TeaItemViewModel
     private var _binding: FragmentTeaItemScreenBinding? = null
     private val binding get() = _binding!!
 
@@ -26,7 +25,7 @@ class TeaItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         viewModel =
-            ViewModelProvider(this)[TeaItemViewModel::class.java]
+            (ViewModelProvider(this)[TeaItemViewModel::class.java])
         val productLineId = arguments?.getString("id")
         viewModel.setProductLineById(productLineId!!)
 
@@ -40,7 +39,7 @@ class TeaItemFragment : Fragment() {
         binding.apply {
             inputTeaQuantity.addTextChangedListener(
                 Listeners.textWatcher {
-                    inputTeaQuantityLayout.error = viewModel.setQuantity(it)
+                    inputTeaQuantityLayout.error = viewModel.setQuantity(it)?.asString(resources)
                 })
 
             buttonsRow.buttonGoBack.setOnClickListener {
@@ -48,11 +47,17 @@ class TeaItemFragment : Fragment() {
             }
 
             buttonsRow.buttonAddToCart.setOnClickListener {
-                viewModel.addToCart() {
-                    UiUtils.addToCartDialog(requireContext()) { goToCart ->
+                viewModel.onAddToCartButtonClicked{
+                    buildDialog(
+                        getString(R.string.continue_shopping_dialog),
+                        getString(R.string.yes),
+                        getString(R.string.no)
+                    ) { positiveClicked ->
                         findNavController().run {
                             popBackStack()
-                            if (goToCart) navigate(R.id.navigation_cart)
+                            if (!positiveClicked) {
+                                navigate(R.id.navigation_cart)
+                            }
                         }
                     }
                 }
@@ -62,15 +67,16 @@ class TeaItemFragment : Fragment() {
             titleRow.textSubTitle.text = viewModel.subTitle
             containerOptions.visibility = viewModel.containerOptionVisibility
 
-            loadImage(viewModel.imageURL)
+            buildPicasso(viewModel.imageURL, imageLayout.image, imageLayout.progressBar)
             titleRow.textName.text = viewModel.name
             titleRow.textPrice.text = viewModel.price
 
-            UiUtils.buildSpinner(
-                requireContext(),
+           buildSpinner(
                 viewModel.teaListNames,
-                textTeaOption
+               spinnerTeaOption
             ) { viewModel.setTea(it) }
+            spinnerTeaOption.setOnClickListener{hideKeyBoard()}
+
 
             //-------------------------------tea observer-----------------------------------------//
             viewModel.tea.observe(viewLifecycleOwner) {
@@ -79,31 +85,28 @@ class TeaItemFragment : Fragment() {
                 containerSubDescription.visible()
                 textSubDescription.text = viewModel.teaDescription
 
-                textTeaStock.text = viewModel.inStock
-                loadImage(viewModel.imageURL)
+                textTeaStock.text = viewModel.inStock.asString(resources)
+                buildPicasso(viewModel.imageURL, imageLayout.image, imageLayout.progressBar)
                 titleRow.textName.text = viewModel.name
                 titleRow.textPrice.text = viewModel.price
                 //------------------------------weight container----------------------------------//
                 containerWeight.visibility = viewModel.containerWeightVisibility
-                textTeaWeight.setText(viewModel.firstWeightName)
+                spinnerTeaWeight.setText(viewModel.firstWeightName)
 
-                UiUtils.buildSpinner(
-                    requireContext(),
+                buildSpinner(
                     viewModel.weightListNames,
-                    textTeaWeight
+                    spinnerTeaWeight
                 ) {
                     viewModel.setWeight(it)
                     titleRow.textPrice.text = viewModel.price
                 }
+                spinnerTeaWeight.setOnClickListener { hideKeyBoard() }
                 startContainerAnimation()
             }
         }
     }
 
     //-------------------------------------functions----------------------------------------------//
-    private fun loadImage(uri: String) {
-        UiUtils.buildPicasso(uri, binding.imageLayout.image, binding.imageLayout.progressBar)
-    }
 
     private fun startContainerAnimation() {
         val containerAnimation =

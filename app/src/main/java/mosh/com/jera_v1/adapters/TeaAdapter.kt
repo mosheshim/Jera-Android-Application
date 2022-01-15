@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.databinding.TeaItemBinding
 import mosh.com.jera_v1.models.ProductSeries
-import mosh.com.jera_v1.utils.MONEY_SYMBOL
-import mosh.com.jera_v1.utils.UiUtils
+import mosh.com.jera_v1.utils.Utils
 
 class TeaAdapter(
     private val productSeriesList: List<ProductSeries>,
@@ -35,10 +34,10 @@ class TeaAdapter(
             textTeaItemName.text =
                 if (productLine.teas.size == 1) productLine.teas[0].name
                 else productLine.name
-            textTeaItemPackage.text = UiUtils.getTeaBagOrBrew(productLine)
+            textTeaItemPackage.text = Utils.getTeaBagOrBrew(productLine)
             textTeaItemPrice.text = root.context
                 .getString(R.string.money_symbol_with_string,productLine.prices)
-            UiUtils.buildPicasso(productLine.teas[0].imageURL,imageTeaItem,progressbar)
+            Utils.buildPicasso(productLine.teas[0].imageURL,imageTeaItem,progressbar)
         }
         holder.itemView.setOnClickListener {
             callback(productLine.id)

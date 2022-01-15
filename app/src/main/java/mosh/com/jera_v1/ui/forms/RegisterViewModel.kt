@@ -1,22 +1,17 @@
 package mosh.com.jera_v1.ui.forms
 
-import android.app.Application
 import android.text.Editable
 import android.util.Patterns
-import androidx.lifecycle.AndroidViewModel
 import mosh.com.jera_v1.MyApplication
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.models.AppUser
-import mosh.com.jera_v1.ui.checkout.*
 import mosh.com.jera_v1.utils.EMPTY_FIELD
-import mosh.com.jera_v1.utils.UiUtils
+import mosh.com.jera_v1.utils.BaseViewModel
+import mosh.com.jera_v1.utils.FormViewModel
+import mosh.com.jera_v1.utils.TextResource
+import mosh.com.jera_v1.utils.TextResource.Companion.fromStringId
 
-const val REQUIRED = "Required"
-const val ADDRESS_NOT_VALID = "Not valid a address"
 
-const val PASSWORD_TO_SHORT = "Must be minimum of 8 characters"
-const val NO_DIGITS_OR_LETTERS_FOUND = "Must contain digits and letters"
-const val PASSWORDS_DONT_MATCH = "Passwords don't match"
 
 const val FIRST_NAME = "fName"
 const val LAST_NAME = "lName"
@@ -25,18 +20,19 @@ const val PASSWORD_1 = "password_1"
 const val PASSWORD_2 = "password_2"
 
 
-class AuthViewModel(application: Application) : AndroidViewModel(application) {
+class AuthViewModel : FormViewModel() {
     private val authRepo = MyApplication.authRepo
     private val usersRepo = MyApplication.usersRepo
-    private val appRef = getApplication<Application>()
 
-    private val fields = mutableMapOf(
-        Pair(FIRST_NAME, EMPTY_FIELD),
-        Pair(LAST_NAME, EMPTY_FIELD),
-        Pair(EMAIL, EMPTY_FIELD),
-        Pair(PASSWORD_1, EMPTY_FIELD),
-        Pair(PASSWORD_2, EMPTY_FIELD),
-    )
+    init {
+        fields = mutableMapOf(
+            Pair(FIRST_NAME, EMPTY_FIELD),
+            Pair(LAST_NAME, EMPTY_FIELD),
+            Pair(EMAIL, EMPTY_FIELD),
+            Pair(PASSWORD_1, EMPTY_FIELD),
+            Pair(PASSWORD_2, EMPTY_FIELD),
+        )
+    }
 
     private fun addAppUserToDB() {
         val userID = authRepo.getCurrentUserId()
@@ -59,18 +55,12 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
                 if (it == null) addAppUserToDB()
                 onResult(it)
             }
-        } else onResult(appRef.getString(R.string.missed_a_field_message))
+        } else onResult("missed_a_field_message")
     }
 
-    fun saveField(editable: Editable?, field: String): String? {
-        val error = validateField(editable, field)
-        fields[field] = if (error == null) editable.toString() else EMPTY_FIELD
-        return error
-    }
-
-    fun validateField(editable: Editable?, field: String): String? {
+    public override fun validateField(editable: Editable?, field: String): TextResource? {
         val string = editable.toString()
-        return if (string.isEmpty()) REQUIRED
+        return if (string.isEmpty()) fromStringId(R.string.required)
         else when (field) {
             EMAIL -> validateEmail(string)
             PASSWORD_1 -> validatePassword1(string)
@@ -79,19 +69,22 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun validateEmail(string: String): String? {
-        return if (!Patterns.EMAIL_ADDRESS.matcher(string).matches()) ADDRESS_NOT_VALID
+    private fun validateEmail(string: String): TextResource? {
+        return if (!Patterns.EMAIL_ADDRESS.matcher(string).matches())
+            fromStringId(R.string.email_address_not_valid)
         else null
     }
 
-    private fun validatePassword1(string: String): String? {
-        return if (string.length < 8) PASSWORD_TO_SHORT
-        else if (!hasDigits(string) || !hasLetters(string)) NO_DIGITS_OR_LETTERS_FOUND
-        else null
+    private fun validatePassword1(string: String): TextResource? {
+        return when{
+            string.length < 8 -> fromStringId(R.string.password_to_short)
+            !hasDigits(string) || !hasLetters(string) -> fromStringId(R.string.no_digits_of_letters)
+            else -> null
+        }
     }
 
-    private fun validatePassword2(string: String): String? {
-        return if (string != fields[PASSWORD_1]) PASSWORDS_DONT_MATCH
+    private fun validatePassword2(string: String): TextResource? {
+        return if (string != fields[PASSWORD_1]) fromStringId(R.string.passwords_do_not_match)
         else null
     }
 

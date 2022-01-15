@@ -27,13 +27,29 @@
     <string name="weight">Weight</string>
     <string name="amount">Amount</string>
     <string name="product_image">Product image</string>
-    <string name="login_to_check_out_meassage">To proceed to checkout please log in</string>
+    <string name="login_to_check_out_message">To proceed to checkout please log in</string>
     <string name="log_in">Log In</string>
     <string name="cancel">Cancel</string>
-    <string name="REQUIRED">*Required</string>
+    <string name="required">*Required</string>
     <string name="missed_a_field_message">You may missed something, check again</string>
     <string name="register_successfully_message">Register successfully </string>
     <string name="login_successfully_message">Welcome Back</string>
-
-
+    <string name="added_to_cart_message">Added</string>
+    <string name="no_tea_chosen_message">Choose Tea</string>
+    <string name="invalid_quantity_message">"Invalid Quantity"</string>
+    <string name="out_of_stock_message">Out Of Stock</string>
+    <string name="continue_shopping_dialog">Do you want to continue Shopping?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="no_delivery_option_chosen_message">Choose delivery option</string>
+    <string name="phone_number_now_valid_message">Enter a valid phone number</string>
+    <string name="no_pickup_location_chosen_message">Choose pickup location</string>
+    <string name="empty_required_field_message">Fill all required fields</string>
+    <string name="number_to_short">Number to short</string>
+    <string name="invalid_number">Invalid number</string>
+    <string name="choose_phone_prefix">Choose phone prefix</string>
+    <string name="email_address_not_valid">Not a valid address</string>
+    <string name="password_to_short">Must be minimum of 8 characters</string>
+    <string name="no_digits_of_letters">Must contain digits and letters</string>
+    <string name="passwords_do_not_match">Passwords don\'t match</string>
 </resources>

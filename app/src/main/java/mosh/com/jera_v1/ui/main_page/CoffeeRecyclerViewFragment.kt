@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.adapters.CoffeeAdapter
 import mosh.com.jera_v1.databinding.FragmentCoffeeBinding
-import mosh.com.jera_v1.utils.UiUtils.Companion.getSpanNum
-import mosh.com.jera_v1.utils.UiUtils.Companion.gone
+import mosh.com.jera_v1.utils.Utils.Companion.getSpanNum
+import mosh.com.jera_v1.utils.Utils.Companion.gone
 
 class CoffeeRecyclerViewFragment : Fragment() {
 

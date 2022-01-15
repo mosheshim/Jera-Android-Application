@@ -5,9 +5,7 @@ import kotlinx.coroutines.*
 import mosh.com.jera_v1.dao.JeraDAO
 import mosh.com.jera_v1.models.CartItem
 import mosh.com.jera_v1.models.Product
-import mosh.com.jera_v1.utils.ADDED
-import mosh.com.jera_v1.utils.INVALID_QUANTITY
-import mosh.com.jera_v1.utils.OUT_OF_STOCK
+
 import java.util.*
 
 class CartRepository(
@@ -55,10 +53,8 @@ class CartRepository(
      * If the item is not valid (quantity is null or product is out of stock) it will return
      * the error as a string, if it went through "Added" will return and the item will be added
      */
-    suspend fun addItem(product: Product, quantity: Int?, extra: String?): String {
-        return if (quantity == null) INVALID_QUANTITY
-        else if (!product.inStock) OUT_OF_STOCK
-        else ADDED.also {
+    suspend fun addItem(product: Product, quantity: Int, extra: String?) {
+        also {
             val cartItem = CartItem(
                 id = UUID.randomUUID().toString(),
                 productId = product.id,

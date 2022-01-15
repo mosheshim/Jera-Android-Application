@@ -1,9 +1,9 @@
 package mosh.com.jera_v1.ui.profile
 
-import androidx.lifecycle.ViewModel
 import mosh.com.jera_v1.MyApplication
+import mosh.com.jera_v1.utils.BaseViewModel
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel : BaseViewModel() {
     fun logout(){
         MyApplication.authRepo.logout()
     }

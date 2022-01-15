@@ -1,21 +1,16 @@
 package mosh.com.jera_v1
 
 import android.os.Bundle
-import android.view.ActionMode
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.children
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import kotlinx.coroutines.cancel
 import mosh.com.jera_v1.databinding.ActivityMainBinding
-import mosh.com.jera_v1.utils.UiUtils.Companion.showToast
-import mosh.com.jera_v1.utils.UiUtils.Companion.visible
-import kotlin.math.log
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -108,7 +103,8 @@ class MainActivity : AppCompatActivity() {
                 authRepo.logout()
                 Toast.makeText(this, "Signed out", Toast.LENGTH_SHORT).show() //TODO make a string res
             }
-            R.id.orders_menu_item -> showToast(this, "order page")
+            R.id.orders_menu_item ->
+                Toast.makeText(this, "order page",Toast.LENGTH_SHORT).show()
         }
         return super.onOptionsItemSelected(item)
     }

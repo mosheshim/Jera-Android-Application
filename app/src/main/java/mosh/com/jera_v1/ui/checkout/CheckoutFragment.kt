@@ -1,10 +1,8 @@
 package mosh.com.jera_v1.ui.checkout
 
-import android.app.AlertDialog
 import android.app.ProgressDialog
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,14 +13,13 @@ import com.google.android.material.textfield.TextInputLayout
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.adapters.CheckOutImagesAdapter
 import mosh.com.jera_v1.databinding.FragmentCheckoutBinding
+import mosh.com.jera_v1.utils.BaseFragment
 import mosh.com.jera_v1.utils.Listeners.Companion.onLostFocusListener
-import mosh.com.jera_v1.utils.UiUtils
-import mosh.com.jera_v1.utils.UiUtils.Companion.gone
-import mosh.com.jera_v1.utils.UiUtils.Companion.showToast
-import mosh.com.jera_v1.utils.UiUtils.Companion.visible
+import mosh.com.jera_v1.utils.TextResource.Companion.asString
 
-class CheckoutFragment : Fragment() {
-    private lateinit var viewModel: CheckoutViewModel
+import mosh.com.jera_v1.utils.Utils.Companion.visible
+
+class CheckoutFragment : BaseFragment<CheckoutViewModel>() {
     private var _binding: FragmentCheckoutBinding? = null
     private val binding get() = _binding!!
     private lateinit var fieldsMap: List<Triple<TextInputEditText, TextInputLayout, String>>
@@ -42,27 +39,23 @@ class CheckoutFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         viewModel.onCartLoad { notifyWhenDataFetched() }
         binding.apply {
 
             buttonPay.setOnClickListener {
-                UiUtils.hideKeyBoard(requireActivity())
+                hideKeyBoard()
                 saveAllFields()
                 val progressDialog = ProgressDialog(requireContext())
                 progressDialog.setTitle("Precessing Order")
                 progressDialog.setMessage("Just a few seconds please")
 
-                if (viewModel.pay {
-                    var message = it
-                    if (it.isNullOrEmpty()){
-                        message = "Order succeeded!"
-                        findNavController().popBackStack()
-                    }else message = it
+                if (viewModel.pay{
+                    if (it.isNullOrEmpty())findNavController().navigate(R.id.navigation_to_main)
                     progressDialog.dismiss()
-                    showToast(requireContext(), message)
                 }) progressDialog.show()
+
             }
+
             buttonCancel.setOnClickListener { findNavController().popBackStack() }
         }
     }
@@ -76,8 +69,7 @@ class CheckoutFragment : Fragment() {
 
             inputPhone.setText(viewModel.phoneNumber)
             spinnerPhonePrefix.setText(viewModel.phoneNumberPrefix)
-            UiUtils.buildSpinner(
-                requireContext(),
+            buildSpinner(
                 viewModel.prefixesList,
                 spinnerPhonePrefix
             ) {
@@ -108,17 +100,12 @@ class CheckoutFragment : Fragment() {
                 //-------------------self pick up ----------------------//
                 layoutSelfPickupFields.apply {
                     mainContainer.visibility = viewModel.selfPickUpContainerVisibility
-                    UiUtils.buildSpinner(
-                        requireContext(),
+                    buildSpinner(
                         viewModel.pickupLocations,
                         spinnerPickupLocation
                     ) { viewModel.setPickUpLocation(it) }
 
-//                    TODO add this to a shared fragment
-                    spinnerPickupLocation.setOnClickListener {
-                        UiUtils.hideKeyBoard(requireActivity()) }
-
-                }
+                    spinnerPickupLocation.setOnClickListener { hideKeyBoard() } }
                 //-------------------shipping layout -------------------//
                 layoutAddressesOptions.apply {
                     mainContainer.visibility = viewModel.addressesLayoutVisibility
@@ -165,12 +152,14 @@ class CheckoutFragment : Fragment() {
 
     private fun setListeners() {
         for (field in fieldsMap) onLostFocusListener(field.first)
-        { field.second.error = viewModel.validateField(field.first.text, field.third) }
+        { field.second.error =
+            viewModel.validateField(field.first.text, field.third)?.asString(resources) }
     }
 
     private fun saveAllFields() {
         for (field in fieldsMap) {
-            field.second.error = viewModel.saveField(field.first.text, field.third)
+            field.second.error =
+                viewModel.saveField(field.first.text, field.third)?.asString(resources)
         }
     }
 

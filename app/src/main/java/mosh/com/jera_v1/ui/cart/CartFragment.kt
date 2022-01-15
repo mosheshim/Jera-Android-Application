@@ -2,9 +2,7 @@ package mosh.com.jera_v1.ui.cart
 
 import android.os.Bundle
 
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
@@ -12,19 +10,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.adapters.CartAdapter
 import mosh.com.jera_v1.adapters.RecycleItemTouchHelper
 import mosh.com.jera_v1.databinding.FragmentCartBinding
-import mosh.com.jera_v1.models.CartItem
-import mosh.com.jera_v1.utils.UiUtils
-import mosh.com.jera_v1.utils.UiUtils.Companion.gone
-import mosh.com.jera_v1.utils.UiUtils.Companion.visible
+import mosh.com.jera_v1.utils.BaseFragment
+import mosh.com.jera_v1.utils.Utils.Companion.gone
+import mosh.com.jera_v1.utils.Utils.Companion.visible
 
-class CartFragment : Fragment() {
+class CartFragment : BaseFragment<CartViewModel>() {
 
-    private lateinit var viewModel: CartViewModel
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter:CartAdapter
@@ -42,6 +37,7 @@ class CartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
             viewModel.onCartLoad {
                 binding.progressBar.gone()
                 updateList()
@@ -65,9 +61,8 @@ class CartFragment : Fragment() {
             binding.buttonGoToPayment.setOnClickListener {
 //            TODO delete backstack later
                 if (!viewModel.isLoggedIn())
-                    UiUtils.buildDialog(
-                        requireContext(),
-                        getString(R.string.login_to_check_out_meassage),
+                    buildDialog(
+                        getString(R.string.login_to_check_out_message),
                         getString(R.string.log_in),
                         getString(R.string.cancel)
                     ) {
@@ -98,7 +93,11 @@ class CartFragment : Fragment() {
     }
 
     private fun deleteItemDialog(index: Int) =
-        UiUtils.deleteItemDialog(requireContext()) {
+       buildDialog(
+           "Are you sure you want to delete this item?",
+           "Delete",
+           "Cancel",
+       ) {
         if (it) {
             viewModel.deleteItem(index)
             adapter.notifyItemRemoved(index)

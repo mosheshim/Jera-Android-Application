@@ -1,7 +1,6 @@
 package mosh.com.jera_v1.ui.forms
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,15 +9,16 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import mosh.com.jera_v1.R
-import mosh.com.jera_v1.utils.UiUtils
+import mosh.com.jera_v1.utils.Utils
 import mosh.com.jera_v1.databinding.FragmentRegisterBinding
+import mosh.com.jera_v1.utils.BaseFragment
 import mosh.com.jera_v1.utils.Listeners.Companion.onLostFocusListener
+import mosh.com.jera_v1.utils.TextResource.Companion.asString
 
-class RegisterFragment : Fragment() {
+class RegisterFragment : BaseFragment<AuthViewModel>() {
 
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: AuthViewModel
     private lateinit var fieldsMap: List<Triple<TextInputEditText, TextInputLayout, String>>
 
 
@@ -37,6 +37,8 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         setListeners()
         binding.apply {
             inputFnameLayout.isEndIconVisible = false
@@ -45,13 +47,13 @@ class RegisterFragment : Fragment() {
 
 
             buttonRegister.setOnClickListener { button ->
-                UiUtils.hideKeyBoard(requireActivity())
+               hideKeyBoard()
                 saveAllFields()
-                UiUtils.changeButtonLoadingView(textViewRegister, progressIndicator, button)
+                Utils.changeButtonLoadingView(textViewRegister, progressIndicator, button)
                 viewModel.register {
                     if (it.isNullOrEmpty())
                         findNavController().popBackStack(R.id.navigation_login, true)
-                     else UiUtils.changeButtonLoadingView(
+                     else Utils.changeButtonLoadingView(
                         textViewRegister,
                         progressIndicator,
                         button
@@ -70,13 +72,15 @@ class RegisterFragment : Fragment() {
 
     private fun setListeners() {
         for (field in fieldsMap) onLostFocusListener(field.first) {
-            changeFieldUI (field,viewModel.validateField(field.first.text, field.third))
+            changeFieldUI (field,
+                viewModel.validateField(field.first.text, field.third)?.asString(resources))
         }
     }
 
     private fun saveAllFields() {
         for (field in fieldsMap) {
-            changeFieldUI (field,viewModel.saveField(field.first.text, field.third))
+            changeFieldUI(field,
+                viewModel.saveField(field.first.text, field.third)?.asString(resources))
 
         }
     }

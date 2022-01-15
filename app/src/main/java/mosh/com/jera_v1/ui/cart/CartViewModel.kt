@@ -1,14 +1,13 @@
 package mosh.com.jera_v1.ui.cart
 
-import android.app.Application
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import mosh.com.jera_v1.MyApplication
 import mosh.com.jera_v1.models.CartItem
-import mosh.com.jera_v1.utils.UiUtils
-import mosh.com.jera_v1.utils.UiUtils.Companion.getTotalPrice
+import mosh.com.jera_v1.utils.BaseViewModel
+import mosh.com.jera_v1.utils.Utils
 
-class CartViewModel(application: Application) : AndroidViewModel(application) {
+class CartViewModel : BaseViewModel(){
     private val authRepo = MyApplication.authRepo
     private val cartRepo = MyApplication.cartRepo
 
@@ -42,7 +41,7 @@ class CartViewModel(application: Application) : AndroidViewModel(application) {
        return authRepo.isLoggedIn
     }
 
-    val price get() = UiUtils.getTotalPrice(cart)
+    val price get() = Utils.getTotalPrice(cart)
     val cartIsEmpty get() = _cart.isNullOrEmpty()
 
 

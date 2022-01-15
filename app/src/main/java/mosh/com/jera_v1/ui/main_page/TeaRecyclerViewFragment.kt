@@ -1,6 +1,5 @@
 package mosh.com.jera_v1.ui.main_page
 
-import android.app.Application
 import android.os.Bundle
 import android.view.*
 import androidx.core.os.bundleOf
@@ -11,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.adapters.TeaAdapter
 import mosh.com.jera_v1.databinding.FragmentTeaBinding
-import mosh.com.jera_v1.utils.UiUtils.Companion.getSpanNum
+import mosh.com.jera_v1.utils.Utils.Companion.getSpanNum
 
 class TeaRecyclerViewFragment : Fragment() {
 

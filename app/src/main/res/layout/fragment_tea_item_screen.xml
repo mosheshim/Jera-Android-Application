@@ -105,7 +105,7 @@
                     app:layout_constraintTop_toBottomOf="@id/divider_options" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/text_tea_option_layout"
+                    android:id="@+id/spinner_tea_option_layout"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -117,11 +117,11 @@
                     app:layout_constraintTop_toBottomOf="@id/divider_options">
 
                     <AutoCompleteTextView
-                        android:id="@+id/text_tea_option"
+                        android:id="@+id/spinner_tea_option"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
-                        android:labelFor="@id/text_tea_option"
+                        android:labelFor="@id/spinner_tea_option"
                         android:text="@string/choose"
                         android:textSize="16sp" />
 
@@ -156,7 +156,7 @@
                     app:layout_constraintTop_toBottomOf="@id/divider_weight" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/text_tea_weight_layout"
+                    android:id="@+id/spinner_tea_weight_layout"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
                     app:layout_constraintTop_toBottomOf="@id/divider_weight">
 
                     <AutoCompleteTextView
-                        android:id="@+id/text_tea_weight"
+                        android:id="@+id/spinner_tea_weight"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:inputType="none"

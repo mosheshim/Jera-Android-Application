@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.databinding.CoffeeItemBinding
 import mosh.com.jera_v1.models.Coffee
-import mosh.com.jera_v1.utils.UiUtils
+import mosh.com.jera_v1.utils.Utils
 
 class CoffeeAdapter(private val coffeeList: List<Coffee>,val onClick:(String)->Unit) :
     RecyclerView.Adapter<CoffeeAdapter.ViewHolder>() {
@@ -31,7 +31,7 @@ class CoffeeAdapter(private val coffeeList: List<Coffee>,val onClick:(String)->U
                 textItemTasteProfile.text = coffee.tasteProfile
                 textCoffeeItemPrice.text =
                     root.context.getString(R.string.money_symbol, coffee.price)
-                UiUtils.buildPicasso(coffee.imageURL,imageCoffeeItem,progressbar)
+                Utils.buildPicasso(coffee.imageURL,imageCoffeeItem,progressbar)
             }
         holder.itemView.setOnClickListener {
             onClick(coffee.id)

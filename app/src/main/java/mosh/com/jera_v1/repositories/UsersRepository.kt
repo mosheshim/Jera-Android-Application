@@ -30,29 +30,6 @@ class UsersRepository(
     }
 
 
-//    private fun getUserById(id: String, callback: (AppUser?) -> Unit) {
-//        usersRef.child(id).addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                callback(snapshot.getValue(AppUser::class.java))
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//
-//            }
-//        })
-//    }
-
-//    fun getUsersName(onSuccess: (String?) -> Unit) {
-//        if (authRep.isLoggedIn)
-//        usersRef.child(authRep.getCurrentUserId()!!).child("fname")
-//            .get().addOnSuccessListener {
-//                onSuccess(it.value.toString())
-//            }.addOnFailureListener  {
-//                onSuccess(it.localizedMessage)
-//            }
-//    }
-
-
     fun getUserAddress(onFetch: (Address?) -> Unit) {
         usersRef.child(authRep.getCurrentUserId()!!).child(ADDRESS_PATH)
             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -69,7 +46,7 @@ class UsersRepository(
 
     fun updateAddress(address: Address) {
         usersRef.child(authRep.getCurrentUserId()!!).child(ADDRESS_PATH).setValue(address)
-            .addOnSuccessListener { }
+            .addOnCompleteListener { }
             .addOnFailureListener { }
 
     }

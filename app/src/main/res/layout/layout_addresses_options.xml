@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:hint="City"
-                app:helperText="@string/REQUIRED">
+                app:helperText="@string/required">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_city"
@@ -126,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:hint="Street Name"
-                app:helperText="@string/REQUIRED">
+                app:helperText="@string/required">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_street"
@@ -151,7 +151,7 @@
                     android:layout_weight="1"
 
                     android:hint="House Number"
-                    app:helperText="@string/REQUIRED">
+                    app:helperText="@string/required">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_house_number"
@@ -159,7 +159,7 @@
                         android:layout_height="wrap_content"
                         android:autofillHints="postalAddress"
                         android:inputType="textPostalAddress"
-                        app:helperText="@string/REQUIRED" />
+                        app:helperText="@string/required" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -178,7 +178,7 @@
                         android:layout_height="wrap_content"
                         android:autofillHints="postalAddress"
                         android:inputType="textPostalAddress"
-                        app:helperText="@string/REQUIRED" />
+                        app:helperText="@string/required" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>

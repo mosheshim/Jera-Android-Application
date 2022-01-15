@@ -2,22 +2,20 @@ package mosh.com.jera_v1.ui.forms
 
 import android.os.Bundle
 
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import mosh.com.jera_v1.R
-import mosh.com.jera_v1.utils.UiUtils
 import mosh.com.jera_v1.databinding.FragmentLoginBinding
+import mosh.com.jera_v1.utils.BaseFragment
 import mosh.com.jera_v1.utils.Listeners.Companion.onLostFocusListener
-import mosh.com.jera_v1.utils.UiUtils.Companion.changeButtonLoadingView
-import mosh.com.jera_v1.utils.UiUtils.Companion.showToast
+import mosh.com.jera_v1.utils.TextResource.Companion.asString
+import mosh.com.jera_v1.utils.Utils.Companion.changeButtonLoadingView
 
 
-class LoginFragment : Fragment() {
-    private lateinit var viewModel: LoginViewModel
+class LoginFragment : BaseFragment<LoginViewModel>() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
@@ -33,23 +31,25 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.apply {
 
             onLostFocusListener(inputEmailLogin){
-                inputEmailLoginLayout.error = viewModel.validateEmail(inputEmailLogin.text)
+                inputEmailLoginLayout.error =
+                    viewModel.validateEmail(inputEmailLogin.text)?.asString(resources)
             }
 
             buttonLogin.setOnClickListener{ button ->
-                UiUtils.hideKeyBoard(requireActivity())
+                hideKeyBoard()
 
                 changeButtonLoadingView(textViewLogin,progressIndicator,button)
                 viewModel.logIn(inputEmailLogin.text, inputPasswordLogin.text){
-                    UiUtils.hideKeyBoard(requireActivity())
+                    hideKeyBoard()
                     if (it.isNullOrEmpty()){
-                        showToast(requireContext(), getString(R.string.login_successfully_message))
+//                        showToast( getString(R.string.login_successfully_message))
                         findNavController().popBackStack()
                     }else {
-                        showToast(requireContext(), it)
+//                        showToast(it)
                         changeButtonLoadingView(textViewLogin,progressIndicator,button)
                     }
 

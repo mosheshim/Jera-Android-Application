@@ -8,12 +8,12 @@ import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import mosh.com.jera_v1.MyApplication
+import mosh.com.jera_v1.R
 import mosh.com.jera_v1.models.Address
 import mosh.com.jera_v1.models.CartItem
 import mosh.com.jera_v1.models.PickUpLocation
-import mosh.com.jera_v1.utils.EMPTY_FIELD
-import mosh.com.jera_v1.utils.NOT_VALID
-import mosh.com.jera_v1.utils.UiUtils
+import mosh.com.jera_v1.utils.*
+import mosh.com.jera_v1.utils.TextResource.Companion.fromStringId
 
 const val DELIVERY = "delivery"
 const val PICK_UP = "pick up"
@@ -28,23 +28,26 @@ const val DEFAULT_ADDRESS = "default address"
 const val NEW_ADDRESS = "new address"
 const val PHONE = "phone"
 const val PHONE_PREFIX = "phone prefix"
+const val NOT_VALID = ""
 
-class CheckoutViewModel(application: Application) : AndroidViewModel(application) {
+class CheckoutViewModel : FormViewModel() {
     private val cartRepo = MyApplication.cartRepo
     private val userRepo = MyApplication.usersRepo
     private val ordersRepo = MyApplication.ordersRepo
 
-    private val fields = mutableMapOf(
-        Pair(CITY, EMPTY_FIELD),
-        Pair(STREET, EMPTY_FIELD),
-        Pair(HOUSE_NUMBER, EMPTY_FIELD),
-        Pair(POSTAL_NUM, EMPTY_FIELD),
-        Pair(FLOOR, EMPTY_FIELD),
-        Pair(APARTMENT, EMPTY_FIELD),
-        Pair(ENTRANCE, EMPTY_FIELD),
-        Pair(PHONE, EMPTY_FIELD),
-        Pair(PHONE_PREFIX, EMPTY_FIELD),
-    )
+    init {
+        fields = mutableMapOf(
+            Pair(CITY, EMPTY_FIELD),
+            Pair(STREET, EMPTY_FIELD),
+            Pair(HOUSE_NUMBER, EMPTY_FIELD),
+            Pair(POSTAL_NUM, EMPTY_FIELD),
+            Pair(FLOOR, EMPTY_FIELD),
+            Pair(APARTMENT, EMPTY_FIELD),
+            Pair(ENTRANCE, EMPTY_FIELD),
+            Pair(PHONE, EMPTY_FIELD),
+            Pair(PHONE_PREFIX, EMPTY_FIELD),
+        )
+    }
 
     private lateinit var cart: List<CartItem>
     private var defaultAddress: Address? = null
@@ -69,7 +72,7 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
     val newOrDefaultAddress: LiveData<String> get() = _newOrDefaultAddress
 
     //-----------------------------------db communication-----------------------------------------//
-    private fun updateDB(onFinish:(String?)->Unit) {
+    private fun updateDB(onFinish: (String?) -> Unit) {
         val address = buildAddress()
         viewModelScope.launch {
             cartRepo.deleteCart()
@@ -85,10 +88,10 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun buildAddress(): Address? {
-        return when (orderType){
+        return when (orderType) {
             PICK_UP -> null
             DEFAULT_ADDRESS -> defaultAddress!!
-            else ->Address(
+            else -> Address(
                 fields[CITY]!!,
                 fields[STREET]!!,
                 fields[HOUSE_NUMBER]!!,
@@ -100,49 +103,49 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
             )
         }
     }
+
     //--------------------------------validation and saving---------------------------------------//
     //validate the fields which needed by the user delivery choice
-    fun pay(onFinish: (String?) -> Unit):Boolean {
+    fun pay(onSuccess: (String?) -> Unit): Boolean {
         fillNotRequiredFields()
-        val error: String? =
-            when {
-                pickupOrDelivery.value == null -> "Choose delivery option"
-                fields[PHONE].equals("") -> "Phone number is invalid"
-                else -> when (orderType) {
-                    PICK_UP -> if (chosenPickupLocation == null) "Choose Location" else null
-                    NEW_ADDRESS -> if (fields.containsValue(EMPTY_FIELD))
-                        "Fill all required fields" else null
-                    else -> null
-                }
+        val stringId: Int? =
+            when { //TODO find a better way to do it
+                pickupOrDelivery.value == null -> R.string.no_delivery_option_chosen_message
+                fields[PHONE].equals("") -> R.string.phone_number_now_valid_message
+                pickupOrDelivery.value == PICK_UP -> if (chosenPickupLocation == null)
+                    R.string.no_pickup_location_chosen_message else null
+                orderType == DEFAULT_ADDRESS -> null
+                fields.containsValue(EMPTY_FIELD) -> R.string.empty_required_field_message
+                else -> null
             }
-        if (error.isNullOrEmpty())  updateDB(onFinish).also { return true }
-        else onFinish(error)
+        if (stringId == null) updateDB(onSuccess).also { return true }
+        else showToast(stringId)
         return false
     }
 
-    private fun validatePhone(number: String): String? {
-        return if (number.length != 7) "Number to short"
-        else if (!number.isDigitsOnly()) "Invalid number"
-        else if (fields[PHONE_PREFIX].isNullOrEmpty()) "Choose phone prefix"
-        else null
+    private fun validatePhone(number: String): TextResource? {
+        return when {
+            number.length != 7 -> fromStringId(R.string.number_to_short)
+            !number.isDigitsOnly() -> fromStringId(R.string.invalid_number)
+            fields[PHONE_PREFIX].isNullOrEmpty() ->
+                fromStringId(R.string.choose_phone_prefix)
+            else -> null
+        }
     }
 
-    fun validateField(editable: Editable?, field: String): String? {
+    public override fun validateField(editable: Editable?, field: String): TextResource? {
         val string = editable.toString()
         return when (field) {
-            CITY, STREET, HOUSE_NUMBER, POSTAL_NUM -> if (string.isEmpty()) "Required" else null
+            CITY, STREET, HOUSE_NUMBER, POSTAL_NUM -> if (string.isEmpty())
+                fromStringId(R.string.required) else null
             PHONE -> validatePhone(string)
             else -> null
         }
     }
 
-    fun saveField(editable: Editable?, field: String): String? {
-        //checks if should valid and save input or can skip
+    override fun saveField(editable: Editable?, field: String): TextResource? {
         if ((field != PHONE && newOrDefaultAddress.value == DEFAULT_ADDRESS)) return null
-        //validate the field, if yes it will save it
-        val error = validateField(editable, field)
-        fields[field] = if (error == null) editable.toString() else EMPTY_FIELD
-        return error
+        return super.saveField(editable, field)
     }
 
     private fun fillNotRequiredFields() {
@@ -150,7 +153,6 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
             if (fields[fieldKey] == EMPTY_FIELD) fields[fieldKey] = "-"
     }
 
-    val popUpToastString : MutableLiveData<String> = MutableLiveData()
     //------------------------------------init functions -----------------------------------------//
     fun onCartLoad(onLoad: () -> Unit) {
         viewModelScope.launch {
@@ -276,7 +278,7 @@ class CheckoutViewModel(application: Application) : AndroidViewModel(application
 
     val pickupLocations get() = _pickupLocations.map { it.location }
 
-    val price get() = UiUtils.getTotalPrice(cart)
+    val price get() = Utils.getTotalPrice(cart)
 
     val prefixesList get() = getPhonePrefixList()
 }
