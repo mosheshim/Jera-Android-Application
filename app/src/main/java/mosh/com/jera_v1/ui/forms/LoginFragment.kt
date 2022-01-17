@@ -10,12 +10,11 @@ import androidx.navigation.fragment.findNavController
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.databinding.FragmentLoginBinding
 import mosh.com.jera_v1.utils.BaseFragment
-import mosh.com.jera_v1.utils.Listeners.Companion.onLostFocusListener
+import mosh.com.jera_v1.utils.UiUtils
 import mosh.com.jera_v1.utils.TextResource.Companion.asString
-import mosh.com.jera_v1.utils.Utils.Companion.changeButtonLoadingView
 
 
-class LoginFragment : BaseFragment<LoginViewModel>() {
+class LoginFragment : BaseFragment<LoginViewModel>(), UiUtils {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
@@ -47,11 +46,8 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
                     hideKeyBoard()
                     if (it) findNavController().popBackStack()
                     else changeButtonLoadingView(textViewLogin,progressIndicator,button)
-
-
                 }
             }
-
             textViewNavRegister.setOnClickListener{
                 findNavController().navigate(R.id.action_login_to_register)
             }
@@ -59,4 +55,5 @@ class LoginFragment : BaseFragment<LoginViewModel>() {
         }
     }
 
-}
+
+    }

@@ -1,4 +1,4 @@
-package mosh.com.jera_v1.ui.tea
+package mosh.com.jera_v1.ui.tea_item
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,11 +10,13 @@ import androidx.navigation.fragment.findNavController
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.databinding.FragmentTeaItemScreenBinding
 import mosh.com.jera_v1.utils.BaseFragment
-import mosh.com.jera_v1.utils.Listeners
+import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.buildPicasso
+import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.visible
+import mosh.com.jera_v1.utils.TextResource
+import mosh.com.jera_v1.utils.UiUtils
 import mosh.com.jera_v1.utils.TextResource.Companion.asString
-import mosh.com.jera_v1.utils.Utils.Companion.visible
 
-class TeaItemFragment : BaseFragment<TeaItemViewModel>() {
+class TeaItemFragment : BaseFragment<TeaItemViewModel>(), UiUtils {
 
     private var _binding: FragmentTeaItemScreenBinding? = null
     private val binding get() = _binding!!
@@ -38,7 +40,7 @@ class TeaItemFragment : BaseFragment<TeaItemViewModel>() {
 //----------------------------------------init UI-------------------------------------------------//
         binding.apply {
             inputTeaQuantity.addTextChangedListener(
-                Listeners.textWatcher {
+                textWatcher {
                     inputTeaQuantityLayout.error = viewModel.setQuantity(it)?.asString(resources)
                 })
 
@@ -64,10 +66,10 @@ class TeaItemFragment : BaseFragment<TeaItemViewModel>() {
             }
 
             textProductLineDescription.text = viewModel.productLineDescription
-            titleRow.textSubTitle.text = viewModel.subTitle
+            titleRow.textSubTitle.text = viewModel.subTitle.asString(resources)
             containerOptions.visibility = viewModel.containerOptionVisibility
 
-            buildPicasso(viewModel.imageURL, imageLayout.image, imageLayout.progressBar)
+            imageLayout.image.buildPicasso(viewModel.imageURL, imageLayout.progressBar)
             titleRow.textName.text = viewModel.name
             titleRow.textPrice.text = getString(R.string.money_symbol_with_string, viewModel.price)
 
@@ -86,7 +88,7 @@ class TeaItemFragment : BaseFragment<TeaItemViewModel>() {
                 textSubDescription.text = viewModel.teaDescription
 
                 textTeaStock.text = viewModel.inStock.asString(resources)
-                buildPicasso(viewModel.imageURL, imageLayout.image, imageLayout.progressBar)
+                imageLayout.image.buildPicasso(viewModel.imageURL , imageLayout.progressBar)
                 titleRow.textName.text = viewModel.name
                 titleRow.textPrice.text = viewModel.price
                 //------------------------------weight container----------------------------------//

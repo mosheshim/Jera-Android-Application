@@ -46,7 +46,6 @@
     <string name="phone_number_now_valid_message">Enter a valid phone number</string>
     <string name="no_pickup_location_chosen_message">Choose pickup location</string>
     <string name="empty_field_message">Fill all required fields</string>
-    <string name="number_to_short">Number to short</string>
     <string name="invalid_number">Invalid number</string>
     <string name="choose_phone_prefix">Choose phone prefix</string>
     <string name="email_address_not_valid">Not a valid address</string>
@@ -98,6 +97,12 @@
     <string name="order_confirmed">Order Confirmed</string>
     <string name="check_out">Check Out</string>
     <string name="signed_out">Signed out</string>
+    <string name="tea_brew">tea brew</string>
+    <string name="tea_bag">tea bag</string>
+    <string name="check_again_message">Something is wrong, check again</string>
+    <string name="processing_order">Processing Order</string>
+    <string name="just_a_few_seconds_please">Just a few seconds please"</string>
+    <string name="no_internet_message">No Internet Available</string>
 
 
 </resources>

@@ -1,6 +1,10 @@
 package mosh.com.jera_v1
 
 import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.view.View
 import com.google.firebase.database.DatabaseReference
 import mosh.com.jera_v1.database.FireBase
 import mosh.com.jera_v1.database.JeraDataBase

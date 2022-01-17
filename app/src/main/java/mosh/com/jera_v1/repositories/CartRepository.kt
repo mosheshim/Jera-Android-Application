@@ -14,11 +14,17 @@ class CartRepository(
     private val userRepo: UsersRepository
 ) {
     val scope = CoroutineScope(Dispatchers.IO)
-    var syncedWithFB = false
     val cartLiveData: LiveData<List<CartItem>> = jeraDAO.getLiveCart()
+    val totalPrice get() = getCartPrice()
 
     init {
         updateCart()
+    }
+
+    private fun getCartPrice():String{
+        var total = 0
+        cartLiveData.value?.forEach { total =+ it.price }
+        return total.toString()
     }
 
     /**
@@ -30,28 +36,7 @@ class CartRepository(
      * sync Room with Firebase. After syncing with Firebase the function will stop sending GET
      * request until the user will open the app again in another time.
      */
-//    suspend fun getCart(cartFetched: (List<CartItem>) -> Unit) {
-//        if (syncedWithFB) cartFetched(jeraDAO.getCart())
-//        else {
-//            val roomCart = jeraDAO.getCart()
-//            if (!roomCart.isNullOrEmpty()) {
-//                cartFetched(roomCart)
-//                userRepo.updateFirebaseCart(roomCart)
-//            } else {
-//                userRepo.getCartFromFirebase {
-//                    if (it == null) cartFetched(listOf())
-//                    else {
-//                        syncedWithFB = true
-//                        cartFetched(it)
-//                        scope.launch(Dispatchers.IO) {
-//                            jeraDAO.addCartItems(it)
-//                        }
-//                    }
-//                }
-//            }
-//
-//        }
-//    }
+
     private fun updateCart() {
         scope.launch(Dispatchers.IO) {
             val roomCart = jeraDAO.getCart()

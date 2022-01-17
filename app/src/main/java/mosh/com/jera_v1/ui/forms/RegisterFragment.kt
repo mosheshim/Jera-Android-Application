@@ -9,13 +9,12 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import mosh.com.jera_v1.R
-import mosh.com.jera_v1.utils.Utils
 import mosh.com.jera_v1.databinding.FragmentRegisterBinding
 import mosh.com.jera_v1.utils.BaseFragment
-import mosh.com.jera_v1.utils.Listeners.Companion.onLostFocusListener
+import mosh.com.jera_v1.utils.UiUtils
 import mosh.com.jera_v1.utils.TextResource.Companion.asString
 
-class RegisterFragment : BaseFragment<AuthViewModel>() {
+class RegisterFragment : BaseFragment<AuthViewModel>(), UiUtils {
 
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
@@ -49,10 +48,10 @@ class RegisterFragment : BaseFragment<AuthViewModel>() {
             buttonRegister.setOnClickListener { button ->
                 hideKeyBoard()
                 saveAllFields()
-                Utils.changeButtonLoadingView(textViewRegister, progressIndicator, button)
+                changeButtonLoadingView(textViewRegister, progressIndicator, button)
                 viewModel.register {
                     if (it) findNavController().popBackStack(R.id.navigation_login, true)
-                    else Utils.changeButtonLoadingView(textViewRegister, progressIndicator, button)
+                    else changeButtonLoadingView(textViewRegister, progressIndicator, button)
                 }
             }
         }

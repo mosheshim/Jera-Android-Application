@@ -1,6 +1,9 @@
 package mosh.com.jera_v1.utils
 
 import android.app.AlertDialog
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -8,6 +11,9 @@ import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.tasks.OnSuccessListener
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.utils.TextResource.Companion.asString
 
@@ -18,7 +24,10 @@ open class BaseFragment<T:BaseViewModel> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.showToastLiveData.observe(viewLifecycleOwner){
-            showToast(it.asString(resources))
+            Toast.makeText(
+                requireContext(),
+                it.asString(resources),
+                Toast.LENGTH_LONG).show()
     }
     }
 
@@ -26,15 +35,6 @@ open class BaseFragment<T:BaseViewModel> : Fragment() {
         ContextCompat.getSystemService(requireActivity(), InputMethodManager::class.java)
             ?.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
     }
-
-    private fun showToast(text: String, duration: Int = Toast.LENGTH_LONG) {
-        Toast.makeText(
-            requireContext(),
-            text,
-            duration
-        ).show()
-    }
-
 
     protected fun buildSpinner(
         list: List<String>,
@@ -53,11 +53,7 @@ open class BaseFragment<T:BaseViewModel> : Fragment() {
             }
     }
 
-    protected fun buildPicasso(
-        uri: String,
-        imageView: ImageView,
-        progressBar: ProgressBar
-    ) = Utils.buildPicasso(uri, imageView, progressBar)
+
 
     protected fun buildDialog(
         message: String,
@@ -77,4 +73,8 @@ open class BaseFragment<T:BaseViewModel> : Fragment() {
                 onClick(false)
             }.show()
     }
+
+
+
+
 }

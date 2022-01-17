@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.databinding.CartItemBinding
 import mosh.com.jera_v1.models.CartItem
-import mosh.com.jera_v1.utils.Utils
+import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.buildPicasso
 
 class CartAdapter(val cart: List<CartItem>, val onItemMenuClicked: (View, index: Int) -> Unit) :
     RecyclerView.Adapter<CartAdapter.ViewHolder>() {
-    class ViewHolder(val binding: CartItemBinding) : RecyclerView.ViewHolder(binding.root) {}
+    class ViewHolder(val binding: CartItemBinding) : RecyclerView.ViewHolder(binding.root)
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,12 +27,17 @@ class CartAdapter(val cart: List<CartItem>, val onItemMenuClicked: (View, index:
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val cartItem = cart[position]
         holder.binding.apply {
-            Utils.buildPicasso(cartItem.imageURL, imageView, progressBar)
+            imageView.buildPicasso(cartItem.imageURL, progressBar)
+
             textName.text = cartItem.productName
+
             textQuantity.text = cartItem.quantity.toString()
+
             textPrice.text =
                 root.context.getString(R.string.money_symbol_with_string, cartItem.price.toString())
+
             textAdditional.text = cartItem.extra
+
             buttonDeleteMenu.setOnClickListener {
                 onItemMenuClicked(it, position)
             }

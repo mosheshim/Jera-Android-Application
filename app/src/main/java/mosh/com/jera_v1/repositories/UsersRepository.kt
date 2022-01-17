@@ -45,10 +45,8 @@ class UsersRepository(
     }
 
     fun updateAddress(address: Address) {
+        if (authRep.isLoggedIn)
         usersRef.child(authRep.getCurrentUserId()!!).child(ADDRESS_PATH).setValue(address)
-            .addOnCompleteListener { }
-            .addOnFailureListener { }
-
     }
 
     /**
@@ -60,7 +58,7 @@ class UsersRepository(
             usersRef.child(authRep.getCurrentUserId()!!).child("cart")
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        onFetch(getCardFromSnapshot(snapshot))
+                        onFetch(getCartFromSnapshot(snapshot))
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -70,7 +68,7 @@ class UsersRepository(
         } else onFetch(null)
     }
 
-    fun getCardFromSnapshot(snapshot: DataSnapshot): List<CartItem> {
+    fun getCartFromSnapshot(snapshot: DataSnapshot): List<CartItem> {
         val cart = mutableListOf<CartItem>()
         if (snapshot.exists()) {
             for (item in snapshot.children) {

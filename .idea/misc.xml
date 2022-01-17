@@ -21,6 +21,7 @@
         <entry key="app/src/main/res/drawable/rating_fill.xml" value="0.31197916666666664" />
         <entry key="app/src/main/res/drawable/rating_filled.xml" value="0.3539325842696629" />
         <entry key="app/src/main/res/drawable/spinner_border.xml" value="0.3609375" />
+        <entry key="app/src/main/res/layout-land/fragment_register.xml" value="0.33" />
         <entry key="app/src/main/res/layout-v26/fragment_coffee_item_screen.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/cart_item.xml" value="0.1" />
@@ -42,7 +43,8 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3697916666666667" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.2869791666666667" />
-        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_splash_screen.xml" value="0.165625" />
         <entry key="app/src/main/res/layout/fragment_tea.xml" value="0.20729166666666668" />
         <entry key="app/src/main/res/layout/fragment_tea_dialog.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_tea_item.xml" value="0.340625" />

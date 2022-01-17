@@ -34,8 +34,7 @@
         <action
             app:destination="@id/navigation_checkout"
             android:id="@+id/navigate_to_checkout"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/navigation_cart"/>
+            app:launchSingleTop="true"/>
     </fragment>
 
     <action
@@ -58,8 +57,7 @@
     <action
         android:id="@+id/action_global_login_fragment"
         app:destination="@id/navigation_login"
-        app:popUpTo="@id/navigation_login"
-        app:popUpToInclusive="true" />
+        app:launchSingleTop="true"/>
 
     <fragment
         android:id="@+id/navigation_register"
@@ -81,12 +79,12 @@
 
     <fragment
         android:id="@+id/navigation_coffee_Item_screen"
-        android:name="mosh.com.jera_v1.ui.coffee.CoffeeItemFragment"
+        android:name="mosh.com.jera_v1.ui.coffee_item.CoffeeItemFragment"
         android:label="@string/coffee" />
 
     <fragment
         android:id="@+id/navigation_tea_Item_screen"
-        android:name="mosh.com.jera_v1.ui.tea.TeaItemFragment"
+        android:name="mosh.com.jera_v1.ui.tea_item.TeaItemFragment"
         android:label="@string/tea">
     </fragment>
     <fragment
@@ -105,6 +103,7 @@
     android:id="@+id/navigation_to_main"
     app:destination="@id/viewPagerFragment"
     app:popUpTo="@id/viewPagerFragment"
-    app:popUpToInclusive="true"/>
+    app:popUpToInclusive="true"
+    app:launchSingleTop="true"/>
 
 </navigation>

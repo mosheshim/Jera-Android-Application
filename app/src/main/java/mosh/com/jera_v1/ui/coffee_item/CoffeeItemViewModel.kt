@@ -1,7 +1,5 @@
-package mosh.com.jera_v1.ui.coffee
+package mosh.com.jera_v1.ui.coffee_item
 
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
 import mosh.com.jera_v1.MyApplication
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.models.Coffee

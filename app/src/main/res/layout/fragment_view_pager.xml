@@ -7,6 +7,36 @@
     tools:context=".ui.main_page.ViewPagerFragment"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/no_internet_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="128dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nav_host_container">
+
+        <TextView
+            android:id="@+id/text_no_internet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please Connect To The Internet"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/button_reload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Reload" />
+    </LinearLayout>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"

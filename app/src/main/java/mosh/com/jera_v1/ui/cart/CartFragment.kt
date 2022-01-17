@@ -14,10 +14,8 @@ import mosh.com.jera_v1.R
 import mosh.com.jera_v1.adapters.CartAdapter
 import mosh.com.jera_v1.adapters.RecycleItemTouchHelper
 import mosh.com.jera_v1.databinding.FragmentCartBinding
-import mosh.com.jera_v1.models.CartItem
 import mosh.com.jera_v1.utils.BaseFragment
-import mosh.com.jera_v1.utils.Utils.Companion.gone
-import mosh.com.jera_v1.utils.Utils.Companion.visible
+import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.visible
 
 class CartFragment : BaseFragment<CartViewModel>() {
 

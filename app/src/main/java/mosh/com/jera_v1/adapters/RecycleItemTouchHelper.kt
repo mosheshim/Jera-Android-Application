@@ -11,7 +11,7 @@ import mosh.com.jera_v1.R
 class RecycleItemTouchHelper(
     val context: Context,
     val onSwipeCallback: (index:Int)->Unit)
-    : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+    : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
     override fun onMove(
         recyclerView: RecyclerView,
         viewHolder: RecyclerView.ViewHolder,
@@ -43,8 +43,8 @@ class RecycleItemTouchHelper(
                 dY,
                 actionState,
                 isCurrentlyActive)
-                .addSwipeRightBackgroundColor(Color.RED)
-                .addSwipeRightActionIcon(R.drawable.ic_baseline_delete_24)
+                .addSwipeLeftBackgroundColor(Color.RED)
+                .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
                 .create()
                 .decorate()
     }

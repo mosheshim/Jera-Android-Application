@@ -13,6 +13,7 @@ import mosh.com.jera_v1.models.CartItem
 import mosh.com.jera_v1.models.PickUpLocation
 import mosh.com.jera_v1.utils.*
 import mosh.com.jera_v1.utils.TextResource.Companion.fromStringId
+import org.w3c.dom.Text
 
 const val DELIVERY = "delivery"
 const val PICK_UP = "pick up"
@@ -32,6 +33,7 @@ class CheckoutViewModel : FormViewModel() {
     private val cartRepo = MyApplication.cartRepo
     private val userRepo = MyApplication.usersRepo
     private val ordersRepo = MyApplication.ordersRepo
+    private val authRepo = MyApplication.authRepo
 
     init {
         fields = mutableMapOf(
@@ -48,6 +50,9 @@ class CheckoutViewModel : FormViewModel() {
     }
 
     private lateinit var cart: List<CartItem>
+    val isUserLoggedIn :LiveData<Boolean> = authRepo.isLoggedInLiveData
+
+
     private var defaultAddress: Address? = null
 
     private var hasDefaultAddress: Boolean = false
@@ -76,20 +81,25 @@ class CheckoutViewModel : FormViewModel() {
         val address = buildAddress()
         viewModelScope.launch {
             cartRepo.deleteCart()
-            ordersRepo.addOrder(
-                cart = cart,
-                userId = userRepo.getUserID()!!,
-                address = address,
-                pickUpLocation = chosenPickupLocation,
-                ){
-                if (it.isNullOrEmpty()){
-                    ifSucceeded(true)
-                    showToast(R.string.order_confirmed)
-                }else showToast(it)
-            }
+            if (orderType == NEW_ADDRESS && addAddressToDefault) userRepo.updateAddress(address!!)
+            addOrder(address, ifSucceeded)
         }
-        if (orderType == NEW_ADDRESS && addAddressToDefault) userRepo.updateAddress(address!!)
     }
+
+    private fun addOrder(address: Address?,ifSucceeded: (Boolean) -> Unit){
+        ordersRepo.addOrder(
+            cart = cart,
+            userId = userRepo.getUserID()!!,
+            address = address,
+            pickUpLocation = chosenPickupLocation,
+        ){
+            val answer= it.isNullOrEmpty()
+            if (answer)showToast(R.string.order_confirmed)
+            else showToast(it!!)
+            ifSucceeded(answer)
+        }
+    }
+
 
     private fun buildAddress(): Address? {
         return when (orderType) {
@@ -109,17 +119,16 @@ class CheckoutViewModel : FormViewModel() {
     }
 
     //--------------------------------validation and saving---------------------------------------//
-    //validate the fields which needed by the user delivery choice
     fun pay(ifSucceeded: (Boolean) -> Unit): Boolean {
         fillNotRequiredFields()
         val stringId: Int? =
-            when { //TODO find a better way to do it
+            when {
                 pickupOrDelivery.value == null -> R.string.no_delivery_option_chosen_message
                 fields[PHONE].equals("") -> R.string.phone_number_now_valid_message
-                pickupOrDelivery.value == PICK_UP -> if (chosenPickupLocation == null)
-                    R.string.no_pickup_location_chosen_message else null
-                orderType == DEFAULT_ADDRESS -> null
-                fields.containsValue(NOT_VALID) -> R.string.empty_field_message
+                orderType == NEW_ADDRESS && fields.containsValue(NOT_VALID)->
+                    R.string.empty_field_message
+                orderType == PICK_UP && chosenPickupLocation == null ->
+                    R.string.no_pickup_location_chosen_message
                 else -> null
             }
         if (stringId == null) updateDB(ifSucceeded).also { return true }
@@ -129,7 +138,7 @@ class CheckoutViewModel : FormViewModel() {
 
     private fun validatePhone(number: String): TextResource? {
         return when {
-            number.length != 7 -> fromStringId(R.string.number_to_short)
+            number.length != 7 -> fromStringId(R.string.invalid_number)
             !number.isDigitsOnly() -> fromStringId(R.string.invalid_number)
             fields[PHONE_PREFIX].isNullOrEmpty() ->
                 fromStringId(R.string.choose_phone_prefix)
@@ -279,7 +288,7 @@ class CheckoutViewModel : FormViewModel() {
 
     val pickupLocations get() = _pickupLocations.map { it.location }
 
-    val price get() = Utils.getTotalPrice(cart).toString()
+    val price get() = cartRepo.totalPrice
 
     val prefixesList get() = getPhonePrefixList()
 }

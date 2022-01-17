@@ -5,7 +5,6 @@ import kotlinx.coroutines.launch
 import mosh.com.jera_v1.MyApplication
 import mosh.com.jera_v1.models.CartItem
 import mosh.com.jera_v1.utils.BaseViewModel
-import mosh.com.jera_v1.utils.Utils
 
 class CartViewModel : BaseViewModel(){
     private val authRepo = MyApplication.authRepo
@@ -40,7 +39,7 @@ class CartViewModel : BaseViewModel(){
 
 
 
-    val price get() = Utils.getTotalPrice(cart).toString()
+    val price get() = cartRepo.totalPrice
     val cartIsEmpty get() = _cart.isNullOrEmpty()
 
 

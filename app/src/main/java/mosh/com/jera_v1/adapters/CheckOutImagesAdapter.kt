@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import mosh.com.jera_v1.databinding.ImageHolderItemBinding
-import mosh.com.jera_v1.utils.Utils
+import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.buildPicasso
 
 class CheckOutImagesAdapter(private val imagesList: List<String>) :
     RecyclerView.Adapter<CheckOutImagesAdapter.ViewHolder>() {
@@ -23,7 +23,7 @@ class CheckOutImagesAdapter(private val imagesList: List<String>) :
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val image = imagesList[position]
-        Utils.buildPicasso(image, holder.binding.image,holder.binding.progressBar)
+        holder.binding.image.buildPicasso(image,holder.binding.progressBar)
     }
 
     override fun getItemCount(): Int = imagesList.size

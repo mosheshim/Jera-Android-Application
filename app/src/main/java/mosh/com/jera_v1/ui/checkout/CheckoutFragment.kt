@@ -14,12 +14,12 @@ import mosh.com.jera_v1.R
 import mosh.com.jera_v1.adapters.CheckOutImagesAdapter
 import mosh.com.jera_v1.databinding.FragmentCheckoutBinding
 import mosh.com.jera_v1.utils.BaseFragment
-import mosh.com.jera_v1.utils.Listeners.Companion.onLostFocusListener
+import mosh.com.jera_v1.utils.UiUtils
 import mosh.com.jera_v1.utils.TextResource.Companion.asString
 
-import mosh.com.jera_v1.utils.Utils.Companion.visible
+import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.visible
 
-class CheckoutFragment : BaseFragment<CheckoutViewModel>() {
+class CheckoutFragment : BaseFragment<CheckoutViewModel>(),UiUtils {
     private var _binding: FragmentCheckoutBinding? = null
     private val binding get() = _binding!!
     private lateinit var fieldsMap: List<Triple<TextInputEditText, TextInputLayout, String>>
@@ -39,6 +39,10 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.isUserLoggedIn.observe(viewLifecycleOwner){
+            if (!it) findNavController().popBackStack()
+        }
+
         viewModel.onCartLoad { notifyWhenDataFetched() }
         binding.apply {
 
@@ -46,16 +50,14 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>() {
                 hideKeyBoard()
                 saveAllFields()
                 val progressDialog = ProgressDialog(requireContext())
-                progressDialog.setTitle("Precessing Order")
-                progressDialog.setMessage("Just a few seconds please")
+                progressDialog.setTitle(getString(R.string.processing_order))
+                progressDialog.setMessage(getString(R.string.just_a_few_seconds_please))
 
                 if (viewModel.pay {
                         if (it) findNavController().navigate(R.id.navigation_to_main)
                         progressDialog.dismiss()
                     }) progressDialog.show()
-
             }
-
             buttonCancel.setOnClickListener { findNavController().popBackStack() }
         }
     }
@@ -160,8 +162,7 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>() {
     }
 
     private fun setListeners() {
-        for (field in fieldsMap) onLostFocusListener(field.first)
-        {
+        for (field in fieldsMap) onLostFocusListener(field.first) {
             field.second.error =
                 viewModel.validateField(field.first.text, field.third)?.asString(resources)
         }

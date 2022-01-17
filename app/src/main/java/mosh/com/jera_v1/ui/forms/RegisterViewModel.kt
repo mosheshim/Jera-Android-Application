@@ -2,6 +2,7 @@ package mosh.com.jera_v1.ui.forms
 
 import android.text.Editable
 import android.util.Patterns
+import androidx.lifecycle.LiveData
 import mosh.com.jera_v1.MyApplication
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.models.AppUser
@@ -51,7 +52,7 @@ class AuthViewModel : FormViewModel() {
     fun register(onResult: (Boolean) -> Unit) {
         if (fields.containsValue(NOT_VALID)) {
             onResult(false)
-            showToast(R.string.empty_field_message)
+            showToast(R.string.check_again_message)
             return
         }
             authRepo.registerNewUser(fields[EMAIL]!!, fields[PASSWORD_1]!!) {

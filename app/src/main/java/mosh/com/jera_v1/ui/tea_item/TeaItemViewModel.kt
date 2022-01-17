@@ -1,4 +1,4 @@
-package mosh.com.jera_v1.ui.tea
+package mosh.com.jera_v1.ui.tea_item
 
 import android.view.View
 import androidx.lifecycle.*
@@ -8,7 +8,6 @@ import mosh.com.jera_v1.models.Tea
 import mosh.com.jera_v1.models.ProductSeries
 import mosh.com.jera_v1.models.Weight
 import mosh.com.jera_v1.utils.*
-import mosh.com.jera_v1.utils.Utils.Companion.getTeaBagOrBrew
 
 import java.lang.Exception
 
@@ -68,7 +67,8 @@ class TeaItemViewModel() : ProductItemViewModel() {
      */
     private fun updateProductLineData() {
         _productLineDescription = productSeries.description
-        _subTitle = getTeaBagOrBrew(productSeries)
+        _subTitle =TextResource.fromStringId(
+            if(productSeries.isTeaBag) R.string.tea_bag else R.string.tea_brew)
         if (productSeries.teas.size > 1) {
             _imageURL = productSeries.teas[0].imageURL
             _price = productSeries.prices
@@ -115,7 +115,7 @@ class TeaItemViewModel() : ProductItemViewModel() {
     private lateinit var _productLineDescription: String
     private lateinit var _price: String
     private lateinit var _imageURL: String
-    private lateinit var _subTitle: String
+    private lateinit var _subTitle: TextResource
     private lateinit var _inStock: TextResource
     private lateinit var _teaDescription: String
     private var _teaList: List<Tea> = listOf()
@@ -130,7 +130,7 @@ class TeaItemViewModel() : ProductItemViewModel() {
     val productLineDescription: String get() = _productLineDescription
     val price: String get() = _price
     val imageURL: String get() = _imageURL
-    val subTitle: String get() = _subTitle
+    val subTitle: TextResource get() = _subTitle
     val inStock: TextResource get() = _inStock
     val teaDescription: String get() = _teaDescription
     val teaListNames: List<String> get() = _teaList.map { it.name }

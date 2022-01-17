@@ -1,4 +1,4 @@
-package mosh.com.jera_v1.ui.coffee
+package mosh.com.jera_v1.ui.coffee_item
 
 import android.os.Bundle
 import android.view.*
@@ -7,11 +7,12 @@ import androidx.navigation.fragment.findNavController
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.databinding.FragmentCoffeeItemScreenBinding
 import mosh.com.jera_v1.utils.BaseFragment
-import mosh.com.jera_v1.utils.Listeners
+import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.buildPicasso
+import mosh.com.jera_v1.utils.UiUtils
 import mosh.com.jera_v1.utils.TextResource.Companion.asString
 
 
-class CoffeeItemFragment() : BaseFragment<CoffeeItemViewModel>() {
+class CoffeeItemFragment() : BaseFragment<CoffeeItemViewModel>(), UiUtils {
 
     private var _binding: FragmentCoffeeItemScreenBinding? = null
     private val binding get() = _binding!!
@@ -23,7 +24,7 @@ class CoffeeItemFragment() : BaseFragment<CoffeeItemViewModel>() {
     ): View {
 
         viewModel =
-            ViewModelProvider(requireActivity())[CoffeeItemViewModel::class.java]
+            ViewModelProvider(this)[CoffeeItemViewModel::class.java]
         val coffeeId = arguments?.getString("id") //TODO find a place to put it (ID)
         viewModel.setCoffeeById(coffeeId!!)
 
@@ -62,14 +63,13 @@ class CoffeeItemFragment() : BaseFragment<CoffeeItemViewModel>() {
                     spinnerGrindLevel
                 ) { setGrindSize(it) }
 
-                buildPicasso(
+                imageLayout.image.buildPicasso(
                     imageUrl,
-                    imageLayout.image,
                     imageLayout.progressBar
                 )
 
                 inputCoffeeQuantity.addTextChangedListener(
-                    Listeners.textWatcher {
+                    textWatcher {
                         inputCoffeeQuantityLayout.error = setQuantity(it)?.asString(resources)
                     })
 

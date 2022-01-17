@@ -1,21 +1,15 @@
 package mosh.com.jera_v1.utils
 
-import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.compose.ui.text.TextLayoutInput
-import androidx.core.widget.addTextChangedListener
-import androidx.navigation.NavController
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
-import mosh.com.jera_v1.R
-import mosh.com.jera_v1.models.Product
-import mosh.com.jera_v1.models.Tea
+import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.gone
+import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.visible
 
-class Listeners {
-    companion object {
+interface UiUtils {
         //        TODO check if it can return null
         fun textWatcher(onChange: (String) -> Unit) =
             object : TextWatcher {
@@ -42,5 +36,15 @@ class Listeners {
             }
         }
 
+    fun changeButtonLoadingView(textView: TextView, progressBar: ProgressBar, button: View) {
+        if (button.isClickable) {
+            textView.gone()
+            progressBar.visible()
+            button.isClickable = false
+        } else {
+            textView.visible()
+            progressBar.gone()
+            button.isClickable = true
+        }
     }
 }
