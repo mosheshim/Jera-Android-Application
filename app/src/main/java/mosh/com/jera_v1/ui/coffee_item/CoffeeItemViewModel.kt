@@ -42,8 +42,8 @@ class CoffeeItemViewModel : ProductItemViewModel() {
     val countryOfOrigin get() = coffee.countryOfOrigin
     val tasteProfile get() = coffee.tasteProfile
     val description get() = coffee.description
-    val stockState get() = TextResource.fromStringId(if (coffee.inStock)
-        R.string.in_stock else R.string.out_of_stock)
+    val addToCartButtonText get() = TextResource.fromStringId(if (coffee.inStock)
+        R.string.add_to_cart else R.string.out_of_stock)
     val imageUrl get() = coffee.imageURL
 
 }

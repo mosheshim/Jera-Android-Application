@@ -48,10 +48,12 @@ class RegisterFragment : BaseFragment<AuthViewModel>(), UiUtils {
             buttonRegister.setOnClickListener { button ->
                 hideKeyBoard()
                 saveAllFields()
-                changeButtonLoadingView(textViewRegister, progressIndicator, button)
-                viewModel.register {
-                    if (it) findNavController().popBackStack(R.id.navigation_login, true)
-                    else changeButtonLoadingView(textViewRegister, progressIndicator, button)
+                if (checkIfConnected()) {
+                    changeButtonLoadingView(textViewRegister, progressIndicator, button)
+                    viewModel.register {
+                        if (it) findNavController().popBackStack(R.id.navigation_login, true)
+                        else changeButtonLoadingView(textViewRegister, progressIndicator, button)
+                    }
                 }
             }
         }

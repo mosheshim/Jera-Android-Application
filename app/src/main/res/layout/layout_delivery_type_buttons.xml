@@ -36,6 +36,7 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:theme="@style/Theme.Jerav1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/radioButton_delivery"
         app:layout_constraintHorizontal_bias="0.5"
@@ -46,6 +47,7 @@
 
         android:layout_width="50dp"
         android:layout_height="wrap_content"
+        android:theme="@style/Theme.Jerav1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

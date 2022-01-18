@@ -36,7 +36,7 @@
         <entry key="app/src/main/res/layout/fragment_checkout.xml" value="0.40115606936416187" />
         <entry key="app/src/main/res/layout/fragment_coffee.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_coffee_dialog.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_coffee_item_screen.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_coffee_item_screen.xml" value="0.27521206409048066" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.3697916666666667" />
         <entry key="app/src/main/res/layout/fragment_equipment.xml" value="0.3697916666666667" />
         <entry key="app/src/main/res/layout/fragment_equipment_item_screen.xml" value="0.340625" />
@@ -52,7 +52,7 @@
         <entry key="app/src/main/res/layout/fragment_view_pager.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/layout/image_frame_layout.xml" value="0.36822916666666666" />
         <entry key="app/src/main/res/layout/image_holder_item.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/item_buttons_row.xml" value="0.36822916666666666" />
+        <entry key="app/src/main/res/layout/item_buttons_row.xml" value="0.33" />
         <entry key="app/src/main/res/layout/layout_address_options.xml" value="0.3203125" />
         <entry key="app/src/main/res/layout/layout_addresses_options.xml" value="0.23333333333333334" />
         <entry key="app/src/main/res/layout/layout_checkout_header.xml" value="0.36822916666666666" />

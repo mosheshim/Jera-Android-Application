@@ -40,12 +40,13 @@ class LoginFragment : BaseFragment<LoginViewModel>(), UiUtils {
 
             buttonLogin.setOnClickListener{ button ->
                 hideKeyBoard()
-
-                changeButtonLoadingView(textViewLogin,progressIndicator,button)
-                viewModel.logIn(inputEmailLogin.text, inputPasswordLogin.text){
-                    hideKeyBoard()
-                    if (it) findNavController().popBackStack()
-                    else changeButtonLoadingView(textViewLogin,progressIndicator,button)
+                if (checkIfConnected()) {
+                    changeButtonLoadingView(textViewLogin, progressIndicator, button)
+                    viewModel.logIn(inputEmailLogin.text, inputPasswordLogin.text) {
+                        hideKeyBoard()
+                        if (it) findNavController().popBackStack()
+                        else changeButtonLoadingView(textViewLogin, progressIndicator, button)
+                    }
                 }
             }
             textViewNavRegister.setOnClickListener{

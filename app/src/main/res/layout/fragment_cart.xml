@@ -25,23 +25,33 @@
 
     <Button
         android:id="@+id/button_go_to_payment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:backgroundTint="@color/colorSecondary"
         android:text="@string/go_to_payment"
+        android:textAlignment="center"
+        android:textColor="@color/colorOnSecondary"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/button_go_back_cart_frag"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button_go_back_cart_frag" />
+        app:layout_constraintStart_toEndOf="@+id/button_go_back_cart_frag"
+        app:layout_constraintTop_toTopOf="@+id/button_go_back_cart_frag" />
 
     <Button
         android:id="@+id/button_go_back_cart_frag"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:backgroundTint="@color/colorSecondary"
         android:text="@string/continue_shopping"
+        android:textAlignment="center"
+        android:textColor="@color/colorOnSecondary"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/button_go_to_payment"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_go_to_payment"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
@@ -82,6 +92,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/your_cart_is_empty"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="40sp"
         android:visibility="gone"

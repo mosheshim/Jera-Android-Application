@@ -55,7 +55,7 @@ class CoffeeItemFragment() : BaseFragment<CoffeeItemViewModel>(), UiUtils {
                 textCoffeeOriginCountry.text = countryOfOrigin
                 textCoffeeTasteProfile.text = tasteProfile
                 textDescription.text = description
-                textCoffeeStock.text = stockState.asString(resources)
+                buttonsRow.buttonAddToCart.text = addToCartButtonText.asString(resources)
 
 
                 buildSpinner(

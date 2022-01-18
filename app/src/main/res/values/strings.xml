@@ -102,7 +102,8 @@
     <string name="check_again_message">Something is wrong, check again</string>
     <string name="processing_order">Processing Order</string>
     <string name="just_a_few_seconds_please">Just a few seconds please"</string>
-    <string name="no_internet_message">No Internet Available</string>
+    <string name="no_internet_dialog">It seems you don\'t have internet connection…</string>
+    <string name="go_to_settings">Go To Settings</string>
 
 
 </resources>

@@ -1,6 +1,8 @@
 package mosh.com.jera_v1.ui.cart
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 
 import android.view.LayoutInflater
 import android.view.View

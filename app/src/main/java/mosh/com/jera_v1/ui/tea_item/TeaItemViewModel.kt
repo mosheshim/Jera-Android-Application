@@ -88,8 +88,8 @@ class TeaItemViewModel() : ProductItemViewModel() {
     private fun setTea(tea: Tea) {
         _name = tea.name
         _imageURL = tea.imageURL
-        _inStock = TextResource.fromStringId(if (tea.inStock)
-            R.string.in_stock else R.string.out_of_stock)
+        _addToCartButtonText = TextResource.fromStringId(if (tea.inStock)
+            R.string.add_to_cart else R.string.out_of_stock)
         _teaDescription = tea.description
         weightUiSetter(tea)
         _price = "${if (!_weightList.isNullOrEmpty()) _weightList[0].price else tea.price}"
@@ -116,7 +116,7 @@ class TeaItemViewModel() : ProductItemViewModel() {
     private lateinit var _price: String
     private lateinit var _imageURL: String
     private lateinit var _subTitle: TextResource
-    private lateinit var _inStock: TextResource
+    private lateinit var _addToCartButtonText: TextResource
     private lateinit var _teaDescription: String
     private var _teaList: List<Tea> = listOf()
     private lateinit var _weightList: List<Weight>
@@ -131,11 +131,11 @@ class TeaItemViewModel() : ProductItemViewModel() {
     val price: String get() = _price
     val imageURL: String get() = _imageURL
     val subTitle: TextResource get() = _subTitle
-    val inStock: TextResource get() = _inStock
+    val addToCartButtonText: TextResource get() = _addToCartButtonText
     val teaDescription: String get() = _teaDescription
     val teaListNames: List<String> get() = _teaList.map { it.name }
     val weightListNames: List<String> get() = _weightList.map { getWeightString(it) ?: "" }
-    val firstWeightName: String get() = "${_weight?.weight}g"
+    val firstWeightName: String get() = "${_weight?.weight}g" //TODO add to srtigns the 'g'
     val containerOptionVisibility get() = _containerOptionVisibility
     val containerWeightVisibility get() = _containerWeightVisibility
     val isOneTea: Boolean get() = productSeries.teas.size == 1

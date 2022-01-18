@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.utils.TextResource.Companion.asString
 
-open class BaseFragment<T:BaseViewModel> : Fragment() {
+open class BaseFragment<T:BaseViewModel> : FragmentWithUtils() {
     protected lateinit var  viewModel: T
 
 
@@ -31,48 +31,7 @@ open class BaseFragment<T:BaseViewModel> : Fragment() {
     }
     }
 
-    protected fun hideKeyBoard() {
-        ContextCompat.getSystemService(requireActivity(), InputMethodManager::class.java)
-            ?.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
-    }
 
-    protected fun buildSpinner(
-        list: List<String>,
-        spinner: AutoCompleteTextView,
-        onClickAction: (Int) -> Unit
-    ) {
-        val adapter = ArrayAdapter(
-            requireContext(),
-            R.layout.spinner_item,
-            list
-        )
-        spinner.setAdapter(adapter)
-        spinner.onItemClickListener =
-            AdapterView.OnItemClickListener { _, _, position, _ ->
-                onClickAction(position)
-            }
-    }
-
-
-
-    protected fun buildDialog(
-        message: String,
-        positiveBtnTxt: String,
-        negativeBtnTxt: String,
-        onClick: (Boolean) -> Unit
-    ) {
-        AlertDialog.Builder(requireContext())
-            .setMessage(message)
-            .setPositiveButton(positiveBtnTxt) { _, _ ->
-                onClick(true)
-            }
-            .setNegativeButton(negativeBtnTxt) { _, _ ->
-                onClick(false)
-            }
-            .setOnCancelListener {
-                onClick(false)
-            }.show()
-    }
 
 
 

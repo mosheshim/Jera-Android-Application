@@ -87,10 +87,10 @@ class TeaItemFragment : BaseFragment<TeaItemViewModel>(), UiUtils {
                 containerSubDescription.visible()
                 textSubDescription.text = viewModel.teaDescription
 
-                textTeaStock.text = viewModel.inStock.asString(resources)
+                buttonsRow.buttonAddToCart.text = viewModel.addToCartButtonText.asString(resources)
                 imageLayout.image.buildPicasso(viewModel.imageURL , imageLayout.progressBar)
                 titleRow.textName.text = viewModel.name
-                titleRow.textPrice.text = viewModel.price
+                titleRow.textPrice.text = getString(R.string.money_symbol_with_string, viewModel.price)
                 //------------------------------weight container----------------------------------//
                 containerWeight.visibility = viewModel.containerWeightVisibility
                 spinnerTeaWeight.setText(viewModel.firstWeightName)
@@ -100,7 +100,7 @@ class TeaItemFragment : BaseFragment<TeaItemViewModel>(), UiUtils {
                     spinnerTeaWeight
                 ) {
                     viewModel.setWeight(it)
-                    titleRow.textPrice.text = viewModel.price
+                    titleRow.textPrice.text = getString(R.string.money_symbol_with_string, viewModel.price)
                 }
                 spinnerTeaWeight.setOnClickListener { hideKeyBoard() }
                 startContainerAnimation()
@@ -108,7 +108,7 @@ class TeaItemFragment : BaseFragment<TeaItemViewModel>(), UiUtils {
         }
     }
 
-    //-------------------------------------functions----------------------------------------------//
+    //-------------------------------------animations---------------------------------------------//
 
     private fun startContainerAnimation() {
         val containerAnimation =

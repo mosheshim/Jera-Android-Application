@@ -53,7 +53,7 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(),UiUtils {
                 progressDialog.setTitle(getString(R.string.processing_order))
                 progressDialog.setMessage(getString(R.string.just_a_few_seconds_please))
 
-                if (viewModel.pay {
+                if (checkIfConnected() && viewModel.pay {
                         if (it) findNavController().navigate(R.id.navigation_to_main)
                         progressDialog.dismiss()
                     }) progressDialog.show()

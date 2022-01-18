@@ -16,8 +16,9 @@ import mosh.com.jera_v1.adapters.ViewPagerAdapter
 import mosh.com.jera_v1.databinding.FragmentViewPagerBinding
 import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.gone
 import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.visible
+import mosh.com.jera_v1.utils.FragmentWithUtils
 
-class ViewPagerFragment : Fragment() {
+class ViewPagerFragment : FragmentWithUtils() {
 
     private var _binding: FragmentViewPagerBinding? = null
     private val binding get() = _binding!!
@@ -51,8 +52,7 @@ class ViewPagerFragment : Fragment() {
             binding.noInternetContainer.visible()
             toolBar.gone()
 
-            Toast.makeText(
-                requireContext(), getString(R.string.no_internet_message), Toast.LENGTH_LONG).show()
+
         }
 
     }
@@ -77,13 +77,4 @@ class ViewPagerFragment : Fragment() {
             }
         }.attach()
     }
-
-    private fun checkIfConnected():Boolean{
-        val cm = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val capabilities = cm.getNetworkCapabilities(cm.activeNetwork)
-        return (capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET))
-    }
-
-
-
 }
