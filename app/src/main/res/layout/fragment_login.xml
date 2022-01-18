@@ -12,7 +12,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -21,8 +21,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="32dp">
+            android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_email_login_layout"
@@ -31,9 +30,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:hint="@string/email"
+                app:boxStrokeColor="@color/colorSecondary"
+                app:hintTextColor="@color/colorSecondaryVariant"
                 app:endIconDrawable="@drawable/ic_baseline_check_circle_24"
                 app:endIconMode="none"
                 app:endIconTint="#37E63D"
+
                 app:startIconDrawable="@drawable/ic_baseline_email_24">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -50,7 +52,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
+                app:boxStrokeColor="@color/colorSecondary"
                 app:endIconMode="password_toggle"
+                app:hintTextColor="@color/colorSecondaryVariant"
                 app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
                 <com.google.android.material.textfield.TextInputEditText

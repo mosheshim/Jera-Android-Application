@@ -23,8 +23,10 @@ class LoginViewModel() : BaseViewModel() {
         val password = passwordEditable.toString()
         if (validateEmail(emailEditable) == null && password.isNotEmpty())
             authRepo.logIn(email, password) {
-                if (it.isNullOrEmpty())showToast(R.string.login_successfully_message)
-                    onResult(it.isNullOrEmpty()) }
+                if (it.isNullOrEmpty()) showToast(R.string.login_successfully_message)
+                else showToast(it)
+                onResult(it.isNullOrEmpty())
+            }
         else {
             onResult(false)
             showToast(R.string.empty_field_message)

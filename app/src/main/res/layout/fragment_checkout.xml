@@ -65,17 +65,17 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2">
+                    android:layout_weight="2"
+                    app:boxStrokeColor="@color/colorSecondary">
 
                     <AutoCompleteTextView
                         android:id="@+id/spinner_phone_prefix"
-                        android:labelFor="@id/spinner_phone_prefix_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
+                        android:labelFor="@id/spinner_phone_prefix_layout"
                         android:layoutDirection="ltr"
-                        android:maxLines="1"
-                      />
+                        android:maxLines="1" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,7 +85,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="@string/phone_number">
+                    android:hint="@string/phone_number"
+                    app:boxStrokeColor="@color/colorSecondary"
+                    app:hintTextColor="@color/colorSecondaryVariant">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_phone"

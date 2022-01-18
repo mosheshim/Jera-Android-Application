@@ -148,6 +148,8 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:gravity="end"
+                    app:boxStrokeColor="@color/colorSecondary"
+                    app:hintTextColor="@color/colorSecondaryVariant"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -191,6 +193,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    app:boxStrokeColor="@color/colorSecondary"
                     app:layout_constraintTop_toBottomOf="@+id/scrollView_tea_description">
 
                     <AutoCompleteTextView
@@ -199,7 +202,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
-                        android:maxLines="1"
+                        android:maxLines="2"
                         android:text="@string/beans" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -208,7 +211,7 @@
 
             <include
                 android:id="@+id/buttons_row"
-                layout="@layout/item_buttons_row" />
+                layout="@layout/layout_add_to_cart_buttons" />
 
 
         </LinearLayout>

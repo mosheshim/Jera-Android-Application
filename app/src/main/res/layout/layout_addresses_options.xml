@@ -40,7 +40,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:hint="@string/city"
-                app:helperText="@string/required">
+                app:boxStrokeColor="@color/colorSecondary"
+                app:helperText="@string/required"
+                app:hintTextColor="@color/colorSecondaryVariant">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_city"
@@ -57,7 +59,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:hint="@string/street_name"
-                app:helperText="@string/required">
+                app:boxStrokeColor="@color/colorSecondary"
+                app:helperText="@string/required"
+                app:hintTextColor="@color/colorSecondaryVariant">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_street"
@@ -81,7 +85,9 @@
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
                     android:hint="@string/house_number"
-                    app:helperText="@string/required">
+                    app:boxStrokeColor="@color/colorSecondary"
+                    app:helperText="@string/required"
+                    app:hintTextColor="@color/colorSecondaryVariant">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_house_number"
@@ -100,7 +106,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
-                    android:hint="@string/zip_code">
+                    android:hint="@string/zip_code"
+                    app:boxStrokeColor="@color/colorSecondary"
+                    app:hintTextColor="@color/colorSecondaryVariant">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_zip"
@@ -126,7 +134,9 @@
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
-                    android:hint="@string/floor">
+                    android:hint="@string/floor"
+                    app:boxStrokeColor="@color/colorSecondary"
+                    app:hintTextColor="@color/colorSecondaryVariant">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_floor"
@@ -144,7 +154,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
-                    android:hint="@string/apt">
+                    android:hint="@string/apt"
+                    app:boxStrokeColor="@color/colorSecondary"
+                    app:hintTextColor="@color/colorSecondaryVariant">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_apartment"
@@ -163,7 +175,9 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
-                    android:hint="@string/entrance">
+                    android:hint="@string/entrance"
+                    app:boxStrokeColor="@color/colorSecondary"
+                    app:hintTextColor="@color/colorSecondaryVariant">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_entrance"

@@ -99,6 +99,7 @@
                     android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:isScrollContainer="false"
+                    app:boxStrokeColor="@color/colorSecondary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/divider_options">
@@ -147,6 +148,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
+                    app:boxStrokeColor="@color/colorSecondary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/divider_weight">
@@ -169,7 +171,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/container_inner_padding"
-                android:visibility="gone">
+                android:visibility="gone"
+                >
 
                 <com.google.android.material.divider.MaterialDivider
                     android:id="@+id/divider_quantity"
@@ -186,6 +189,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/amount"
                     android:textSize="24sp"
+                    app:boxStrokeColor="@color/colorSecondary"
+                    app:hintTextColor="@color/colorSecondaryVariant"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/divider_quantity"/>
@@ -195,6 +200,8 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
+                    app:boxStrokeColor="@color/colorSecondary"
+                    app:hintTextColor="@color/colorSecondaryVariant"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/divider_quantity">
@@ -212,7 +219,7 @@
 
             <include
                 android:id="@+id/buttons_row"
-                layout="@layout/item_buttons_row" />
+                layout="@layout/layout_add_to_cart_buttons" />
         </LinearLayout>
 
     </ScrollView>
