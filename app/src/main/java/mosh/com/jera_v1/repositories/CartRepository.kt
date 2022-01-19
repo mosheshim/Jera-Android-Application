@@ -21,21 +21,12 @@ class CartRepository(
         updateCart()
     }
 
-    private fun getCartPrice():String{
+    private fun getCartPrice():Int{
         var total = 0
         cartLiveData.value?.forEach { total =+ it.price }
-        return total.toString()
+        return total
     }
 
-    /**
-     * The function check if the cart has already been fetched fromFirebaseDB in
-     * this app lifecycle, if not it will fetch from Room first and update Firebase cart.
-     * That prevents any unwanted requests and make sure that Firebase is synced
-     * if the user changed the cart while not been connected,  .
-     * If the cart that is saved in Room is empty, the function will try to fetch from Firebase and
-     * sync Room with Firebase. After syncing with Firebase the function will stop sending GET
-     * request until the user will open the app again in another time.
-     */
 
     private fun updateCart() {
         scope.launch(Dispatchers.IO) {

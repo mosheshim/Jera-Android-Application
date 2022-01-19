@@ -32,6 +32,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:labelFor="@+id/spinner_pickup_location"
             app:boxStrokeColor="@color/colorSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,9 +44,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none"
-                android:labelFor="@+id/spinner_pickup_location_layout"
                 android:maxLines="1"
-                android:text="@string/choose" />
+                android:text="@string/choose"
+                android:textColor="#757575"
+                tools:ignore="TextContrastCheck" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -10,5 +10,6 @@ data class Order(
     val pickUpLocation: PickUpLocation? = null,
     val deliveryType:String = "",
     val deliveryStatus: String = "Processing",
-    val date: String = Date().toString()
+    val date: String = Date().toString(),
+    val totalPrice: Int = 0
 )

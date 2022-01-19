@@ -76,8 +76,7 @@ class MainActivity : AppCompatActivity() {
                 authRepo.logout()
                 Toast.makeText(this, R.string.signed_out, Toast.LENGTH_SHORT).show()
             }
-            R.id.orders_menu_item ->
-                Toast.makeText(this, "order page",Toast.LENGTH_SHORT).show()
+            R.id.orders_menu_item -> navController.navigate(R.id.global_navigation_orders)
         }
         return super.onOptionsItemSelected(item)
     }

@@ -29,7 +29,7 @@
 
             <include
                 android:id="@+id/title_row"
-                layout="@layout/title_row" />
+                layout="@layout/layout_title_row" />
 
             <TextView
                 android:id="@+id/text_product_line_description"

@@ -43,9 +43,11 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(),UiUtils {
             if (!it) findNavController().popBackStack()
         }
 
-        viewModel.onCartLoad { notifyWhenDataFetched() }
-        binding.apply {
 
+        binding.apply {
+            viewModel.onCartLoad {
+                notifyWhenDataFetched()
+            }
             buttonPay.setOnClickListener {
                 hideKeyBoard()
                 saveAllFields()
@@ -54,7 +56,7 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(),UiUtils {
                 progressDialog.setMessage(getString(R.string.just_a_few_seconds_please))
 
                 if (checkIfConnected() && viewModel.pay {
-                        if (it) findNavController().navigate(R.id.navigation_to_main)
+                        if (it) findNavController().navigate(R.id.global_navigation_to_main)
                         progressDialog.dismiss()
                     }) progressDialog.show()
             }
@@ -78,7 +80,8 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(),UiUtils {
             ) {
                 viewModel.setPrefix(it)
             }
-            layoutHeader.recyclerImages.adapter = CheckOutImagesAdapter(viewModel.images)
+            layoutHeader.recyclerImages.adapter = CheckOutImagesAdapter(viewModel.images,
+            layoutHeader.progressBar)
             layoutHeader.recyclerImages.layoutManager = LinearLayoutManager(
                 requireContext(),
                 LinearLayoutManager.HORIZONTAL,

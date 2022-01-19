@@ -100,9 +100,21 @@
         android:label="@string/app_name"
         tools:layout="@layout/fragment_view_pager" />
 <action
-    android:id="@+id/navigation_to_main"
+    android:id="@+id/global_navigation_to_main"
     app:destination="@id/viewPagerFragment"
     app:popUpTo="@id/viewPagerFragment"
+    app:popUpToInclusive="true"
+    app:launchSingleTop="true"/>
+
+    <fragment
+        android:id="@+id/fragmentOrders"
+        android:name="mosh.com.jera_v1.ui.orders.FragmentOrders"
+        android:label="fragment_orders"
+        tools:layout="@layout/fragment_orders" />
+<action
+    android:id="@+id/global_navigation_orders"
+    app:destination="@id/fragmentOrders"
+    app:popUpTo="@id/fragmentOrders"
     app:popUpToInclusive="true"
     app:launchSingleTop="true"/>
 

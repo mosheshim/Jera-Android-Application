@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.adapters.ViewPagerAdapter
@@ -23,6 +24,7 @@ class ViewPagerFragment : FragmentWithUtils() {
     private var _binding: FragmentViewPagerBinding? = null
     private val binding get() = _binding!!
     private lateinit var  toolBar:Toolbar
+    private lateinit var tabLayout: TabLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +37,7 @@ class ViewPagerFragment : FragmentWithUtils() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        tabLayout = requireActivity().findViewById(R.id.tab_layout)
         toolBar = requireActivity().findViewById(R.id.main_toolbar)
         updateUi()
         binding.buttonReload.setOnClickListener {
@@ -47,11 +50,13 @@ class ViewPagerFragment : FragmentWithUtils() {
         if (checkIfConnected()){
             buildViewPager()
             toolBar.visible()
+            tabLayout.visible()
+
         }
         else {
             binding.noInternetContainer.visible()
             toolBar.gone()
-
+            tabLayout.gone()
 
         }
 

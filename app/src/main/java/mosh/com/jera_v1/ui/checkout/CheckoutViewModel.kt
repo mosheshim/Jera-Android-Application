@@ -92,6 +92,7 @@ class CheckoutViewModel : FormViewModel() {
             userId = userRepo.getUserID()!!,
             address = address,
             pickUpLocation = chosenPickupLocation,
+            totalPrice = cartRepo.totalPrice
         ){
             val answer= it.isNullOrEmpty()
             if (answer)showToast(R.string.order_confirmed)

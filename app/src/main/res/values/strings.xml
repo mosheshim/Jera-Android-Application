@@ -104,6 +104,9 @@
     <string name="just_a_few_seconds_please">Just a few seconds please"</string>
     <string name="no_internet_dialog">It seems you don\'t have internet connection…</string>
     <string name="go_to_settings">Go To Settings</string>
+    <string name="check_out_item_image">check out item image</string>
+    <string name="reload">Reload</string>
+    <string name="connect_to_internet_message">Please Connect To The Internet</string>
 
 
 </resources>
