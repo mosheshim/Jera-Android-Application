@@ -37,7 +37,6 @@ class CartRepository(
                 userRepo.getCartFromFirebase {
                     if (it != null) {
                         scope.launch {
-                            println("launched")
                             jeraDAO.addCartItems(it)
                         }
                     }

@@ -27,12 +27,6 @@
                 android:id="@+id/layout_delivery_options_buttons"
                 layout="@layout/layout_delivery_type_buttons" />
 
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider_delivery_options"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
-
 
             <include
                 android:id="@+id/layout_addresses_options"

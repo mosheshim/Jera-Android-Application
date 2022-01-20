@@ -1,9 +1,6 @@
 package mosh.com.jera_v1.ui.cart
 
-import android.content.Intent
 import android.os.Bundle
-import android.provider.Settings
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,13 +45,12 @@ class CartFragment : BaseFragment<CartViewModel>() {
 
     /**
      * Update the view when called.
-     * Very important to call only after the cart in viewModel is updated to prevent crashes
+     * Must be called after the cart in viewModel is updated to prevent crashes
      */
     private fun updateList() {
         if (viewModel.cartIsEmpty) binding.textCartEmpty.visible()
         else {
             binding.buttonGoToPayment.setOnClickListener {
-//            TODO delete backstack later
                 if (!viewModel.isLoggedIn())
                     buildDialog(
                         getString(R.string.login_to_check_out_message),
@@ -88,6 +84,9 @@ class CartFragment : BaseFragment<CartViewModel>() {
 
     }
 
+    /**
+     * Shows dialog to before deleting the item in [index] of the cartItem list
+     */
     private fun deleteItemDialog(index: Int) =
         buildDialog(
             getString(R.string.delete_item_dialog),
@@ -103,8 +102,10 @@ class CartFragment : BaseFragment<CartViewModel>() {
         }
 
 
-
-
+    /**
+     * Shows pop up when clicked on the right button in the card. If clicked on the pop up, will
+     * delete item in [index] of cartItem list
+     */
     private fun showPopup(v: View, index: Int) {
         PopupMenu(requireContext(), v).apply {
             setOnMenuItemClickListener {

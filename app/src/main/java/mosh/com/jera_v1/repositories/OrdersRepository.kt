@@ -7,45 +7,39 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import mosh.com.jera_v1.MyApplication
-import mosh.com.jera_v1.models.Address
-import mosh.com.jera_v1.models.CartItem
-import mosh.com.jera_v1.models.Order
-import mosh.com.jera_v1.models.PickUpLocation
+import mosh.com.jera_v1.models.*
 import mosh.com.jera_v1.ui.checkout.DELIVERY
 import mosh.com.jera_v1.ui.checkout.PICK_UP
 
+const val USER_ID_PATH = "userId"
+
 class OrdersRepository(private val orderRef: DatabaseReference) {
     private val authRepo = MyApplication.authRepo
+    private var orders = mutableListOf<Order>()
 
-    private val _ordersLiveData = MutableLiveData<List<Order>>()
-    val ordersLiveData: LiveData<List<Order>> get() = _ordersLiveData
-
+    init {
+        authRepo.addAuthStateChangeListener { orders = mutableListOf() }
+    }
 
     fun addOrder(
         cart: List<CartItem>,
         userId: String,
-        address: Address?,
-        pickUpLocation: PickUpLocation?,
+        address: Address? = null,
+        pickUpLocation: PickUpLocation? = null,
         totalPrice: Int,
         ifSucceeded: (String?) -> Unit
     ) {
-
-        val order = if (address != null) Order(
-            userId = userId,
-            cart = cart,
-            deliveryType = DELIVERY,
-            address = address,
-            totalPrice = totalPrice
+        addOrderToDB(
+            ifSucceeded =  ifSucceeded,
+            order = Order(
+                userId = userId,
+                cart = cart,
+                deliveryType = DELIVERY,
+                pickUpLocation = pickUpLocation,
+                address = address,
+                totalPrice = totalPrice
+            )
         )
-        else Order(
-            userId = userId,
-            cart = cart,
-            deliveryType = PICK_UP,
-            pickUpLocation = pickUpLocation,
-            totalPrice = totalPrice
-        )
-
-        addOrderToDB(order, ifSucceeded)
     }
 
     private fun addOrderToDB(order: Order, ifSucceeded: (String?) -> Unit) {
@@ -53,19 +47,19 @@ class OrdersRepository(private val orderRef: DatabaseReference) {
             .addOnFailureListener {
                 ifSucceeded(it.localizedMessage)
             }.addOnCompleteListener {
-                ifSucceeded(null)
+                ifSucceeded(null).also { orders.add(order) }
             }
     }
 
-    fun fetchOrders() {
-        //TODO make const
-        orderRef.orderByChild("userId")
-            .equalTo(authRepo.getCurrentUserId()!!)
-            .limitToFirst(5)
+    fun fetchOrders(onFetch: (List<Order>) -> Unit) {
+        if (orders.isNotEmpty()) onFetch(orders).also { return }
+        orderRef.orderByChild(USER_ID_PATH)
+            .equalTo(authRepo.getCurrentUserId())
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) //TODO make all repositories fetch like that
-                    _ordersLiveData.postValue(getOrdersFromSnapshot(snapshot))
+                    if (snapshot.exists() && snapshot.hasChildren())
+                        orders.addAll(getOrdersFromSnapshot(snapshot))
+                    onFetch(orders)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -75,9 +69,9 @@ class OrdersRepository(private val orderRef: DatabaseReference) {
 
     private fun getOrdersFromSnapshot(snapshot: DataSnapshot): List<Order> {
         val orders = mutableListOf<Order>()
-            for (order in snapshot.children) {
-                orders.add(order.getValue(Order::class.java)!!)
-            }
+        for (order in snapshot.children) {
+            orders.add(order.getValue(Order::class.java)!!)
+        }
         return orders
     }
 }

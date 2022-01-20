@@ -13,7 +13,6 @@ import mosh.com.jera_v1.models.CartItem
 import mosh.com.jera_v1.models.PickUpLocation
 import mosh.com.jera_v1.utils.*
 import mosh.com.jera_v1.utils.TextResource.Companion.fromStringId
-import org.w3c.dom.Text
 
 const val DELIVERY = "delivery"
 const val PICK_UP = "pick up"
@@ -31,11 +30,12 @@ const val PHONE_PREFIX = "phone prefix"
 
 class CheckoutViewModel : FormViewModel() {
     private val cartRepo = MyApplication.cartRepo
-    private val userRepo = MyApplication.usersRepo
     private val ordersRepo = MyApplication.ordersRepo
-    private val authRepo = MyApplication.authRepo
 
     init {
+        /**
+         * initialize the fields that can be filled by the user
+         */
         fields = mutableMapOf(
             Pair(CITY, NOT_VALID),
             Pair(STREET, NOT_VALID),
@@ -50,8 +50,7 @@ class CheckoutViewModel : FormViewModel() {
     }
 
     private lateinit var cart: List<CartItem>
-    val isUserLoggedIn :LiveData<Boolean> = authRepo.isLoggedInLiveData
-
+    val authStateChangeLiveData: LiveData<Boolean> = authRepo.authStateChangeLiveData
 
     private var defaultAddress: Address? = null
 
@@ -77,31 +76,43 @@ class CheckoutViewModel : FormViewModel() {
     val newOrDefaultAddress: LiveData<String> get() = _newOrDefaultAddress
 
     //-----------------------------------db communication-----------------------------------------//
+    /**
+     * Deletes the cart from the Room DB and the server DB and sends request the server DB
+     */
     private fun updateDB(ifSucceeded: (Boolean) -> Unit) {
         val address = buildAddress()
         viewModelScope.launch {
             cartRepo.deleteCart()
-            if (orderType == NEW_ADDRESS && addAddressToDefault) userRepo.updateAddress(address!!)
+            if (orderType == NEW_ADDRESS && addAddressToDefault) usersRepo.updateAddress(address!!)
             addOrder(address, ifSucceeded)
+
         }
     }
 
-    private fun addOrder(address: Address?,ifSucceeded: (Boolean) -> Unit){
+    /**
+     * Calls the addOrder function in OrderRepository with the fields that the user filled.
+     * Calls [ifSucceeded] with the answer of the DB request and shows toast with the error
+     * if failed
+     */
+    private fun addOrder(address: Address?, ifSucceeded: (Boolean) -> Unit) {
         ordersRepo.addOrder(
             cart = cart,
-            userId = userRepo.getUserID()!!,
+            userId = usersRepo.getUserID()!!,
             address = address,
             pickUpLocation = chosenPickupLocation,
             totalPrice = cartRepo.totalPrice
-        ){
-            val answer= it.isNullOrEmpty()
-            if (answer)showToast(R.string.order_confirmed)
+        ) {
+            val answer = it.isNullOrEmpty()
+            if (answer) showToast(R.string.order_confirmed)
             else showToast(it!!)
             ifSucceeded(answer)
         }
     }
 
-
+    /**
+     * Builds an address based of what the user chose (new address or the default address).
+     * If the pickup option was chosen, will return null
+     */
     private fun buildAddress(): Address? {
         return when (orderType) {
             PICK_UP -> null
@@ -120,23 +131,32 @@ class CheckoutViewModel : FormViewModel() {
     }
 
     //--------------------------------validation and saving---------------------------------------//
-    fun pay(ifSucceeded: (Boolean) -> Unit): Boolean {
+    /**
+     * Returns false if a field is not valid and shows a toast with the problem.
+     * If all fields are valid returns true and sends request to the DB.
+     * The answer of the DB request will be passed to the callback [whenDone]
+     */
+    fun pay(whenDone: (Boolean) -> Unit): Boolean {
         fillNotRequiredFields()
         val stringId: Int? =
             when {
                 pickupOrDelivery.value == null -> R.string.no_delivery_option_chosen_message
-                fields[PHONE].equals("") -> R.string.phone_number_now_valid_message
-                orderType == NEW_ADDRESS && fields.containsValue(NOT_VALID)->
+                fields[PHONE].equals(NOT_VALID) -> R.string.phone_number_now_valid_message
+                orderType == NEW_ADDRESS && fields.containsValue(NOT_VALID) ->
                     R.string.empty_field_message
                 orderType == PICK_UP && chosenPickupLocation == null ->
                     R.string.no_pickup_location_chosen_message
                 else -> null
             }
-        if (stringId == null) updateDB(ifSucceeded).also { return true }
+        if (stringId == null) updateDB(whenDone).also { return true }
         else showToast(stringId)
         return false
     }
 
+    /**
+     * Validates the [number]
+     * Returns the error message if there is one, if not return null
+     */
     private fun validatePhone(number: String): TextResource? {
         return when {
             number.length != 7 -> fromStringId(R.string.invalid_number)
@@ -147,6 +167,10 @@ class CheckoutViewModel : FormViewModel() {
         }
     }
 
+    /**
+     * Validates the [editable] by the [field]
+     * Returns the error message if there is one, if not return null
+     */
     public override fun validateField(editable: Editable?, field: String): TextResource? {
         val string = editable.toString()
         return when (field) {
@@ -157,26 +181,43 @@ class CheckoutViewModel : FormViewModel() {
         }
     }
 
+//   Adds validation to specific fields.
+    /**
+     * If field is valid, saves it to [fields]
+     */
     override fun saveField(editable: Editable?, field: String): TextResource? {
         if ((field != PHONE && newOrDefaultAddress.value == DEFAULT_ADDRESS)) return null
         return super.saveField(editable, field)
     }
 
+//  Created to work with current validations functions
+    /**
+     * Fills the fields that are not required.
+     */
     private fun fillNotRequiredFields() {
-        for (fieldKey in listOf<String>(FLOOR, APARTMENT, ENTRANCE))
+        for (fieldKey in listOf(FLOOR, APARTMENT, ENTRANCE))
             if (fields[fieldKey] == NOT_VALID) fields[fieldKey] = "-"
     }
 
     //------------------------------------init functions -----------------------------------------//
+    /*
+    Uses callback instead of livedata to have more control over the data that is passed to the view
+     */
+    /**
+     * Calls [onLoad] when cart is loaded
+     */
     fun onCartLoad(onLoad: () -> Unit) {
-            cart = cartRepo.cartLiveData.value!!
-                userRepo.getUserAddress { address ->
-                    defaultAddress = address
-                    initFields()
-                    onLoad()
-                }
+        cart = cartRepo.cartLiveData.value!!
+        usersRepo.getUserAddress { address ->
+            defaultAddress = address
+            initFields()
+            onLoad()
+        }
     }
 
+    /**
+     * Sets the data to for the view to use
+     */
     private fun initFields() {
         if (!defaultAddress?.phone.isNullOrEmpty()) {
             fields[PHONE_PREFIX] = defaultAddress!!.phone.substring(0, 3)
@@ -189,6 +230,9 @@ class CheckoutViewModel : FormViewModel() {
         } else _newAddressContainerVisibility = VISIBLE
     }
 
+    /**
+     * Checks if the user's default address has all the required information to use
+     */
     private fun checkIfHasDefaultAddress(): Boolean {
         return if (defaultAddress == null) false
         else when (NOT_VALID) {
@@ -200,13 +244,15 @@ class CheckoutViewModel : FormViewModel() {
         }
     }
 
-    //TODO load From Data base
+    //Will be loaded from the DB server in the future
     private val _pickupLocations: List<PickUpLocation> = listOf(
-        PickUpLocation("Rishon lezion", "the beer mall"),
-        PickUpLocation("Tel Aviv", "Eban Gavirol")
+        PickUpLocation("Rishon lezion", "some address"),
+        PickUpLocation("Tel Aviv", "some address")
     )
 
-
+    /**
+     * Builds the available phone prefixes in Israel
+     */
     private fun getPhonePrefixList(): List<String> {
         val prefixes = mutableListOf<String>()
         for (i in 0..9) prefixes.add("05$i")
@@ -214,37 +260,58 @@ class CheckoutViewModel : FormViewModel() {
     }
 
     //-------------------------------------on click functions-------------------------------------//
-    fun setPickUpLocation(index: Int) {
+    /**
+     * Setts the action that when the button is clicked
+     */
+    fun pickUpLocationClicked(index: Int) {
         chosenPickupLocation = _pickupLocations[index]
     }
 
-    fun setPrefix(index: Int) {
+    /**
+     * Setts the action that when the button is clicked
+     */
+    fun phonePrefixClicked(index: Int) {
         fields[PHONE_PREFIX] = getPhonePrefixList()[index]
     }
 
+    /**
+     * Setts the action that when the button is clicked
+     */
     fun deliveryButtonClicked() {
         _addressesLayoutVisibility = VISIBLE
         _selfPickUpContainerVisibility = GONE
         _pickupOrDelivery.postValue(DELIVERY)
     }
 
+    /**
+     * Setts the action that when the button is clicked
+     */
     fun selfPickUpButtonClicked() {
         _selfPickUpContainerVisibility = VISIBLE
         _addressesLayoutVisibility = GONE
         _pickupOrDelivery.postValue(PICK_UP)
     }
 
+    /**
+     * Setts the action that when the button is clicked
+     */
     fun defaultAddressClicked() {
         _newAddressContainerVisibility = GONE
         _newOrDefaultAddress.postValue(DEFAULT_ADDRESS)
     }
 
+    /**
+     * Setts the action that when the button is clicked
+     */
     fun newAddressClicked() {
         _newAddressContainerVisibility = VISIBLE
         _newOrDefaultAddress.postValue(NEW_ADDRESS)
 
     }
 
+    /**
+     * Setts the action that when the button is clicked
+     */
     fun addAddressToDefaultClicked() {
         addAddressToDefault = !addAddressToDefault
     }
@@ -289,7 +356,7 @@ class CheckoutViewModel : FormViewModel() {
 
     val pickupLocations get() = _pickupLocations.map { it.location }
 
-    val price get() = cartRepo.totalPrice
+    val price get() = cartRepo.totalPrice.toString()
 
     val prefixesList get() = getPhonePrefixList()
 }

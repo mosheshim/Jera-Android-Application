@@ -3,20 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="4dp"
     android:elevation="8dp"
-    app:cardCornerRadius="16dp">
+    app:cardCornerRadius="16dp"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:padding="16dp"
+        >
 
         <TextView
             android:id="@+id/text_order_date_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/date_of_order"
             android:textColor="@color/black"
-            android:text="Date Of Order:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,86 +27,86 @@
             android:id="@+id/text_order_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="16.12.21"
             android:layout_marginStart="8dp"
+            android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@id/text_order_date_label"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
-<!--        change to dynamic text-->
         <TextView
             android:id="@+id/text_type_of_delivery_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="PickUp / Delivey"
-            app:layout_constraintTop_toBottomOf="@id/text_order_date_label"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/text_order_date_label" />
 
         <TextView
+            android:id="@+id/text_type_of_delivery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="street name goes here"
+            android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@id/text_type_of_delivery_label"
-            app:layout_constraintTop_toTopOf="@id/text_type_of_delivery_label"/>
+            app:layout_constraintTop_toTopOf="@id/text_type_of_delivery_label" />
 
         <TextView
             android:id="@+id/text_delivery_status_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Status:"
-            app:layout_constraintTop_toBottomOf="@id/text_type_of_delivery_label"
+            android:textColor="@color/black"
+            android:text="@string/status"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/text_type_of_delivery_label" />
 
         <TextView
             android:id="@+id/text_delivery_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="status text"
+            android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@id/text_delivery_status_label"
-            app:layout_constraintTop_toTopOf="@id/text_delivery_status_label"/>
+            app:layout_constraintTop_toTopOf="@id/text_delivery_status_label" />
 
         <TextView
             android:id="@+id/text_price_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Price:"
-            app:layout_constraintTop_toBottomOf="@id/text_delivery_status"
+            android:textColor="@color/black"
+            android:text="@string/price"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/text_delivery_status" />
 
         <TextView
             android:id="@+id/text_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="150$"
+            android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@id/text_price_label"
-            app:layout_constraintTop_toTopOf="@id/text_price_label"/>
+            app:layout_constraintTop_toTopOf="@id/text_price_label" />
 
-<TextView
+        <TextView
             android:id="@+id/text_order_id_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Order ID:"
-            app:layout_constraintTop_toBottomOf="@id/text_price"
+            android:textColor="@color/black"
+            android:text="@string/order_id"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/text_price" />
 
         <TextView
             android:id="@+id/text_order_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="53344252dgs435d"
+            android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@id/text_order_id_label"
-            app:layout_constraintTop_toTopOf="@id/text_order_id_label"/>
+            app:layout_constraintTop_toTopOf="@id/text_order_id_label" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

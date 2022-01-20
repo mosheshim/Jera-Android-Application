@@ -21,8 +21,7 @@ const val PASSWORD_2 = "password_2"
 
 
 class AuthViewModel : FormViewModel() {
-    private val authRepo = MyApplication.authRepo
-    private val usersRepo = MyApplication.usersRepo
+    private var password1Holder:String =""
 
     init {
         fields = mutableMapOf(
@@ -84,6 +83,7 @@ class AuthViewModel : FormViewModel() {
     }
 
     private fun validatePassword1(string: String): TextResource? {
+        password1Holder = string
         return when{
             string.length < 8 -> fromStringId(R.string.password_to_short)
             !hasDigits(string) || !hasLetters(string) -> fromStringId(R.string.no_digits_of_letters)
@@ -92,7 +92,7 @@ class AuthViewModel : FormViewModel() {
     }
 
     private fun validatePassword2(string: String): TextResource? {
-        return if (string != fields[PASSWORD_1]) fromStringId(R.string.passwords_do_not_match)
+        return if (string != password1Holder) fromStringId(R.string.passwords_do_not_match)
         else null
     }
 

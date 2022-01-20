@@ -19,7 +19,7 @@ import mosh.com.jera_v1.utils.TextResource.Companion.asString
 
 import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.visible
 
-class CheckoutFragment : BaseFragment<CheckoutViewModel>(),UiUtils {
+class CheckoutFragment : BaseFragment<CheckoutViewModel>(), UiUtils {
     private var _binding: FragmentCheckoutBinding? = null
     private val binding get() = _binding!!
     private lateinit var fieldsMap: List<Triple<TextInputEditText, TextInputLayout, String>>
@@ -38,16 +38,19 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(),UiUtils {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.isUserLoggedIn.observe(viewLifecycleOwner){
+        //Pop the stack if the user logged out
+        viewModel.authStateChangeLiveData.observe(viewLifecycleOwner) {
             if (!it) findNavController().popBackStack()
         }
-
-
         binding.apply {
             viewModel.onCartLoad {
                 notifyWhenDataFetched()
             }
+            /*
+            If fields are valid, start progress dialog. If request passed through it will navigate
+            to main screen.
+            The progress dialog will be dismissed when the callback will be called
+            */
             buttonPay.setOnClickListener {
                 hideKeyBoard()
                 saveAllFields()
@@ -60,10 +63,14 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(),UiUtils {
                         progressDialog.dismiss()
                     }) progressDialog.show()
             }
+
             buttonCancel.setOnClickListener { findNavController().popBackStack() }
         }
     }
 
+    /**
+     * Update the Ui when the data is fetched successfully
+     */
     private fun notifyWhenDataFetched() {
         setListeners()
         binding.apply {
@@ -78,10 +85,12 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(),UiUtils {
                 viewModel.prefixesList,
                 spinnerPhonePrefix
             ) {
-                viewModel.setPrefix(it)
+                viewModel.phonePrefixClicked(it)
             }
-            layoutHeader.recyclerImages.adapter = CheckOutImagesAdapter(viewModel.images,
-            layoutHeader.progressBar)
+            layoutHeader.recyclerImages.adapter = CheckOutImagesAdapter(
+                viewModel.images,
+                layoutHeader.progressBar
+            )
             layoutHeader.recyclerImages.layoutManager = LinearLayoutManager(
                 requireContext(),
                 LinearLayoutManager.HORIZONTAL,
@@ -100,16 +109,14 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(),UiUtils {
             }
             //-------------------------changes in order type observer------------------------------//
             viewModel.pickupOrDelivery.observe(viewLifecycleOwner) {
-                dividerDeliveryOptions.visible() //TODO can delete from here?
                 containerPhone.visible()
-
                 //-------------------self pick up ----------------------//
                 layoutSelfPickupFields.apply {
                     mainContainer.visibility = viewModel.selfPickUpContainerVisibility
                     buildSpinner(
                         viewModel.pickupLocations,
                         spinnerPickupLocation
-                    ) { viewModel.setPickUpLocation(it) }
+                    ) { viewModel.pickUpLocationClicked(it) }
 
                     spinnerPickupLocation.setOnClickListener { hideKeyBoard() }
                 }
@@ -164,6 +171,11 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(),UiUtils {
         }
     }
 
+    //This function prevent repetitive code
+
+    /**
+     * Add listeners to all fields
+     */
     private fun setListeners() {
         for (field in fieldsMap) onLostFocusListener(field.first) {
             field.second.error =
@@ -171,6 +183,9 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(),UiUtils {
         }
     }
 
+    /**
+     * Saves all fields
+     */
     private fun saveAllFields() {
         for (field in fieldsMap) {
             field.second.error =
@@ -178,6 +193,9 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(),UiUtils {
         }
     }
 
+    /**
+     * Creates a map of all the fields inputs, layout and fields name
+     */
     private fun getFieldsMap(): List<Triple<TextInputEditText, TextInputLayout, String>> {
         binding.layoutAddressesOptions.apply {
             return listOf(

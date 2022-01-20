@@ -108,7 +108,7 @@
 
     <fragment
         android:id="@+id/fragmentOrders"
-        android:name="mosh.com.jera_v1.ui.orders.FragmentOrders"
+        android:name="mosh.com.jera_v1.ui.orders.OrdersFragment"
         android:label="fragment_orders"
         tools:layout="@layout/fragment_orders" />
 <action

@@ -1,5 +1,7 @@
 package mosh.com.jera_v1.models
 
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 data class Order(
@@ -10,6 +12,6 @@ data class Order(
     val pickUpLocation: PickUpLocation? = null,
     val deliveryType:String = "",
     val deliveryStatus: String = "Processing",
-    val date: String = Date().toString(),
+    val date: String = LocalDate.now().format(DateTimeFormatter.ISO_DATE),
     val totalPrice: Int = 0
 )

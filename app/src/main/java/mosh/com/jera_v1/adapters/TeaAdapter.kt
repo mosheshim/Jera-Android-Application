@@ -10,7 +10,7 @@ import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.buildPicasso
 
 class TeaAdapter(
     private val productSeriesList: List<ProductSeries>,
-    val callback: (String) -> Unit
+    val onClick: (String) -> Unit
 ) : RecyclerView.Adapter<TeaAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: TeaItemBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -43,7 +43,7 @@ class TeaAdapter(
             imageTeaItem.buildPicasso(productLine.teas[0].imageURL,progressbar)
         }
         holder.itemView.setOnClickListener {
-            callback(productLine.id)
+            onClick(productLine.id)
         }
     }
 

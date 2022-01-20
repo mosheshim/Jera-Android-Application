@@ -6,14 +6,18 @@ import com.google.firebase.auth.FirebaseAuth
 
 class AuthRepository(private val auth: FirebaseAuth) {
 
-    private val _isUserLoggedIn = MutableLiveData(auth.currentUser != null)
-    val isLoggedInLiveData:LiveData<Boolean> get() = _isUserLoggedIn
-    val isLoggedIn:Boolean get() = _isUserLoggedIn.value?: false
+    private val _authStateChangeLiveData = MutableLiveData(auth.currentUser != null)
+    val authStateChangeLiveData:LiveData<Boolean> get() = _authStateChangeLiveData
+    val isLoggedIn:Boolean get() = _authStateChangeLiveData.value?: false
 
     init {
         auth.addAuthStateListener {
-            _isUserLoggedIn.postValue(it.currentUser != null)
+            _authStateChangeLiveData.postValue(it.currentUser != null)
         }
+    }
+    //TODO add listener like that and not from listening to live data
+    fun addAuthStateChangeListener(onChange:()->Unit){
+        auth.addAuthStateListener { onChange() }
     }
 
 //    TODO ia that ok?

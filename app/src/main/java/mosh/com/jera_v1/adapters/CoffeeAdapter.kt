@@ -11,8 +11,7 @@ import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.buildPicasso
 class CoffeeAdapter(private val coffeeList: List<Coffee>,val onClick:(String)->Unit) :
     RecyclerView.Adapter<CoffeeAdapter.ViewHolder>() {
 
-    class ViewHolder(val binding: CoffeeItemBinding) : RecyclerView.ViewHolder(binding.root) {
-    }
+    class ViewHolder(val binding: CoffeeItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(

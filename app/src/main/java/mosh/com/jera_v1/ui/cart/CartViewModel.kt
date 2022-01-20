@@ -14,32 +14,33 @@ class CartViewModel : BaseViewModel(){
     val cart:List<CartItem> get() = _cart
 
     init {
+        /**
+         * Update local cartItems list parameter from the repository
+         */
         _cart.addAll(cartRepo.cartLiveData.value?: listOf())
     }
-    /**
-     * Calls updateUI callback when Room is synced with Firebase(if user is logged in) and the cart
-     * is fetched
-     */
-//    fun onCartLoad(updateUI:() ->Unit){
-//                    _cart = cartRepo.cartLiveData.value.toMutableList()
-//                    updateUI()
-//    }
 
+    /**
+     * Deletes the item in [index] from the local cartItem list parameter & from
+     * the sever DB and Room DB
+     */
     fun deleteItem(index: Int) {
-        val item = _cart[index]
         _cart.removeAt(index)
         viewModelScope.launch {
-            cartRepo.deleteItem(item)
+            cartRepo.deleteItem(_cart[index])
         }
     }
 
+    /**
+     * Link function to auth repository
+     */
     fun isLoggedIn(): Boolean {
        return authRepo.isLoggedIn
     }
 
 
-
-    val price get() = cartRepo.totalPrice
+//--------------------------------------getters for the view--------------------------------------//
+    val price get() = cartRepo.totalPrice.toString()
     val cartIsEmpty get() = _cart.isNullOrEmpty()
 
 
