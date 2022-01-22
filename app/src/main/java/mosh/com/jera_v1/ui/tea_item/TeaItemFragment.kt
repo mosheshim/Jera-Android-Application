@@ -12,7 +12,6 @@ import mosh.com.jera_v1.databinding.FragmentTeaItemScreenBinding
 import mosh.com.jera_v1.utils.BaseFragment
 import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.buildPicasso
 import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.visible
-import mosh.com.jera_v1.utils.TextResource
 import mosh.com.jera_v1.utils.UiUtils
 import mosh.com.jera_v1.utils.TextResource.Companion.asString
 
@@ -76,7 +75,7 @@ class TeaItemFragment : BaseFragment<TeaItemViewModel>(), UiUtils {
            buildSpinner(
                 viewModel.teaListNames,
                spinnerTeaOption
-            ) { viewModel.setTea(it) }
+            ) { viewModel.onTeaClicked(it) }
             spinnerTeaOption.setOnClickListener{hideKeyBoard()}
 
 
@@ -109,7 +108,9 @@ class TeaItemFragment : BaseFragment<TeaItemViewModel>(), UiUtils {
     }
 
     //-------------------------------------animations---------------------------------------------//
-
+    /**
+     * Start container animations depending on which widget is visible
+     */
     private fun startContainerAnimation() {
         val containerAnimation =
             AnimationUtils.loadAnimation(requireContext(), R.anim.conatiner_animation)

@@ -60,7 +60,6 @@
         android:id="@+id/text_total_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="@+id/text_total_price_label"
         app:layout_constraintEnd_toEndOf="@+id/button_go_to_payment" />
@@ -71,7 +70,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="@string/total_price"
-        android:textColor="@color/black"
         android:textSize="22sp"
         app:layout_constraintBottom_toTopOf="@+id/button_go_back_cart_frag"
         app:layout_constraintStart_toStartOf="@+id/button_go_back_cart_frag" />
@@ -93,7 +91,6 @@
         android:layout_marginEnd="16dp"
         android:text="@string/your_cart_is_empty"
         android:textAlignment="center"
-        android:textColor="@color/black"
         android:textSize="40sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/rv_cart"

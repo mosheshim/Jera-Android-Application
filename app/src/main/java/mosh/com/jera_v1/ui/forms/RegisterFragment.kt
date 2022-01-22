@@ -48,7 +48,7 @@ class RegisterFragment : BaseFragment<AuthViewModel>(), UiUtils {
             buttonRegister.setOnClickListener { button ->
                 hideKeyBoard()
                 saveAllFields()
-                if (checkIfConnected()) {
+                if (connectedToInternet()) {
                     changeButtonLoadingView(textViewRegister, progressIndicator, button)
                     viewModel.register {
                         if (it) findNavController().popBackStack(R.id.navigation_login, true)
@@ -59,6 +59,9 @@ class RegisterFragment : BaseFragment<AuthViewModel>(), UiUtils {
         }
     }
 
+    /**
+     * Updates the field to show error ui
+     */
     private fun changeFieldUI(
         field: Triple<TextInputEditText, TextInputLayout, String>, error: String?
     ) {
@@ -66,6 +69,9 @@ class RegisterFragment : BaseFragment<AuthViewModel>(), UiUtils {
         field.second.isEndIconVisible = error.isNullOrEmpty()
     }
 
+    /**
+     * Add listeners to all fields
+     */
     private fun setListeners() {
         for (field in fieldsMap) onLostFocusListener(field.first) {
             changeFieldUI(
@@ -75,6 +81,9 @@ class RegisterFragment : BaseFragment<AuthViewModel>(), UiUtils {
         }
     }
 
+    /**
+     * Saves all fields
+     */
     private fun saveAllFields() {
         for (field in fieldsMap) {
             changeFieldUI(
@@ -85,6 +94,9 @@ class RegisterFragment : BaseFragment<AuthViewModel>(), UiUtils {
         }
     }
 
+    /**
+     * Creates a map of all the fields inputs, layout and fields name
+     */
     private fun getFieldsMap(): List<Triple<TextInputEditText, TextInputLayout, String>> {
         binding.apply {
             return listOf(

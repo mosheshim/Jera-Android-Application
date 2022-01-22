@@ -30,10 +30,4 @@ open class BaseFragment<T:BaseViewModel> : FragmentWithUtils() {
                 Toast.LENGTH_LONG).show()
     }
     }
-
-
-
-
-
-
 }

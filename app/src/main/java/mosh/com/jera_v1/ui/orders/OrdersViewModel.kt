@@ -23,6 +23,9 @@ class OrdersViewModel : BaseViewModel() {
         getOrders()
     }
 
+    /**
+     * Updates the Livedata when the data arrived from the server
+     */
     private fun getOrders() {
         ordersRepo.fetchOrders { orders ->
             val dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
@@ -35,8 +38,8 @@ class OrdersViewModel : BaseViewModel() {
         }
     }
 
-    val textNoOrdersFoundVisibility
-        get() = if (orders.value.isNullOrEmpty()) View.VISIBLE
+    val textNoOrdersFoundVisibility get() =
+        if (orders.value.isNullOrEmpty()) View.VISIBLE
         else View.GONE
 
 }

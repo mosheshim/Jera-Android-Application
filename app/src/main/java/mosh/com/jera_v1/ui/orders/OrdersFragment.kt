@@ -29,6 +29,7 @@ class OrdersFragment : BaseFragment<OrdersViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // If user logged out, the stack will pop
         viewModel.authStateChangeLiveData.observe(viewLifecycleOwner) {
             if (!it) findNavController().popBackStack()
         }

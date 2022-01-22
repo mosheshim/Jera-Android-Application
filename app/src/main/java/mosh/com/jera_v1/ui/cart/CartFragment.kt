@@ -74,7 +74,7 @@ class CartFragment : BaseFragment<CartViewModel>() {
             recyclerView.adapter = adapter
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             binding.textTotalPrice.text =
-                getString(R.string.money_symbol_with_string, viewModel.price)
+                getString(R.string.money_symbol_with_string, viewModel.totalPrice)
         }
     }
 
@@ -97,7 +97,7 @@ class CartFragment : BaseFragment<CartViewModel>() {
                 viewModel.deleteItem(index)
                 adapter.notifyItemRemoved(index)
                 binding.textTotalPrice.text =
-                    getString(R.string.money_symbol_with_string, viewModel.price)
+                    getString(R.string.money_symbol_with_string, viewModel.totalPrice)
             } else adapter.notifyItemChanged(index)
         }
 

@@ -3,6 +3,7 @@ package mosh.com.jera_v1.ui.coffee_item
 import mosh.com.jera_v1.MyApplication
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.models.Coffee
+import mosh.com.jera_v1.repositories.*
 import mosh.com.jera_v1.utils.*
 import java.lang.Exception
 
@@ -12,24 +13,38 @@ class CoffeeItemViewModel : ProductItemViewModel() {
     private lateinit var coffee: Coffee
 
     /**
-     * finds the product line by id and sets it as the selected product line
+     * Finds the coffee by id and sets it as the selected product line
      */
     fun setCoffeeById(id: String) {
-//        TODO change the exeption
-        coffee = productsRepository.findCoffeeById(id) ?: throw Exception("no coffee found")
-    }
-    fun onAddToCartButtonClicked(onSuccess:()->Unit){
-        addToCart(
-            coffee,
-             chosenGrindSize,
-            onSuccess)
+        coffee = productsRepository.findCoffeeById(id)!!
     }
 
-    fun setGrindSize(index: Int) {
+    /**
+     * Adds the selected item to the database
+     */
+    fun onAddToCartButtonClicked(onSuccess: () -> Unit) {
+        addToCart(
+            coffee,
+            chosenGrindSize,
+            onSuccess
+        )
+    }
+
+    /**
+     * Sets the chosen grind size
+     */
+    fun onGrindSizeClicked(index: Int) {
         chosenGrindSize = grindSizes[index]
     }
 
-    val grindSizes = listOf("Beans", "Espresso", "Moka Pot", "Filter", "French Press")
+//    TODO make is work as a string id
+    val grindSizes = listOf(
+        BEANS,
+        ESPRESSO,
+        MOKA_POT,
+        FILTER,
+        FRENCH_PRESS
+    )
     private var chosenGrindSize = grindSizes[0]
 
     val name get() = coffee.name
@@ -42,8 +57,11 @@ class CoffeeItemViewModel : ProductItemViewModel() {
     val countryOfOrigin get() = coffee.countryOfOrigin
     val tasteProfile get() = coffee.tasteProfile
     val description get() = coffee.description
-    val addToCartButtonText get() = TextResource.fromStringId(if (coffee.inStock)
-        R.string.add_to_cart else R.string.out_of_stock)
+    val addToCartButtonText
+        get() = TextResource.fromStringId(
+            if (coffee.inStock)
+                R.string.add_to_cart else R.string.out_of_stock
+        )
     val imageUrl get() = coffee.imageURL
 
 }

@@ -40,9 +40,9 @@ class LoginFragment : BaseFragment<LoginViewModel>(), UiUtils {
 
             buttonLogin.setOnClickListener{ button ->
                 hideKeyBoard()
-                if (checkIfConnected()) {
+                if (connectedToInternet()) {
                     changeButtonLoadingView(textViewLogin, progressIndicator, button)
-                    viewModel.logIn(inputEmailLogin.text, inputPasswordLogin.text) {
+                    viewModel.onLoginClicked(inputEmailLogin.text, inputPasswordLogin.text) {
                         hideKeyBoard()
                         if (it) findNavController().popBackStack()
                         else changeButtonLoadingView(textViewLogin, progressIndicator, button)

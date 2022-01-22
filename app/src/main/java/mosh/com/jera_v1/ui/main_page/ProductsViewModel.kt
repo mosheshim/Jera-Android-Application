@@ -16,6 +16,9 @@ class ProductsViewModel : ViewModel() {
 
     val coffeeList: LiveData<List<Coffee>> = productsRepo.coffeeLiveData
 
+    /**
+     * Return the span number of the grid according to the orientation
+     */
     fun getSpanNum(orientation: Int): Int {
         return when (orientation) {
             Configuration.ORIENTATION_PORTRAIT -> 2

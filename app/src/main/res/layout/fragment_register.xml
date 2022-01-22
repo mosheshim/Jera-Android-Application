@@ -32,7 +32,6 @@
                 android:text="@string/you_can_almost_smell_the_coffee"
                 android:textAlignment="center"
                 android:autoSizeTextType="uniform"
-                android:textColor="@color/black"
                 android:textSize="36sp" />
 
             <LinearLayout

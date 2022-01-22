@@ -61,7 +61,7 @@ class CoffeeItemFragment() : BaseFragment<CoffeeItemViewModel>(), UiUtils {
                 buildSpinner(
                     grindSizes,
                     spinnerGrindLevel
-                ) { setGrindSize(it) }
+                ) { onGrindSizeClicked(it) }
 
                 imageLayout.image.buildPicasso(
                     imageUrl,

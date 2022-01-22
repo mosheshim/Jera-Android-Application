@@ -3,11 +3,19 @@ package mosh.com.jera_v1.repositories
 
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.*
+import mosh.com.jera_v1.R
 import mosh.com.jera_v1.dao.JeraDAO
 import mosh.com.jera_v1.models.CartItem
 import mosh.com.jera_v1.models.Product
+import mosh.com.jera_v1.utils.TextResource
 
 import java.util.*
+
+const val BEANS = "Beans"
+const val ESPRESSO = "Espresso"
+const val MOKA_POT = "Moka Pot"
+const val FILTER = "Filter"
+const val FRENCH_PRESS = "French Press"
 
 class CartRepository(
     private val jeraDAO: JeraDAO,
@@ -15,15 +23,15 @@ class CartRepository(
 ) {
     val scope = CoroutineScope(Dispatchers.IO)
     val cartLiveData: LiveData<List<CartItem>> = jeraDAO.getLiveCart()
-    val totalPrice get() = getCartPrice()
+
 
     init {
         updateCart()
     }
 
-    private fun getCartPrice():Int{
+     fun getCartPrice(cart: List<CartItem> = cartLiveData.value!!): Int {
         var total = 0
-        cartLiveData.value?.forEach { total =+ it.price }
+        cart.forEach { total = total.plus(it.price) }
         return total
     }
 
@@ -82,4 +90,6 @@ class CartRepository(
         jeraDAO.deleteCart()
         userRepo.deleteCartFromFirebase()
     }
+
+
 }

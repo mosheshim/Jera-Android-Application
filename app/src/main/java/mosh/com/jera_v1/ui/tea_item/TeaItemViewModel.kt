@@ -16,9 +16,9 @@ class TeaItemViewModel() : ProductItemViewModel() {
 
     private lateinit var productSeries: ProductSeries
 
+//    TODO change it
     /**
-     * helper method to clean the code
-     * converting the weight into a string and adding a gram symbol
+     * Converting the weight into a string and adding a gram symbol
      */
     private fun getWeightString(weight: Weight?): String? =
         if (weight != null)
@@ -26,23 +26,23 @@ class TeaItemViewModel() : ProductItemViewModel() {
         else null
 
     /**
-     * helper method to clean the code
-     * returning a copy of the the tea object with a new price changed by the weight price
+     * Returns a copy of the the tea object with a new price changed to the weight price
      */
     private fun getTeaCopyWithPrice(tea: Tea): Tea =
         if (_weight != null) tea.copy(price = _weight!!.price) else tea
 
     /**
-     * finds the product line by id and sets it as the selected product line
+     * Finds the product line by id and sets it as the selected product line
      */
     fun setProductLineById(id: String) {
-        val temp =
-            productsRepository.findProductLineById(id) ?: throw Exception("no product line found")
-        productSeries = temp
-        updateProductLineData()
+        productSeries =
+            productsRepository.findProductLineById(id) ?: throw Exception("No product line found")
+        initializeData()
     }
 
-
+    /**
+     * Check if a tea was chosen, if true, will add to cart the product
+     */
     fun onAddToCartButtonClicked(onSuccess: () -> Unit) {
         if (tea.value == null) showToast(R.string.no_tea_chosen_message)
         else
@@ -53,19 +53,25 @@ class TeaItemViewModel() : ProductItemViewModel() {
         )
     }
 
-    fun setTea(index: Int) {
-        setTea(productSeries.teas[index])
+    /**
+     * Sets the chosen tea by [index]
+     */
+    fun onTeaClicked(index: Int) {
+        onTeaClicked(productSeries.teas[index])
     }
 
+    /**
+     * Sets the chosen weight by [index]
+     */
     fun setWeight(index: Int) {
         _weight = _weightList[index]
         _price = _weight!!.price.toString()
     }
 
     /**
-     * updates the parameters that the fragment observes
+     * Initialize the parameters
      */
-    private fun updateProductLineData() {
+    private fun initializeData() {
         _productLineDescription = productSeries.description
         _subTitle =TextResource.fromStringId(
             if(productSeries.isTeaBag) R.string.tea_bag else R.string.tea_brew)
@@ -77,15 +83,14 @@ class TeaItemViewModel() : ProductItemViewModel() {
             _containerOptionVisibility = View.VISIBLE
         } else {
             _teaList = listOf()
-            setTea(productSeries.teas[0])
+            onTeaClicked(productSeries.teas[0])
         }
-
     }
 
     /**
-     * updates the parameters that the fragment observes
+     * Updates the parameters that the fragment observes
      */
-    private fun setTea(tea: Tea) {
+    private fun onTeaClicked(tea: Tea) {
         _name = tea.name
         _imageURL = tea.imageURL
         _addToCartButtonText = TextResource.fromStringId(if (tea.inStock)
@@ -96,6 +101,9 @@ class TeaItemViewModel() : ProductItemViewModel() {
         _tea.postValue(tea)
     }
 
+    /**
+     * Change the parameters that related to the weight
+     */
     private fun weightUiSetter(tea: Tea) {
         if (!tea.weights.isNullOrEmpty()) {
             _weightList = tea.weights

@@ -34,7 +34,7 @@ class CheckoutViewModel : FormViewModel() {
 
     init {
         /**
-         * initialize the fields that can be filled by the user
+         * initialize the fields that are filled by the user
          */
         fields = mutableMapOf(
             Pair(CITY, NOT_VALID),
@@ -100,7 +100,7 @@ class CheckoutViewModel : FormViewModel() {
             userId = usersRepo.getUserID()!!,
             address = address,
             pickUpLocation = chosenPickupLocation,
-            totalPrice = cartRepo.totalPrice
+            totalPrice = cartRepo.getCartPrice()
         ) {
             val answer = it.isNullOrEmpty()
             if (answer) showToast(R.string.order_confirmed)
@@ -261,58 +261,60 @@ class CheckoutViewModel : FormViewModel() {
 
     //-------------------------------------on click functions-------------------------------------//
     /**
-     * Setts the action that when the button is clicked
+     * Sets the pick up location
      */
-    fun pickUpLocationClicked(index: Int) {
+    fun onPickUpLocationClicked(index: Int) {
         chosenPickupLocation = _pickupLocations[index]
     }
 
     /**
-     * Setts the action that when the button is clicked
+     * Sets the phone prefix
      */
-    fun phonePrefixClicked(index: Int) {
+    fun onPhonePrefixClicked(index: Int) {
         fields[PHONE_PREFIX] = getPhonePrefixList()[index]
     }
 
     /**
-     * Setts the action that when the button is clicked
+     * Setts the delivery type to delivery.
+     * Showing the address container visible and the pick up container hidden
      */
-    fun deliveryButtonClicked() {
+    fun onDeliveryButtonClicked() {
         _addressesLayoutVisibility = VISIBLE
         _selfPickUpContainerVisibility = GONE
         _pickupOrDelivery.postValue(DELIVERY)
     }
 
     /**
-     * Setts the action that when the button is clicked
+     * Sets the delivery type to pick up.
+     * Showing the pick up container visible and the address container hidden
      */
-    fun selfPickUpButtonClicked() {
+    fun onSelfPickUpButtonClicked() {
         _selfPickUpContainerVisibility = VISIBLE
         _addressesLayoutVisibility = GONE
         _pickupOrDelivery.postValue(PICK_UP)
     }
 
     /**
-     * Setts the action that when the button is clicked
+     * Sets the chosen address as the default address and makes the new address form hidden
      */
-    fun defaultAddressClicked() {
+    fun onDefaultAddressClicked() {
         _newAddressContainerVisibility = GONE
         _newOrDefaultAddress.postValue(DEFAULT_ADDRESS)
     }
 
     /**
-     * Setts the action that when the button is clicked
+     * Sets the chosen address as new address and makes the new address form visible
      */
-    fun newAddressClicked() {
+    fun onNewAddressClicked() {
         _newAddressContainerVisibility = VISIBLE
         _newOrDefaultAddress.postValue(NEW_ADDRESS)
 
     }
 
     /**
-     * Setts the action that when the button is clicked
+     * Sets the new address as default address when the order will be uploaded to the server.
      */
-    fun addAddressToDefaultClicked() {
+    fun onAddAddressToDefaultClicked() {
         addAddressToDefault = !addAddressToDefault
     }
 
@@ -328,21 +330,14 @@ class CheckoutViewModel : FormViewModel() {
     val defaultAddressContainerVisibility get() = if (hasDefaultAddress) VISIBLE else GONE
 
     //-------------------------------- default address getters -----------------------------------//
-
     val defCity get() = defaultAddress?.city
-
     val defStreetAndNumber get() = "${defaultAddress?.street}${defaultAddress?.houseNumber}"
-
     val defPostalNumber get() = defaultAddress?.postalNumber
-
-
     val defEntrance get() = defaultAddress?.entrance ?: "-"
     val defFloor get() = defaultAddress?.floor ?: "-"
     val defApartment get() = defaultAddress?.apartment ?: "-"
 
-
     val phoneNumber get() = fields[PHONE]
-
     val phoneNumberPrefix get() = fields[PHONE_PREFIX].takeIf { it != NOT_VALID } ?: "05"
 
     //-------------------------------- other getters ---------------------------------------------//
@@ -356,7 +351,7 @@ class CheckoutViewModel : FormViewModel() {
 
     val pickupLocations get() = _pickupLocations.map { it.location }
 
-    val price get() = cartRepo.totalPrice.toString()
+    val totalPrice get() = cartRepo.getCartPrice().toString()
 
     val prefixesList get() = getPhonePrefixList()
 }

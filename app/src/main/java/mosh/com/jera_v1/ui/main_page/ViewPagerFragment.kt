@@ -1,14 +1,9 @@
 package mosh.com.jera_v1.ui.main_page
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -46,12 +41,14 @@ class ViewPagerFragment : FragmentWithUtils() {
 
     }
 
+    /**
+     * Update the UI according to the internet connection
+     */
     private fun updateUi() {
-        if (checkIfConnected()){
-            buildViewPager()
+        if (connectedToInternet()){
+            showViewPager()
             toolBar.visible()
             tabLayout.visible()
-
         }
         else {
             binding.noInternetContainer.visible()
@@ -62,7 +59,10 @@ class ViewPagerFragment : FragmentWithUtils() {
 
     }
 
-    private fun buildViewPager() {
+    /**
+     * Shows the view pager when called
+     */
+    private fun showViewPager() {
         val pager = binding.viewPager
         val tabLayout = binding.tabLayout
 

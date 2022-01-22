@@ -58,7 +58,7 @@ open class FragmentWithUtils : Fragment() {
             }.show()
     }
 
-    protected fun checkIfConnected():Boolean{
+    protected fun connectedToInternet():Boolean{
         val cm = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val capabilities = cm.getNetworkCapabilities(cm.activeNetwork)
         return if (capabilities != null &&

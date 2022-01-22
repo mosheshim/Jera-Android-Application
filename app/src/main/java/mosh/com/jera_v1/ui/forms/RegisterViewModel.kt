@@ -24,6 +24,9 @@ class AuthViewModel : FormViewModel() {
     private var password1Holder:String =""
 
     init {
+        /**
+         * initialize the fields that are filled by the user
+         */
         fields = mutableMapOf(
             Pair(FIRST_NAME, NOT_VALID),
             Pair(LAST_NAME, NOT_VALID),
@@ -33,6 +36,9 @@ class AuthViewModel : FormViewModel() {
         )
     }
 
+    /**
+     * Add the user to the server DB
+     */
     private fun addAppUserToDB() {
         val userID = authRepo.getCurrentUserId()
         if (!userID.isNullOrBlank()) usersRepo.addUser(
@@ -45,8 +51,7 @@ class AuthViewModel : FormViewModel() {
     }
 
     /**
-     * call back boolean value will be true if succeeded or false if failed
-     *  and string value will be the error if wont succeed, else will be null
+     * Check if all the fields went through validation process. If true, will add the server DB
      */
     fun register(onResult: (Boolean) -> Unit) {
         if (fields.containsValue(NOT_VALID)) {
@@ -64,7 +69,20 @@ class AuthViewModel : FormViewModel() {
             }
     }
 
+    /**
+     * Validates the [editable] by the Patterns standards
+     * If the validation fails returns [TextResource] with the error, else returns null
+     */
+    private fun validateEmail(string: String): TextResource? {
+        return if (!Patterns.EMAIL_ADDRESS.matcher(string).matches())
+            fromStringId(R.string.email_address_not_valid)
+        else null
+    }
 
+    /**
+     * Validates the [editable] by the [field]
+     * Returns the error message if there is one, if not return null
+     */
     public override fun validateField(editable: Editable?, field: String): TextResource? {
         val string = editable.toString()
         return if (string.isEmpty()) fromStringId(R.string.required)
@@ -76,12 +94,10 @@ class AuthViewModel : FormViewModel() {
         }
     }
 
-    private fun validateEmail(string: String): TextResource? {
-        return if (!Patterns.EMAIL_ADDRESS.matcher(string).matches())
-            fromStringId(R.string.email_address_not_valid)
-        else null
-    }
-
+    /**
+     * Validates if the [string] has digits, letters and its longer then 8 characters.
+     * If the validation fails returns [TextResource] with the error, else returns null
+     */
     private fun validatePassword1(string: String): TextResource? {
         password1Holder = string
         return when{
@@ -91,16 +107,27 @@ class AuthViewModel : FormViewModel() {
         }
     }
 
+    /**
+     * Validates if the [string] has digits, letters and its longer then 8 characters.
+     * If the validation fails returns [TextResource] with the error, else returns null
+     */
     private fun validatePassword2(string: String): TextResource? {
         return if (string != password1Holder) fromStringId(R.string.passwords_do_not_match)
         else null
     }
 
+    /**
+     * Return true If the string has digits
+     */
     private fun hasDigits(string: String): Boolean {
         string.forEach { if (it.isDigit()) return true }
         return false
     }
 
+
+    /**
+     * Return true If the string has letters
+     */
     private fun hasLetters(string: String): Boolean {
         string.forEach { if (it.isLetter()) return true }
         return false

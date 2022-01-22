@@ -112,7 +112,7 @@
                 android:padding="15dp"
                 android:text="@string/not_register_yet_click_on_me"
                 android:textAlignment="center"
-                android:textColor="@color/black" />
+               />
         </LinearLayout>
     </ScrollView>
 

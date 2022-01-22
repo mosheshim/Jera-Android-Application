@@ -58,7 +58,7 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(), UiUtils {
                 progressDialog.setTitle(getString(R.string.processing_order))
                 progressDialog.setMessage(getString(R.string.just_a_few_seconds_please))
 
-                if (checkIfConnected() && viewModel.pay {
+                if (connectedToInternet() && viewModel.pay {
                         if (it) findNavController().navigate(R.id.global_navigation_to_main)
                         progressDialog.dismiss()
                     }) progressDialog.show()
@@ -75,7 +75,7 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(), UiUtils {
         setListeners()
         binding.apply {
             buttonPay.text =
-                getString(R.string.money_symbol_with_pay_text, viewModel.price) //TODO change later
+                getString(R.string.money_symbol_with_pay_text, viewModel.totalPrice) //TODO change later
             layoutDeliveryOptionsButtons.mainContainer.visible()
             layoutHeader.textTotalItems.text = viewModel.totalItems
 
@@ -85,7 +85,7 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(), UiUtils {
                 viewModel.prefixesList,
                 spinnerPhonePrefix
             ) {
-                viewModel.phonePrefixClicked(it)
+                viewModel.onPhonePrefixClicked(it)
             }
             layoutHeader.recyclerImages.adapter = CheckOutImagesAdapter(
                 viewModel.images,
@@ -100,11 +100,11 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(), UiUtils {
             layoutDeliveryOptionsButtons.apply {
                 radioButtonDelivery.setOnClickListener {
                     radioButtonSelfPickup.isChecked = false
-                    viewModel.deliveryButtonClicked()
+                    viewModel.onDeliveryButtonClicked()
                 }
                 radioButtonSelfPickup.setOnClickListener {
                     radioButtonDelivery.isChecked = false
-                    viewModel.selfPickUpButtonClicked()
+                    viewModel.onSelfPickUpButtonClicked()
                 }
             }
             //-------------------------changes in order type observer------------------------------//
@@ -116,7 +116,7 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(), UiUtils {
                     buildSpinner(
                         viewModel.pickupLocations,
                         spinnerPickupLocation
-                    ) { viewModel.pickUpLocationClicked(it) }
+                    ) { viewModel.onPickUpLocationClicked(it) }
 
                     spinnerPickupLocation.setOnClickListener { hideKeyBoard() }
                 }
@@ -142,7 +142,7 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(), UiUtils {
 
                         radioButtonUseDefaultAddress.setOnClickListener {
                             radioButtonNewAddress.isChecked = false
-                            viewModel.defaultAddressClicked()
+                            viewModel.onDefaultAddressClicked()
                         }
                         radioButtonUseDefaultAddress.visibility =
                             viewModel.radioChooseAddressVisibility
@@ -150,11 +150,11 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(), UiUtils {
                         //-------------------------new address------------------------------/
                         radioButtonNewAddress.setOnClickListener {
                             radioButtonUseDefaultAddress.isChecked = false
-                            viewModel.newAddressClicked()
+                            viewModel.onNewAddressClicked()
                         }
                     }
                     buttonUseAsDefaultAddress.setOnClickListener {
-                        viewModel.addAddressToDefaultClicked()
+                        viewModel.onAddAddressToDefaultClicked()
                     }
 
                     viewModel.newOrDefaultAddress.observe(viewLifecycleOwner) {

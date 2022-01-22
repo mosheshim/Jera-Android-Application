@@ -1,7 +1,9 @@
 package mosh.com.jera_v1.utils
 
 import android.text.Editable
+import android.util.Patterns
 import mosh.com.jera_v1.MyApplication
+import mosh.com.jera_v1.R
 
 const val NOT_VALID = ""
 
@@ -10,6 +12,8 @@ open class FormViewModel : BaseViewModel() {
      protected val authRepo = MyApplication.authRepo
 
     protected lateinit var fields: MutableMap<String, String>
+
+
 
     protected open fun validateField(editable: Editable?, field: String): TextResource? {
         return null
