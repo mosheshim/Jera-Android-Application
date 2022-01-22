@@ -7,7 +7,7 @@ import mosh.com.jera_v1.models.CartItem
 
 const val DB_NAME = "JeraDB"
 
-@Database(entities = [CartItem::class], version =1)
+@Database(entities = [CartItem::class], version =2)
 abstract class JeraDataBase: RoomDatabase() {
     companion object{
         fun create(context: Context):JeraDataBase{
@@ -19,5 +19,5 @@ abstract class JeraDataBase: RoomDatabase() {
                 .build()
         }
     }
-    abstract fun JeraDao():JeraDAO
+    abstract fun jeraDAO():JeraDAO
 }

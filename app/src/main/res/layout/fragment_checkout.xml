@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.checkout.CheckoutFragment">
+    android:orientation="vertical">
 
 
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,7 +40,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:baselineAligned="false">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/spinner_phone_prefix_layout"
@@ -73,6 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:labelFor="@+id/spinner_phone_prefix"
                     android:hint="@string/phone_number"
                     app:boxStrokeColor="@color/colorSecondary"
                     app:hintTextColor="@color/colorSecondaryVariant">
@@ -112,11 +108,11 @@
                     android:backgroundTint="@color/colorSecondary"
                     android:text="@string/pay"
                     android:textColor="@color/colorOnSecondary"
-                    app:cornerRadius="10dp" />
+                    app:cornerRadius="10dp"
+                    style="?android:attr/buttonBarButtonStyle" />
             </LinearLayout>
 
 
         </LinearLayout>
     </ScrollView>
 
-</FrameLayout>

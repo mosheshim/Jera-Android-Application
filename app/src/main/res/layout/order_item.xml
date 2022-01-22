@@ -5,14 +5,12 @@
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
     android:elevation="8dp"
-    app:cardCornerRadius="16dp"
-    >
+    app:cardCornerRadius="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
-        >
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/text_order_date_label"
@@ -28,8 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toEndOf="@id/text_order_date_label"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_type_of_delivery_label"
@@ -97,7 +94,6 @@
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toEndOf="@id/text_order_id_label"
             app:layout_constraintTop_toTopOf="@id/text_order_id_label" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

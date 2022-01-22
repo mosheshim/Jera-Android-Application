@@ -8,6 +8,9 @@ import mosh.com.jera_v1.databinding.CoffeeItemBinding
 import mosh.com.jera_v1.models.Coffee
 import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.buildPicasso
 
+/**
+ * Sends the item id to [onClick] when clicked on the item
+ */
 class CoffeeAdapter(private val coffeeList: List<Coffee>,val onClick:(String)->Unit) :
     RecyclerView.Adapter<CoffeeAdapter.ViewHolder>() {
 

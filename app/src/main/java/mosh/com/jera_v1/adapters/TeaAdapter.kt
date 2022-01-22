@@ -8,6 +8,9 @@ import mosh.com.jera_v1.databinding.TeaItemBinding
 import mosh.com.jera_v1.models.ProductSeries
 import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.buildPicasso
 
+/**
+ * Sends the item id to [onClick] when clicked on the item
+ */
 class TeaAdapter(
     private val productSeriesList: List<ProductSeries>,
     val onClick: (String) -> Unit
@@ -29,7 +32,7 @@ class TeaAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val productLine = productSeriesList[position]
         holder.binding.apply {
-
+            //If there is only one tea in the product line it will show the tea name as item name
             textTeaItemName.text =
                 if (productLine.teas.size == 1) productLine.teas[0].name
                 else productLine.name

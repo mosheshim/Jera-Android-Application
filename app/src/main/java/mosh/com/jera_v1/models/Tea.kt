@@ -7,10 +7,6 @@ data class Tea(
     override val imageURL:String = "",
     override val inStock:Boolean = false,
     override val description:String= "",
-    /**
-     * first = grams (Int)
-     * second = price (Int)
-     */
     val weights:List<Weight>? = null
 
 ) :Product(

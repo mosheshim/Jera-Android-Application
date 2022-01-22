@@ -40,7 +40,6 @@ class ViewPagerFragment : FragmentWithUtils() {
         }
 
     }
-
     /**
      * Update the UI according to the internet connection
      */
@@ -56,9 +55,7 @@ class ViewPagerFragment : FragmentWithUtils() {
             tabLayout.gone()
 
         }
-
     }
-
     /**
      * Shows the view pager when called
      */

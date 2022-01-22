@@ -3,11 +3,9 @@ package mosh.com.jera_v1.repositories
 
 import androidx.lifecycle.LiveData
 import kotlinx.coroutines.*
-import mosh.com.jera_v1.R
 import mosh.com.jera_v1.dao.JeraDAO
 import mosh.com.jera_v1.models.CartItem
 import mosh.com.jera_v1.models.Product
-import mosh.com.jera_v1.utils.TextResource
 
 import java.util.*
 
@@ -26,17 +24,23 @@ class CartRepository(
 
 
     init {
-        updateCart()
+        fetchCart()
     }
 
+    /**
+     * Calculates the price of all the items in the cart
+     */
      fun getCartPrice(cart: List<CartItem> = cartLiveData.value!!): Int {
         var total = 0
         cart.forEach { total = total.plus(it.price) }
         return total
     }
 
-
-    private fun updateCart() {
+    /**
+     * Fetches the cart from Room DB, if it's not empty the server DB will be synced with Room DB
+     * If the cart is empty in Room DB it will try fetch the cart from the server DB
+     */
+    private fun fetchCart() {
         scope.launch(Dispatchers.IO) {
             val roomCart = jeraDAO.getCart()
             if (!roomCart.isNullOrEmpty()) {
@@ -56,11 +60,9 @@ class CartRepository(
 
 
     /**
-     * Adds an item to Room and updates the Firebase DB
-     * If the item is not valid (quantity is null or product is out of stock) it will return
-     * the error as a string, if it went through "Added" will return and the item will be added
+     * Adds an item to Room and syncing the server DB.
      */
-    suspend fun addItem(product: Product, quantity: Int, extra: String?) {
+    suspend fun addItem(product: Product, quantity: Int, extra: Int?) {
         also {
             val cartItem = CartItem(
                 id = UUID.randomUUID().toString(),
@@ -69,27 +71,26 @@ class CartRepository(
                 productName = product.name,
                 quantity = quantity,
                 price = product.price * quantity,
-                extra = extra ?: "-"
+                extra = extra
             )
             jeraDAO.addCartItem(cartItem)
-            //TODO make it delete one item and not update everything
             userRepo.updateFirebaseCart(jeraDAO.getCart())
         }
     }
 
     /**
-     * deletes the item from Room and Firebase DB
+     * Deletes the item from Room and the server DB
      */
     suspend fun deleteItem(cartItem: CartItem) {
         jeraDAO.deleteItem(cartItem)
-        //TODO make it delete one item and not update everything
         userRepo.updateFirebaseCart(jeraDAO.getCart())
     }
 
+    /**
+     * Deletes the whole cart from Room DB and the server DB
+     */
     suspend fun deleteCart() {
         jeraDAO.deleteCart()
         userRepo.deleteCartFromFirebase()
     }
-
-
 }

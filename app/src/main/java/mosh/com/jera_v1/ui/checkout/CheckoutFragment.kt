@@ -75,7 +75,7 @@ class CheckoutFragment : BaseFragment<CheckoutViewModel>(), UiUtils {
         setListeners()
         binding.apply {
             buttonPay.text =
-                getString(R.string.money_symbol_with_pay_text, viewModel.totalPrice) //TODO change later
+                getString(R.string.money_symbol_with_pay_text, viewModel.totalPrice)
             layoutDeliveryOptionsButtons.mainContainer.visible()
             layoutHeader.textTotalItems.text = viewModel.totalItems
 

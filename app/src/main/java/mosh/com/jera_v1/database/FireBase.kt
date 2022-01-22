@@ -7,6 +7,4 @@ class FireBase {
         val root = FirebaseDatabase.getInstance().reference
 
         val authFB = FirebaseAuth.getInstance()
-
-
 }

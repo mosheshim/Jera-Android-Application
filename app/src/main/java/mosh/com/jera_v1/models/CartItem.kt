@@ -24,5 +24,5 @@ data class CartItem(
 
     val quantity:Int = 0,
     val price:Int = 0,
-    val extra:String = ""
+    val extra:Int? = null
 )

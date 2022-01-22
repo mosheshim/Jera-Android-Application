@@ -3,9 +3,7 @@ package mosh.com.jera_v1.ui.coffee_item
 import mosh.com.jera_v1.MyApplication
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.models.Coffee
-import mosh.com.jera_v1.repositories.*
 import mosh.com.jera_v1.utils.*
-import java.lang.Exception
 
 class CoffeeItemViewModel : ProductItemViewModel() {
     private val productsRepository = MyApplication.productsRepo
@@ -33,23 +31,23 @@ class CoffeeItemViewModel : ProductItemViewModel() {
     /**
      * Sets the chosen grind size
      */
-    fun onGrindSizeClicked(index: Int) {
-        chosenGrindSize = grindSizes[index]
+    fun onGrindSizeClicked(index:Int) {
+        chosenGrindSize = index
     }
 
-//    TODO make is work as a string id
-    val grindSizes = listOf(
-        BEANS,
-        ESPRESSO,
-        MOKA_POT,
-        FILTER,
-        FRENCH_PRESS
+    val grindSizesTextResources = listOf(
+    TextResource.fromStringId(R.string.beans),
+    TextResource.fromStringId(R.string.espresso),
+    TextResource.fromStringId(R.string.moka_pot),
+    TextResource.fromStringId(R.string.filter),
+    TextResource.fromStringId(R.string.french_press),
     )
-    private var chosenGrindSize = grindSizes[0]
+
+    private var chosenGrindSize:Int = 0
 
     val name get() = coffee.name
     val roastingLevel get() = coffee.roastingLevel
-    val price get() = "${coffee.price} INS" //TODO
+    val price get() = coffee.price.toString()
     val bodyRating get() = coffee.body.toFloat()
     val bitternessRating get() = coffee.bitterness.toFloat()
     val sweetnessRating get() = coffee.sweetness.toFloat()
@@ -59,9 +57,6 @@ class CoffeeItemViewModel : ProductItemViewModel() {
     val description get() = coffee.description
     val addToCartButtonText
         get() = TextResource.fromStringId(
-            if (coffee.inStock)
-                R.string.add_to_cart else R.string.out_of_stock
-        )
+            if (coffee.inStock) R.string.add_to_cart else R.string.out_of_stock)
     val imageUrl get() = coffee.imageURL
-
 }

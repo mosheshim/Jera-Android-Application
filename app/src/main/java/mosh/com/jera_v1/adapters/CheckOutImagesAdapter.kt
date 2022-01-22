@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import mosh.com.jera_v1.databinding.ImageCheckoutItemBinding
 import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.buildPicasso
 
+/**
+ * The [progressBar] will be set to visibility GONE when done loading the images
+ */
 class CheckOutImagesAdapter(private val imagesList: List<String>,
                             val progressBar:ProgressBar) :
     RecyclerView.Adapter<CheckOutImagesAdapter.ViewHolder>() {

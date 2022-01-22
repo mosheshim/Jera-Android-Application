@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.adapters.TeaAdapter
 import mosh.com.jera_v1.databinding.FragmentTeaBinding
+import mosh.com.jera_v1.utils.ID
 
 class TeaRecyclerViewFragment : Fragment() {
 
@@ -38,7 +39,7 @@ class TeaRecyclerViewFragment : Fragment() {
             binding.rvTea.adapter = TeaAdapter(it) { id ->
                 findNavController().navigate(
                     R.id.navigation_tea_Item_screen,
-                    bundleOf("id" to id)
+                    bundleOf(ID to id)
                 )
 
             }

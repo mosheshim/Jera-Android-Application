@@ -16,17 +16,9 @@ class TeaItemViewModel() : ProductItemViewModel() {
 
     private lateinit var productSeries: ProductSeries
 
-//    TODO change it
-    /**
-     * Converting the weight into a string and adding a gram symbol
-     */
-    private fun getWeightString(weight: Weight?): String? =
-        if (weight != null)
-            "${weight.weight}g"
-        else null
 
     /**
-     * Returns a copy of the the tea object with a new price changed to the weight price
+     * Returns a copy of the the tea object with the price of the weight
      */
     private fun getTeaCopyWithPrice(tea: Tea): Tea =
         if (_weight != null) tea.copy(price = _weight!!.price) else tea
@@ -48,7 +40,7 @@ class TeaItemViewModel() : ProductItemViewModel() {
         else
         addToCart(
             getTeaCopyWithPrice(tea.value!!),
-            getWeightString(_weight), //TODO make this line better, I dont like the function
+            _weight?.weight,
             onSuccess
         )
     }
@@ -102,7 +94,7 @@ class TeaItemViewModel() : ProductItemViewModel() {
     }
 
     /**
-     * Change the parameters that related to the weight
+     * Update the weight parameters
      */
     private fun weightUiSetter(tea: Tea) {
         if (!tea.weights.isNullOrEmpty()) {
@@ -142,8 +134,8 @@ class TeaItemViewModel() : ProductItemViewModel() {
     val addToCartButtonText: TextResource get() = _addToCartButtonText
     val teaDescription: String get() = _teaDescription
     val teaListNames: List<String> get() = _teaList.map { it.name }
-    val weightListNames: List<String> get() = _weightList.map { getWeightString(it) ?: "" }
-    val firstWeightName: String get() = "${_weight?.weight}g" //TODO add to srtigns the 'g'
+    val weightListNames: List<String> get() = _weightList.map { it.weight.toString()}
+    val firstWeightName: TextResource get() = TextResource.fromText(_weight?.weight.toString())
     val containerOptionVisibility get() = _containerOptionVisibility
     val containerWeightVisibility get() = _containerWeightVisibility
     val isOneTea: Boolean get() = productSeries.teas.size == 1

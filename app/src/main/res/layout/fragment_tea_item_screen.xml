@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_tea_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,8 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/container_inner_padding"
-            android:paddingBottom="@dimen/container_inner_padding"
-            tools:text="asdfmdsa;lfads;l;asl asdadslfl;  ;lasl;   l;sa,dfxacvl,l;cz,;l,a ds;lgdfs;l sdf;lgsl;l;, l;df,g;l, ds;ldfsgdsg,ldsfl;g" />
+            android:paddingBottom="@dimen/container_inner_padding"/>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -105,8 +103,7 @@
                     android:inputType="none"
                     android:labelFor="@id/spinner_tea_option"
                     android:text="@string/choose"
-                    android:textSize="16sp"
-                    tools:ignore="TextContrastCheck" />
+                    android:textSize="16sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

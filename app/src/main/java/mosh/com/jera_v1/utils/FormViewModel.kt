@@ -14,11 +14,19 @@ open class FormViewModel : BaseViewModel() {
     protected lateinit var fields: MutableMap<String, String>
 
 
-
+    /**
+     * An abstract function that required for the saveFields function to work,
+     * Default validation should be in the overridden function
+     */
     protected open fun validateField(editable: Editable?, field: String): TextResource? {
         return null
     }
 
+    /**
+     * Validates a string by default rules and save it.
+     * This functions is meant to be overridden and call other validation function by the [field]
+     * that is given.
+     */
     open fun saveField(editable: Editable?, field: String): TextResource? {
         val error = validateField(editable, field)
         fields[field] = if (error == null) editable.toString() else NOT_VALID

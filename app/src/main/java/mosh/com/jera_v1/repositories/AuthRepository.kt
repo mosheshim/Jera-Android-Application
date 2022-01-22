@@ -7,21 +7,20 @@ import com.google.firebase.auth.FirebaseAuth
 class AuthRepository(private val auth: FirebaseAuth) {
 
     private val _authStateChangeLiveData = MutableLiveData(auth.currentUser != null)
-    val authStateChangeLiveData:LiveData<Boolean> get() = _authStateChangeLiveData
-    val isLoggedIn:Boolean get() = _authStateChangeLiveData.value?: false
+    val authStateChangeLiveData: LiveData<Boolean> get() = _authStateChangeLiveData
+    val isLoggedIn: Boolean get() = _authStateChangeLiveData.value ?: false
 
     init {
         auth.addAuthStateListener {
             _authStateChangeLiveData.postValue(it.currentUser != null)
         }
     }
-    //TODO add listener like that and not from listening to live data
-    fun addAuthStateChangeListener(onChange:()->Unit){
+
+    fun addAuthStateChangeListener(onChange: () -> Unit) {
         auth.addAuthStateListener { onChange() }
     }
 
-//    TODO ia that ok?
-    fun destroyListeners(){
+    fun destroyListeners() {
         auth.removeAuthStateListener {}
     }
 
@@ -34,32 +33,30 @@ class AuthRepository(private val auth: FirebaseAuth) {
             .addOnSuccessListener {
                 onResult(null)
             }
-            .addOnFailureListener  {
+            .addOnFailureListener {
                 onResult(it.localizedMessage ?: "Error")
             }
     }
-
 
     fun getCurrentUserId(): String? {
         return auth.currentUser?.uid
     }
 
     /**
-     * signing in existent user
-     * The call back boolean is true if succeeded login in and false if not.
-     * The string is the error if the action failed, notice that it will return null if succeeded
+     * Signing in existent user
+     * Send if the user logged successfully in [onResult]
      */
-    fun logIn(email: String, password: String, onResult: (String?) -> Unit) {
+    fun logIn(email: String, password: String, onResult: (Boolean) -> Unit) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                onResult(null)
+                onResult(true)
             }
             .addOnFailureListener {
-                onResult(it.localizedMessage)
+                onResult(false)
             }
     }
 
-    fun logout(){
+    fun logout() {
         auth.signOut()
     }
 

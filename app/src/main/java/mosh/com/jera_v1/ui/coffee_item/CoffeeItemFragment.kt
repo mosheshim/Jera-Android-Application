@@ -8,6 +8,7 @@ import mosh.com.jera_v1.R
 import mosh.com.jera_v1.databinding.FragmentCoffeeItemScreenBinding
 import mosh.com.jera_v1.utils.BaseFragment
 import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.buildPicasso
+import mosh.com.jera_v1.utils.ID
 import mosh.com.jera_v1.utils.UiUtils
 import mosh.com.jera_v1.utils.TextResource.Companion.asString
 
@@ -16,6 +17,7 @@ class CoffeeItemFragment() : BaseFragment<CoffeeItemViewModel>(), UiUtils {
 
     private var _binding: FragmentCoffeeItemScreenBinding? = null
     private val binding get() = _binding!!
+    private lateinit var grindSizes:List<String>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,10 +27,12 @@ class CoffeeItemFragment() : BaseFragment<CoffeeItemViewModel>(), UiUtils {
 
         viewModel =
             ViewModelProvider(this)[CoffeeItemViewModel::class.java]
-        val coffeeId = arguments?.getString("id") //TODO find a place to put it (ID)
+        val coffeeId = arguments?.getString(ID)
         viewModel.setCoffeeById(coffeeId!!)
 
         _binding = FragmentCoffeeItemScreenBinding.inflate(inflater, container, false)
+
+        grindSizes = getGrindSizesFromTextResource()
         return binding.root
     }
 
@@ -38,8 +42,9 @@ class CoffeeItemFragment() : BaseFragment<CoffeeItemViewModel>(), UiUtils {
             viewModel.apply {
                 titleRow.textName.text = name
                 titleRow.textSubTitle.text = roastingLevel
-                titleRow.textPrice.text = price
-
+                titleRow.textPrice.text = getString(
+                    R.string.money_symbol_with_string, price
+                )
                 ratingBody.textTaste.setText(R.string.body_label)
                 ratingBody.rating.rating = bodyRating
 
@@ -97,6 +102,15 @@ class CoffeeItemFragment() : BaseFragment<CoffeeItemViewModel>(), UiUtils {
             }
         }
 
+    }
+
+    private fun getGrindSizesFromTextResource(): List<String> {
+        viewModel.grindSizesTextResources
+        val grindSizes = mutableListOf<String>()
+        for (textResource in viewModel.grindSizesTextResources) {
+            grindSizes.add(textResource.asString(resources))
+        }
+        return grindSizes
     }
 
 }

@@ -8,6 +8,9 @@ import com.squareup.picasso.Picasso
 
 class ExtensionsUtils {
     companion object{
+        /**
+         * Extension for loading photos using piccasso
+         */
         fun ImageView.buildPicasso(url:String, progressBar: ProgressBar){
             Picasso.get().load(url).into(this, object  : Callback {
                 override fun onSuccess() = progressBar.gone()
@@ -15,10 +18,16 @@ class ExtensionsUtils {
             })
         }
 
+        /**
+         * Setts the visibility of the view to VISIBLE
+         */
         fun View.visible() {
             this.visibility = View.VISIBLE
         }
 
+        /**
+         * Setts the visibility of the view to GONE
+         */
         fun View.gone() {
             this.visibility = View.GONE
         }

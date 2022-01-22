@@ -42,7 +42,7 @@ class CartViewModel : BaseViewModel() {
 
 //--------------------------------------getters for the view--------------------------------------//
 
-    val totalPrice get() = cartRepo.getCartPrice(cart)
+    val totalPrice get() = cartRepo.getCartPrice(cart).toString()
     val cartIsEmpty get() = _cart.isNullOrEmpty()
 
 }

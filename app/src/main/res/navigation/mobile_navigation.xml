@@ -67,17 +67,6 @@
 
 
     <fragment
-        android:id="@+id/navigation_profile"
-        android:name="mosh.com.jera_v1.ui.profile.ProfileFragment"
-        android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
-    <action
-        android:id="@+id/action_global_profile_fragment"
-        app:destination="@id/navigation_profile"
-        app:popUpTo="@id/navigation_profile"
-        app:popUpToInclusive="true" />
-
-    <fragment
         android:id="@+id/navigation_coffee_Item_screen"
         android:name="mosh.com.jera_v1.ui.coffee_item.CoffeeItemFragment"
         android:label="@string/coffee" />
@@ -109,7 +98,7 @@
     <fragment
         android:id="@+id/fragmentOrders"
         android:name="mosh.com.jera_v1.ui.orders.OrdersFragment"
-        android:label="fragment_orders"
+        android:label="Orders"
         tools:layout="@layout/fragment_orders" />
 <action
     android:id="@+id/global_navigation_orders"

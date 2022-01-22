@@ -3,7 +3,6 @@ package mosh.com.jera_v1.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import mosh.com.jera_v1.models.CartItem
-//TODO make the delete functions not suspended
 @Dao
 interface JeraDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

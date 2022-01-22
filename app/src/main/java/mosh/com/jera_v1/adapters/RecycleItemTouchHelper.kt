@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import mosh.com.jera_v1.R
 
+/**
+ * Make the animation for sliding the item to the left
+ */
 class RecycleItemTouchHelper(
     val context: Context,
     val onSwipeCallback: (index:Int)->Unit)

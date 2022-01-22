@@ -1,6 +1,5 @@
 package mosh.com.jera_v1.repositories
 
-import android.net.ConnectivityDiagnosticsManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot
@@ -9,19 +8,22 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import mosh.com.jera_v1.models.Coffee
 import mosh.com.jera_v1.models.ProductSeries
-import mosh.com.jera_v1.models.Tea
 
 class ProductsRepository(private val productsRef: DatabaseReference) {
+    private val _productSeriesLiveData = MutableLiveData<List<ProductSeries>>()
+
+    val productSeriesLiveData: LiveData<List<ProductSeries>> get() = _productSeriesLiveData
+    private val _coffeeLiveData = MutableLiveData<List<Coffee>>()
+
+    val coffeeLiveData get() = _coffeeLiveData
+
     init {
         fetchProducts()
     }
 
-    private val _productSeriesLiveData = MutableLiveData<List<ProductSeries>>()
-    val productSeriesLiveData: LiveData<List<ProductSeries>> get() = _productSeriesLiveData
-
-    private val _coffeeLiveData = MutableLiveData<List<Coffee>>()
-    val coffeeLiveData get() = _coffeeLiveData
-
+    /**
+     * Fetch the orders from Firebase DB
+     */
     private fun fetchProducts() {
         productsRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -35,6 +37,9 @@ class ProductsRepository(private val productsRef: DatabaseReference) {
         })
     }
 
+    /**
+     * Converting the snapshot children to objects and posting the results to the live data
+     */
     fun postProducts(productsSnap: Iterable<DataSnapshot>){
         val productSeriesList = mutableListOf<ProductSeries>()
         val coffeeList = mutableListOf<Coffee>()

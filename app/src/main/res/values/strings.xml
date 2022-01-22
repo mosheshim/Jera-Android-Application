@@ -109,14 +109,18 @@
     <string name="connect_to_internet_message">Please Connect To The Internet</string>
     <string name="email_or_password_incorrect_message">Email or Password is incorrect</string>
     <string name="no_orders_found">No Orders Found</string>
-    <string name="date_of_order">Date Of Order:</string>
-    <string name="status">Status:</string>
-    <string name="price">Price:</string>
-    <string name="order_id">Order ID:</string>
-    <string name="espresso">Espresso:</string>
-    <string name="moka_pot">Moka Pot:</string>
-    <string name="filter">Filter:</string>
-    <string name="french_press">French Press:</string>
+    <string name="date_of_order">Date Of Order</string>
+    <string name="status">Status</string>
+    <string name="price">Price</string>
+    <string name="order_id">Order ID</string>
+    <string name="espresso">Espresso</string>
+    <string name="moka_pot">Moka Pot</string>
+    <string name="filter">Filter</string>
+    <string name="french_press">French Press</string>
+    <string name="weight_symbol">%1$sg</string>
+    <string name="shows_a_delete_pop_up">shows a delete pop up</string>
+    <string name="go_to_cart">go to cart</string>
+    <string name="init_cart_badge_value">0</string>
 
 
 </resources>

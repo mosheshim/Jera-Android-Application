@@ -14,14 +14,21 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import mosh.com.jera_v1.R
+const val ID = "id"
 
+//This class has functions that are commonly used in fragments.
 open class FragmentWithUtils : Fragment() {
-
+    /**
+     * Hide the key board from the UI when called
+     */
     protected fun hideKeyBoard() {
         ContextCompat.getSystemService(requireActivity(), InputMethodManager::class.java)
             ?.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, 0)
     }
 
+    /**
+     * Build a spinner, send the index of the item in [onClickAction]
+     */
     protected fun buildSpinner(
         list: List<String>,
         spinner: AutoCompleteTextView,
@@ -39,6 +46,10 @@ open class FragmentWithUtils : Fragment() {
             }
     }
 
+    /**
+     * Build a dialog, when clicked on the positive button returns true in [onClick].
+     * If clicked on the negative button or the dialog canceled, return false in [onClick]
+     */
     protected fun buildDialog(
         message: String,
         positiveBtnTxt: String,
@@ -58,6 +69,9 @@ open class FragmentWithUtils : Fragment() {
             }.show()
     }
 
+    /**
+     * Return true if the internet is turned on
+     */
     protected fun connectedToInternet():Boolean{
         val cm = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val capabilities = cm.getNetworkCapabilities(cm.activeNetwork)
@@ -66,6 +80,9 @@ open class FragmentWithUtils : Fragment() {
         else false.also { sendToSettingsPage() }
     }
 
+    /**
+     * Open a dialog that the positive button send the user to the internet settings page
+     */
     private fun sendToSettingsPage(){
         buildDialog(
             getString(R.string.no_internet_dialog),

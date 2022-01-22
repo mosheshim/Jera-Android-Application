@@ -12,6 +12,7 @@ import mosh.com.jera_v1.databinding.FragmentTeaItemScreenBinding
 import mosh.com.jera_v1.utils.BaseFragment
 import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.buildPicasso
 import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.visible
+import mosh.com.jera_v1.utils.ID
 import mosh.com.jera_v1.utils.UiUtils
 import mosh.com.jera_v1.utils.TextResource.Companion.asString
 
@@ -27,7 +28,7 @@ class TeaItemFragment : BaseFragment<TeaItemViewModel>(), UiUtils {
     ): View {
         viewModel =
             (ViewModelProvider(this)[TeaItemViewModel::class.java])
-        val productLineId = arguments?.getString("id")
+        val productLineId = arguments?.getString(ID)
         viewModel.setProductLineById(productLineId!!)
 
         _binding = FragmentTeaItemScreenBinding.inflate(inflater, container, false)
@@ -92,10 +93,13 @@ class TeaItemFragment : BaseFragment<TeaItemViewModel>(), UiUtils {
                 titleRow.textPrice.text = getString(R.string.money_symbol_with_string, viewModel.price)
                 //------------------------------weight container----------------------------------//
                 containerWeight.visibility = viewModel.containerWeightVisibility
-                spinnerTeaWeight.setText(viewModel.firstWeightName)
+                spinnerTeaWeight.setText(getString(
+                    R.string.weight_symbol,
+                    viewModel.firstWeightName.asString(resources)
+                ))
 
                 buildSpinner(
-                    viewModel.weightListNames,
+                    getWeightsWithWeightSymbol(viewModel.weightListNames),
                     spinnerTeaWeight
                 ) {
                     viewModel.setWeight(it)
@@ -125,6 +129,17 @@ class TeaItemFragment : BaseFragment<TeaItemViewModel>(), UiUtils {
                 ?.startAnimation(containerAnimation)
             buttonsRow.containerButtons.startAnimation(containerAnimation)
         }
+    }
+
+    /**
+     * Added a weight symbol (like g) to the end of each weight
+     */
+    private fun getWeightsWithWeightSymbol(lst:List<String>):List<String>{
+        val weightWithSymbol = mutableListOf<String>()
+        for (weight in lst){
+            weightWithSymbol.add(getString(R.string.weight_symbol, weight))
+        }
+        return weightWithSymbol
     }
 
 }

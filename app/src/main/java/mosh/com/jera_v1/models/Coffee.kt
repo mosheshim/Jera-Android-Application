@@ -1,9 +1,5 @@
 package mosh.com.jera_v1.models
 
-const val LIGHT = "Light roast"
-const val MEDIUM = "Medium roast"
-const val DARK = "Dark roast"
-
 class Coffee(
     override val id: String = "",
     override val price: Int = 0,

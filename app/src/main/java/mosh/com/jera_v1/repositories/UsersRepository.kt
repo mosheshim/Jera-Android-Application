@@ -17,7 +17,6 @@ class UsersRepository(
     private val authRep: AuthRepository
 ) {
 
-
     /**
      * Adds the user to Firebase
      */
@@ -29,7 +28,9 @@ class UsersRepository(
         return authRep.getCurrentUserId()
     }
 
-
+    /**
+     * Fetch the address of the user from Firebase DB
+     */
     fun getUserAddress(onFetch: (Address?) -> Unit) {
         usersRef.child(authRep.getCurrentUserId()!!).child(ADDRESS_PATH)
             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -46,7 +47,7 @@ class UsersRepository(
 
     fun updateAddress(address: Address) {
         if (authRep.isLoggedIn)
-        usersRef.child(authRep.getCurrentUserId()!!).child(ADDRESS_PATH).setValue(address)
+            usersRef.child(authRep.getCurrentUserId()!!).child(ADDRESS_PATH).setValue(address)
     }
 
     /**
@@ -68,6 +69,9 @@ class UsersRepository(
         } else onFetch(null)
     }
 
+    /**
+     * Converting the snapshot children to CartItem list
+     */
     fun getCartFromSnapshot(snapshot: DataSnapshot): List<CartItem> {
         val cart = mutableListOf<CartItem>()
         if (snapshot.exists()) {
@@ -83,6 +87,9 @@ class UsersRepository(
             usersRef.child(authRep.getCurrentUserId()!!).child(CART_PATH).setValue(cart)
     }
 
+    /**
+     * Deletes the whole cart from Firebase
+     */
     fun deleteCartFromFirebase() {
         if (authRep.isLoggedIn)
             usersRef.child(authRep.getCurrentUserId()!!).child(CART_PATH).removeValue()
