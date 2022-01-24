@@ -7,6 +7,7 @@ import com.google.firebase.database.ValueEventListener
 import mosh.com.jera_v1.MyApplication
 import mosh.com.jera_v1.models.*
 import mosh.com.jera_v1.ui.checkout.DELIVERY
+import mosh.com.jera_v1.ui.checkout.PICK_UP
 
 const val USER_ID_PATH = "userId"
 
@@ -28,14 +29,14 @@ class OrdersRepository(private val orderRef: DatabaseReference) {
         address: Address? = null,
         pickUpLocation: PickUpLocation? = null,
         totalPrice: Int,
-        ifSucceeded: (String?) -> Unit
+        ifSucceeded: (Boolean) -> Unit
     ) {
         addOrderToDB(
             ifSucceeded =  ifSucceeded,
             order = Order(
                 userId = userId,
                 cart = cart,
-                deliveryType = DELIVERY,
+                deliveryType = if(address == null) PICK_UP else DELIVERY,
                 pickUpLocation = pickUpLocation,
                 address = address,
                 totalPrice = totalPrice
@@ -46,12 +47,12 @@ class OrdersRepository(private val orderRef: DatabaseReference) {
     /**
      * Adds the order by the order ID
      */
-    private fun addOrderToDB(order: Order, ifSucceeded: (String?) -> Unit) {
+    private fun addOrderToDB(order: Order, ifSucceeded: (Boolean) -> Unit) {
         orderRef.child(order.orderId).setValue(order)
             .addOnFailureListener {
-                ifSucceeded(it.localizedMessage)
+                ifSucceeded(false)
             }.addOnCompleteListener {
-                ifSucceeded(null).also { orders.add(order) }
+                ifSucceeded(true).also { orders.add(order) }
             }
     }
 

@@ -5,7 +5,7 @@ class ProductSeries(
     val name:String = "",
     val description:String = "",
     val prices: String = "",
-    val isTeaBag:Boolean = false,
+    val teaBags:Boolean = false,
     val teas: List<Tea> = listOf(),
 
-)
+    )

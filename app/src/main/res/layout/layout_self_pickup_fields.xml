@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="none"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:text="@string/choose"
                 android:textColor="#757575" />
 

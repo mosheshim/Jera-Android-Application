@@ -60,12 +60,13 @@ class AuthViewModel : FormViewModel() {
             return
         }
             authRepo.registerNewUser(fields[EMAIL]!!, fields[PASSWORD_1]!!) {
-                if (it.isNullOrEmpty()) {
+                var message = R.string.user_exists_message
+                if (it) {
                     addAppUserToDB()
-                    showToast(R.string.register_successfully_message)
+                    message = R.string.register_successfully_message
                 }
-                onResult(it.isNullOrEmpty())
-
+                onResult(it)
+                showToast(message)
             }
     }
 

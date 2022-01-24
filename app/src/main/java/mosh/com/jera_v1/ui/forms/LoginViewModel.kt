@@ -44,11 +44,10 @@ class LoginViewModel() : FormViewModel() {
     private fun login(email: String, password: String, onResult: (Boolean) -> Unit) {
         authRepo.logIn(email, password) {
             showToast(
-                if (it)
-                    R.string.login_successfully_message
+                if (it) R.string.login_successfully_message
                 else R.string.email_or_password_incorrect_message
             )
-            onResult(false)
+            onResult(it)
         }
     }
 

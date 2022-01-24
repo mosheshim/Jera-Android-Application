@@ -28,13 +28,13 @@ class AuthRepository(private val auth: FirebaseAuth) {
      * Adds user to Firebase. If fails, the error message will send in the call back.
      * If user added successfully null will send back
      */
-    fun registerNewUser(email: String, password: String, onResult: (String?) -> Unit) {
+    fun registerNewUser(email: String, password: String, onResult: (Boolean) -> Unit) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                onResult(null)
+                onResult(true)
             }
             .addOnFailureListener {
-                onResult(it.localizedMessage ?: "Error")
+                onResult(false)
             }
     }
 

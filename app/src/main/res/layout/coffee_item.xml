@@ -7,7 +7,8 @@
     android:layout_margin="10dp"
     app:cardCornerRadius="25dp"
     app:cardElevation="10dp"
-    app:contentPaddingBottom="5dp">
+    app:contentPaddingBottom="5dp"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -47,19 +48,20 @@
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:minLines="2"
-            android:textAlignment="center"
             android:textSize="20sp"
+            android:gravity="center"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image_coffee_item" />
+            app:layout_constraintTop_toBottomOf="@id/image_coffee_item"
+         />
 
         <TextView
             android:id="@+id/text_item_roasting_level"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textAlignment="center"
+            android:gravity="center"
             android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@+id/text_coffee_item_name"/>
 
@@ -69,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:minLines="2"
-            android:textAlignment="center"
+            android:gravity="center"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/text_coffee_item_price"
             app:layout_constraintTop_toBottomOf="@+id/text_item_roasting_level" />
@@ -78,8 +80,7 @@
             android:id="@+id/text_coffee_item_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:textAlignment="center"
+            android:gravity="center"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>

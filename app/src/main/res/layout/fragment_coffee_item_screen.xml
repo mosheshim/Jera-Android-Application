@@ -181,6 +181,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:layout_gravity="start"
                     android:gravity="center|start"
                     android:text="@string/grind_type"
                     android:textSize="22sp" />
@@ -190,6 +191,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="end"
                     android:layout_weight="1"
                     android:labelFor="@+id/spinner_grind_level"
                     app:boxStrokeColor="@color/colorSecondary"

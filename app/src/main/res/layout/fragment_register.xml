@@ -26,10 +26,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
                 android:maxLines="2"
                 android:text="@string/you_can_almost_smell_the_coffee"
-                android:textAlignment="center"
-                android:autoSizeTextType="uniform"
                 android:textSize="36sp" />
 
             <LinearLayout
@@ -37,8 +37,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"
-                android:orientation="horizontal"
-                android:baselineAligned="false">
+                android:baselineAligned="false"
+                android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_fname_layout"
@@ -48,10 +48,10 @@
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
                     android:hint="@string/first_name"
+                    app:boxStrokeColor="@color/colorSecondary"
                     app:endIconDrawable="@drawable/ic_baseline_check_circle_24"
                     app:endIconMode="custom"
                     app:endIconTint="#37E63D"
-                    app:boxStrokeColor="@color/colorSecondary"
                     app:hintTextColor="@color/colorSecondaryVariant">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -71,10 +71,10 @@
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
                     android:hint="@string/last_name"
+                    app:boxStrokeColor="@color/colorSecondary"
                     app:endIconDrawable="@drawable/ic_baseline_check_circle_24"
                     app:endIconMode="custom"
                     app:endIconTint="#37E63D"
-                    app:boxStrokeColor="@color/colorSecondary"
                     app:hintTextColor="@color/colorSecondaryVariant">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -94,10 +94,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
                 android:hint="@string/email"
+                app:boxStrokeColor="@color/colorSecondary"
                 app:endIconDrawable="@drawable/ic_baseline_check_circle_24"
                 app:endIconMode="custom"
                 app:endIconTint="#37E63D"
-                app:boxStrokeColor="@color/colorSecondary"
                 app:hintTextColor="@color/colorSecondaryVariant">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -117,8 +117,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
                 android:hint="@string/password"
-                app:endIconMode="password_toggle"
                 app:boxStrokeColor="@color/colorSecondary"
+                app:endIconMode="password_toggle"
                 app:hintTextColor="@color/colorSecondaryVariant">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -137,8 +137,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
                 android:hint="@string/re_type_password"
-                app:endIconMode="password_toggle"
                 app:boxStrokeColor="@color/colorSecondary"
+                app:endIconMode="password_toggle"
                 app:hintTextColor="@color/colorSecondaryVariant">
 
                 <com.google.android.material.textfield.TextInputEditText

@@ -38,7 +38,7 @@ class TeaAdapter(
                 else productLine.name
 
             textTeaItemPackage.text = root.context.getString(
-                if(productLine.isTeaBag) R.string.tea_bag else R.string.tea_brew)
+                if(productLine.teaBags) R.string.tea_bag else R.string.tea_brew)
 
             textTeaItemPrice.text = root.context
                 .getString(R.string.money_symbol_with_string,productLine.prices)

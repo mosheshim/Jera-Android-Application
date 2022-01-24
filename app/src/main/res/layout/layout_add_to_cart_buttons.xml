@@ -23,9 +23,9 @@
         android:text="@string/go_back"
         android:textColor="@color/colorSecondary"
         app:cornerRadius="10dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_add_to_cart"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider" />
 
@@ -39,10 +39,10 @@
         android:text="@string/add_to_cart"
         android:textColor="@color/colorOnSecondary"
         app:cornerRadius="10dp"
+        android:layout_marginStart="8dp"
         android:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/button_go_back"
         app:layout_constraintTop_toTopOf="@+id/button_go_back" />
 </androidx.constraintlayout.widget.ConstraintLayout>

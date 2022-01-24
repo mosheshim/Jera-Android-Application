@@ -66,7 +66,7 @@ class TeaItemViewModel() : ProductItemViewModel() {
     private fun initializeData() {
         _productLineDescription = productSeries.description
         _subTitle =TextResource.fromStringId(
-            if(productSeries.isTeaBag) R.string.tea_bag else R.string.tea_brew)
+            if(productSeries.teaBags) R.string.tea_bag else R.string.tea_brew)
         if (productSeries.teas.size > 1) {
             _imageURL = productSeries.teas[0].imageURL
             _price = productSeries.prices

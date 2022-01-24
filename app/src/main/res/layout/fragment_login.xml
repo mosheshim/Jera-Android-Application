@@ -29,10 +29,10 @@
                 android:layout_marginBottom="20dp"
                 android:hint="@string/email"
                 app:boxStrokeColor="@color/colorSecondary"
-                app:hintTextColor="@color/colorSecondaryVariant"
                 app:endIconDrawable="@drawable/ic_baseline_check_circle_24"
                 app:endIconMode="none"
                 app:endIconTint="#37E63D"
+                app:hintTextColor="@color/colorSecondaryVariant"
 
                 app:startIconDrawable="@drawable/ic_baseline_email_24">
 
@@ -60,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="emailAddress"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.cardview.widget.CardView
@@ -102,13 +102,12 @@
                 android:id="@+id/textView_nav_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="15dp"
-                android:text="@string/not_register_yet_click_on_me"
-                android:textAlignment="center"
-               />
+                android:text="@string/not_register_yet_click_on_me" />
         </LinearLayout>
     </ScrollView>
 

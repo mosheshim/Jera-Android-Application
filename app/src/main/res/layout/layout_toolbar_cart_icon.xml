@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cart_toolbar_icon"
     style="?attr/actionButtonStyle"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:clipToPadding="false"
-    android:id="@+id/cart_toolbar_icon"
     android:clickable="true"
+    android:clipToPadding="false"
     android:focusable="true">
 
     <ImageView
@@ -14,20 +13,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/ic_baseline_shopping_cart_24"
-        android:contentDescription="@string/go_to_cart" />
+        android:contentDescription="@string/go_to_cart"
+        android:src="@drawable/ic_baseline_shopping_cart_24" />
 
-    <TextView
-        android:id="@+id/cart_badge"
+    <FrameLayout
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:layout_gravity="end"
-        android:layout_marginEnd="-4dp"
-        android:background="@drawable/badge_background"
-        android:gravity="center"
-        android:paddingBottom="2dp"
-        android:text="@string/init_cart_badge_value"
-        android:textColor="@android:color/white"
-        android:textSize="12sp" />
+        android:background="@drawable/badge_background">
+
+        <TextView
+            android:id="@+id/cart_badge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:text="@string/init_cart_badge_value"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:visibility="visible" />
+    </FrameLayout>
 
 </FrameLayout>
