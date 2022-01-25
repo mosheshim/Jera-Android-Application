@@ -2,12 +2,10 @@ package mosh.com.jera_v1.ui.forms
 
 import android.text.Editable
 import android.util.Patterns
-import androidx.lifecycle.LiveData
-import mosh.com.jera_v1.MyApplication
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.models.AppUser
-import mosh.com.jera_v1.utils.FormViewModel
-import mosh.com.jera_v1.utils.NOT_VALID
+import mosh.com.jera_v1.inheritance.viewmodels.FormViewModel
+import mosh.com.jera_v1.inheritance.viewmodels.NOT_VALID
 import mosh.com.jera_v1.utils.TextResource
 import mosh.com.jera_v1.utils.TextResource.Companion.fromStringId
 

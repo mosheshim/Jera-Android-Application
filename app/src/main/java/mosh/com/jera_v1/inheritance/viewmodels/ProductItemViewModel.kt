@@ -1,10 +1,11 @@
-package mosh.com.jera_v1.utils
+package mosh.com.jera_v1.inheritance.viewmodels
 
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import mosh.com.jera_v1.MyApplication
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.models.Product
+import mosh.com.jera_v1.utils.TextResource
 
 open class ProductItemViewModel : BaseViewModel() {
     private val cartRepo = MyApplication.cartRepo

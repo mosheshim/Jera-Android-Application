@@ -8,6 +8,7 @@ import mosh.com.jera_v1.models.Tea
 import mosh.com.jera_v1.models.ProductSeries
 import mosh.com.jera_v1.models.Weight
 import mosh.com.jera_v1.utils.*
+import mosh.com.jera_v1.inheritance.viewmodels.ProductItemViewModel
 
 import java.lang.Exception
 

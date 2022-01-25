@@ -1,11 +1,12 @@
-package mosh.com.jera_v1.utils
+package mosh.com.jera_v1.inheritance.fragments
 
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import mosh.com.jera_v1.utils.TextResource.Companion.asString
+import mosh.com.jera_v1.inheritance.viewmodels.BaseViewModel
 
-open class BaseFragment<T:BaseViewModel> : FragmentWithUtils() {
+open class BaseFragment<T: BaseViewModel> : FragmentWithUtils() {
     protected lateinit var  viewModel: T
 
 

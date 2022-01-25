@@ -9,10 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.databinding.FragmentTeaItemScreenBinding
-import mosh.com.jera_v1.utils.BaseFragment
+import mosh.com.jera_v1.inheritance.fragments.BaseFragment
 import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.buildPicasso
 import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.visible
-import mosh.com.jera_v1.utils.ID
+import mosh.com.jera_v1.inheritance.fragments.ID
 import mosh.com.jera_v1.utils.UiUtils
 import mosh.com.jera_v1.utils.TextResource.Companion.asString
 

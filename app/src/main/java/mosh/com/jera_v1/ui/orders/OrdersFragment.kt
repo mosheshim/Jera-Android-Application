@@ -9,8 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import mosh.com.jera_v1.adapters.OrdersAdapter
 import mosh.com.jera_v1.databinding.FragmentOrdersBinding
-import mosh.com.jera_v1.models.Order
-import mosh.com.jera_v1.utils.BaseFragment
+import mosh.com.jera_v1.inheritance.fragments.BaseFragment
 import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.gone
 
 class OrdersFragment : BaseFragment<OrdersViewModel>() {
