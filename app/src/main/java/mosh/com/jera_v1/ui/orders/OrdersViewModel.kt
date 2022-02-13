@@ -3,9 +3,10 @@ package mosh.com.jera_v1.ui.orders
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import mosh.com.jera_v1.MyApplication
 import mosh.com.jera_v1.models.Order
-import mosh.com.jera_v1.inheritance.viewmodels.BaseViewModel
+import mosh.com.jera_v1.utils.BaseViewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -27,7 +28,7 @@ class OrdersViewModel : BaseViewModel() {
      */
     private fun getOrders() {
         ordersRepo.fetchOrders { orders ->
-            val dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+            val dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
             val ordersSorted = orders.sortedByDescending {
                 LocalDate.parse(it.date, dateFormat)
             }

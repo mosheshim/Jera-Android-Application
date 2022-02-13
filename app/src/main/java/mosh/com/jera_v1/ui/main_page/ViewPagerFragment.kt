@@ -12,7 +12,7 @@ import mosh.com.jera_v1.adapters.ViewPagerAdapter
 import mosh.com.jera_v1.databinding.FragmentViewPagerBinding
 import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.gone
 import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.visible
-import mosh.com.jera_v1.inheritance.fragments.FragmentWithUtils
+import mosh.com.jera_v1.utils.FragmentWithUtils
 
 class ViewPagerFragment : FragmentWithUtils() {
 

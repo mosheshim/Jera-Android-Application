@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import mosh.com.jera_v1.MyApplication
 import mosh.com.jera_v1.models.CartItem
-import mosh.com.jera_v1.inheritance.viewmodels.BaseViewModel
+import mosh.com.jera_v1.utils.BaseViewModel
 
 class CartViewModel : BaseViewModel() {
     private val authRepo = MyApplication.authRepo

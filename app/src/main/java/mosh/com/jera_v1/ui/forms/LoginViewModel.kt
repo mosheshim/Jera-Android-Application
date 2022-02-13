@@ -3,7 +3,7 @@ package mosh.com.jera_v1.ui.forms
 import android.text.Editable
 import android.util.Patterns
 import mosh.com.jera_v1.R
-import mosh.com.jera_v1.inheritance.viewmodels.FormViewModel
+import mosh.com.jera_v1.utils.FormViewModel
 import mosh.com.jera_v1.utils.TextResource
 import mosh.com.jera_v1.utils.TextResource.Companion.fromStringId
 

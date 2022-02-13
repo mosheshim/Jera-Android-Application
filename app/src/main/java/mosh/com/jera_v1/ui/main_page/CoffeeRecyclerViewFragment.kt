@@ -13,7 +13,7 @@ import mosh.com.jera_v1.R
 import mosh.com.jera_v1.adapters.CoffeeAdapter
 import mosh.com.jera_v1.databinding.FragmentCoffeeBinding
 import mosh.com.jera_v1.utils.ExtensionsUtils.Companion.gone
-import mosh.com.jera_v1.inheritance.fragments.ID
+import mosh.com.jera_v1.utils.ID
 
 class CoffeeRecyclerViewFragment : Fragment() {
 
