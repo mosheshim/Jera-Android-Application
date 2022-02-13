@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.databinding.FragmentLoginBinding
-import mosh.com.jera_v1.utils.BaseFragment
+import mosh.com.jera_v1.inheritance.fragments.BaseFragment
 import mosh.com.jera_v1.utils.UiUtils
 import mosh.com.jera_v1.utils.TextResource.Companion.asString
 

@@ -13,6 +13,8 @@ import mosh.com.jera_v1.models.CartItem
 import mosh.com.jera_v1.models.PickUpLocation
 import mosh.com.jera_v1.utils.*
 import mosh.com.jera_v1.utils.TextResource.Companion.fromStringId
+import mosh.com.jera_v1.inheritance.viewmodels.FormViewModel
+import mosh.com.jera_v1.inheritance.viewmodels.NOT_VALID
 
 const val DELIVERY = "delivery"
 const val PICK_UP = "pick up"

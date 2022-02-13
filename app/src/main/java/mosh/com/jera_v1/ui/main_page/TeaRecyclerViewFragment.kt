@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.adapters.TeaAdapter
 import mosh.com.jera_v1.databinding.FragmentTeaBinding
-import mosh.com.jera_v1.utils.ID
+import mosh.com.jera_v1.inheritance.fragments.ID
 
 class TeaRecyclerViewFragment : Fragment() {
 

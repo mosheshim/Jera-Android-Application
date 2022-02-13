@@ -1,9 +1,8 @@
-package mosh.com.jera_v1.utils
+package mosh.com.jera_v1.inheritance.viewmodels
 
 import android.text.Editable
-import android.util.Patterns
 import mosh.com.jera_v1.MyApplication
-import mosh.com.jera_v1.R
+import mosh.com.jera_v1.utils.TextResource
 
 const val NOT_VALID = ""
 

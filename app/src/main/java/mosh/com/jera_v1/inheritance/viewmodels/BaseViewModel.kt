@@ -1,9 +1,10 @@
-package mosh.com.jera_v1.utils
+package mosh.com.jera_v1.inheritance.viewmodels
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import mosh.com.jera_v1.utils.TextResource
 
 open class BaseViewModel: ViewModel() {
     private val _showToastLiveData = MutableLiveData<TextResource>()

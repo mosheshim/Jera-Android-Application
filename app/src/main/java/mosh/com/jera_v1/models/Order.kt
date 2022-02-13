@@ -12,6 +12,6 @@ data class Order(
     val pickUpLocation: PickUpLocation? = null,
     val deliveryType:String = "",
     val deliveryStatus: String = "Processing",
-    val date: String = LocalDate.now().format(DateTimeFormatter.ISO_DATE),
+    val date: String = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
     val totalPrice: Int = 0
 )

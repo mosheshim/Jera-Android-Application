@@ -4,6 +4,7 @@ import mosh.com.jera_v1.MyApplication
 import mosh.com.jera_v1.R
 import mosh.com.jera_v1.models.Coffee
 import mosh.com.jera_v1.utils.*
+import mosh.com.jera_v1.inheritance.viewmodels.ProductItemViewModel
 
 class CoffeeItemViewModel : ProductItemViewModel() {
     private val productsRepository = MyApplication.productsRepo
